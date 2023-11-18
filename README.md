@@ -14,9 +14,3 @@ When creating a new item in the Kanban board, add a prefix to the item/issue nam
 - `[db]` (database)
 
 Example: `[front] Create login page`
-
-**Board automation**
-- Creating a new issue will add a new task to the board (status `Todo`)
-- Closing an issue will move the corresponding task on the board to `Done`
-- Reopening an issue will move the task to `In Progress`
-- Merging a pull request assigned to the task will move the task to `In Progress`
