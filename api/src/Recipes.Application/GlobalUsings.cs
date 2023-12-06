@@ -1,1 +1,3 @@
-﻿global using Recipes.Domain.Entities;
+﻿global using MediatR;
+global using JetBrains.Annotations;
+global using Recipes.Domain.Entities;

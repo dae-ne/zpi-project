@@ -1,11 +1,10 @@
-﻿using Recipes.Domain.Enums;
+﻿using Recipes.Domain.Common;
+using Recipes.Domain.Enums;
 
 namespace Recipes.Domain.Entities;
 
-public class Recipe
+public class Recipe : BaseCloneableEntity
 {
-    public int Id { get; set; }
-    
     public int UserId { get; set; }
     
     public string Title { get; set; } = null!;

@@ -1,9 +1,9 @@
-﻿namespace Recipes.Domain.Entities;
+﻿using Recipes.Domain.Common;
 
-public class Direction
+namespace Recipes.Domain.Entities;
+
+public class Direction : BaseCloneableEntity
 {
-    public int Id { get; set; }
-    
     public int RecipeId { get; set; }
     
     public string Description { get; set; } = null!;

@@ -13,8 +13,6 @@ public interface IAppDbContext
     public DbSet<Recipe> Recipes { get; set; }
     
     public DbSet<Tag> Tags { get; set; }
-    
-    public DbSet<User> Users { get; set; }
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken);
 }

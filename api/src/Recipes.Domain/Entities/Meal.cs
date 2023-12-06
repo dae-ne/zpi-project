@@ -1,14 +1,14 @@
-﻿namespace Recipes.Domain.Entities;
+﻿using Recipes.Domain.Common;
 
-public class Meal
+namespace Recipes.Domain.Entities;
+
+public class Meal : BaseCloneableEntity
 {
-    public int Id { get; set; }
-    
     public int RecipeId { get; set; }
     
     public DateTime Date { get; set; }
     
     public bool Completed { get; set; }
     
-    public Recipe Recipe { get; set; } = null!;
+    public Recipe? Recipe { get; set; }
 }
