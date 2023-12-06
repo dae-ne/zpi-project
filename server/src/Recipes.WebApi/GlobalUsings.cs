@@ -1,0 +1,10 @@
+﻿global using System;
+global using System.Linq;
+global using System.Threading.Tasks;
+global using Microsoft.AspNetCore.Http;
+global using JetBrains.Annotations;
+global using MediatR;
+global using Recipes.WebApi.Services;
+global using Microsoft.AspNetCore.Builder;
+global using Recipes.WebApi.Extensions;
+global using Recipes.WebApi.Infrastructure;
