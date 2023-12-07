@@ -30,5 +30,5 @@ WORKDIR "/app"
 COPY --from=publish /app/publish .
 COPY --from=build /src/efbundle .
 COPY infra/local/dotnet/entrypoint.sh .
-RUN chmod +x ./entrypoint.sh
+RUN chmod +x entrypoint.sh
 ENTRYPOINT ["./entrypoint.sh"]

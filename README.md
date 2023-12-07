@@ -27,14 +27,12 @@ Example: `[front] Create login page`
 ```bash
 cp .env.template .env
 ```
-2. Update `appsettings.Development.json` in `server/src/Recipes/WebApi` with credentials:
+2. Update `appsettings.Docker.json` in `server/src/Recipes.WebApi` with credentials:
 ```bash
-cp server/src/Recipes.WebApi/appsettings.json server/src/Recipes.WebApi/appsettings.Development.json
+cp server/src/Recipes.WebApi/appsettings.Docker.template.json server/src/Recipes.WebApi/appsettings.Docker.json
 ```
-- `ConnectionStrings:DefaultDB` - "Server=postgres;Port=5432;Database=zpi;User Id=superuser;Password=secret;",
-- `ConnectionStrings:ImageStorage` - "AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;DefaultEndpointsProtocol=http;BlobEndpoint=http://azurite:10000/devstoreaccount1;",
 - `Email:Password` - e.g. Gmail app password. See - [generate a Gmail app password](https://support.google.com/accounts/answer/185833),
-- `Email:AppEmail` - your email address,
+- `Email:AppEmail` - your email address.
 3. Run docker-compose:
 ```bash
 docker-compose up
