@@ -49,7 +49,7 @@ docker-compose up
 
 ### Swagger
 
-Swagger UI is available at: `localhost:8080/swagger`
+Swagger UI is available at: `localhost:8080/swagger` - [direct link](http://localhost:8080/swagger)
 
 ## License
 
