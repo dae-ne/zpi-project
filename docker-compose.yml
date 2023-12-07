@@ -1,0 +1,49 @@
+version: '3.9'
+
+services:
+  azurite:
+    container_name: azurite
+    build:
+      context: .
+      dockerfile: infra/local/azurite/Dockerfile
+    volumes:
+      - azurite:/data
+    ports:
+      - 10000:10000
+
+  dotnet:
+    container_name: dotnet
+    build:
+      context: .
+      dockerfile: infra/local/dotnet/Dockerfile
+      args:
+        ENVIRONMENT: $DOTNET_ENVIRONMENT
+    volumes:
+      - dotnet:/app
+    ports:
+      - 8080:8080
+    depends_on:
+      - azurite
+      - postgres
+
+  # TODO: node.js
+
+  postgres:
+    container_name: postgres
+    build:
+      context: .
+      dockerfile: infra/local/postgres/Dockerfile
+      args:
+        USERNAME: $DB_USERNAME
+        PASSWORD: $DB_PASSWORD
+        DATABASE: $DB_DATABASE
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres:/var/lib/postgresql/data
+
+volumes:
+  azurite:
+  dotnet:
+  # node:
+  postgres:

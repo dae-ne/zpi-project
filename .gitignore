@@ -1,0 +1,16 @@
+.env
+
+server/**/*.suo
+server/**/*.user
+server/**/.vs/
+server/**/.idea/
+server/**/[Bb]in/
+server/**/[Oo]bj/
+server/**/_UpgradeReport_Files/
+server/**/[Pp]ackages/
+
+server/**/Thumbs.db
+server/**/Desktop.ini
+server/**/.DS_Store
+
+server/**/appsettings.*.json
