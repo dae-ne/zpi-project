@@ -1,0 +1,15 @@
+{
+  "name": "zpi-project",
+  "private": true,
+  "scripts": {
+    "sync": "turbo run sync",
+    "test": "turbo run test"
+  },
+  "workspaces": [
+    "web/*",
+    "lib/*"
+  ],
+  "devDependencies": {
+    "turbo": "^1.11.1"
+  }
+}

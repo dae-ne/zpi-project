@@ -10,6 +10,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionIt
 		docker-compose.yml = docker-compose.yml
 		.editorconfig = .editorconfig
 		nuget.config = nuget.config
+		.config\dotnet-tools.json = .config\dotnet-tools.json
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Recipes.WebApi", "src\Recipes.WebApi\Recipes.WebApi.csproj", "{B7FCBD73-13C6-4FE7-82BC-1CCA1ADEE714}"
