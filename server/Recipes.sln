@@ -5,10 +5,7 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{B34C76B5-5578-4F14-A2CE-590251FDD6F3}"
 	ProjectSection(SolutionItems) = preProject
-		.gitignore = .gitignore
 		global.json = global.json
-		docker-compose.yml = docker-compose.yml
-		.editorconfig = .editorconfig
 		nuget.config = nuget.config
 		.config\dotnet-tools.json = .config\dotnet-tools.json
 	EndProjectSection
