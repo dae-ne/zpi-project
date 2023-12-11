@@ -12,10 +12,11 @@ COPY server .
 RUN dotnet tool install --global dotnet-ef
 ENV PATH="$PATH:~/.dotnet/tools"
 RUN dotnet ef migrations bundle \
-    -o efbundle \
-    -c AppDbContext \
-    -p src/Recipes.Infrastructure/Recipes.Infrastructure.csproj \
-    -s src/Recipes.WebApi/Recipes.WebApi.csproj
+  -o efbundle \
+  -c AppDbContext \
+  -p src/Recipes.Infrastructure/Recipes.Infrastructure.csproj \
+  -s src/Recipes.WebApi/Recipes.WebApi.csproj \
+  --configuration $BUILD_CONFIGURATION
 WORKDIR "/src/src/Recipes.WebApi"
 RUN dotnet restore
 RUN dotnet build -c $BUILD_CONFIGURATION -o /app/build

@@ -26,10 +26,4 @@
     <ProjectReference Include="..\Recipes.Application\Recipes.Application.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Reference Include="Microsoft.AspNetCore.Identity">
-      <HintPath>..\..\..\..\..\Program Files\dotnet\shared\Microsoft.AspNetCore.App\8.0.0\Microsoft.AspNetCore.Identity.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
 </Project>
