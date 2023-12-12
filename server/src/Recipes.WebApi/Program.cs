@@ -11,10 +11,11 @@ builder.Services.AddScoped<CurrentUser>();
 builder.Services
     .AddHttpContextAccessor()
     .AddEndpointsApiExplorer()
-    .AddSwaggerGenerator();
+    .AddSwaggerGenerator()
+    .AddCorsConfig();
 
 builder.Services
-    .AddUseCases()
+    .AddApplication()
     .AddInfrastructure(builder.Configuration);
 
 var serviceProvider = builder.Services.BuildServiceProvider();
@@ -29,6 +30,7 @@ if (app.Environment.IsDevelopment() ||
 }
 
 app.UseHttpsRedirection();
+app.UseCors();
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseEndpoints(serviceProvider);
