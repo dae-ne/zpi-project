@@ -27,9 +27,11 @@ WORKDIR "/src/src/Recipes.WebApi"
 RUN dotnet publish -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
+RUN apt update && apt install dos2unix
 WORKDIR "/app"
 COPY --from=publish /app/publish .
 COPY --from=build /src/efbundle .
 COPY infra/local/dotnet/entrypoint.sh .
+RUN dos2unix entrypoint.sh
 RUN chmod +x entrypoint.sh
 ENTRYPOINT ["./entrypoint.sh"]
