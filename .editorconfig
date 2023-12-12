@@ -12,9 +12,6 @@ indent_size = 2
 [infra/**/*]
 indent_size = 2
 
-[infra/**/*.sh]
-end_of_line = lf
-
 [server/**/*]
 indent_size = 2
 
