@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Moq;
 using Recipes.WebApi.Services;
 
-namespace Recipes.WebApi.UnitTests;
+namespace Recipes.WebApi.UnitTests.Services;
 
 public class CurrentUserTests
 {
