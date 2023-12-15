@@ -12,7 +12,12 @@ builder.Services
     .AddHttpContextAccessor()
     .AddEndpointsApiExplorer()
     .AddSwaggerGenerator()
-    .AddCorsConfig();
+    .AddCorsConfig()
+#if DEBUG
+    .AddFullHttpLogging();
+#else
+    .AddBasicHttpLogging();
+#endif
 
 builder.Services
     .AddApplication()
@@ -29,6 +34,7 @@ if (app.Environment.IsDevelopment() ||
     app.UseSwaggerUI();
 }
 
+app.UseHttpLogging();
 app.UseHttpsRedirection();
 app.UseCors();
 app.UseAuthentication();

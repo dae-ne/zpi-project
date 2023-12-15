@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.HttpLogging;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Recipes.WebApi.Infrastructure;
@@ -14,6 +15,25 @@ internal static class ServiceCollectionExtensions
                     .AllowAnyHeader()
                     .AllowAnyMethod();
             });
+        });
+
+        return services;
+    }
+
+    public static IServiceCollection AddFullHttpLogging(this IServiceCollection services)
+    {
+        services.AddHttpLogging(_ => { });
+        return services;
+    }
+
+    public static IServiceCollection AddBasicHttpLogging(this IServiceCollection services)
+    {
+        services.AddHttpLogging(options =>
+        {
+            options.LoggingFields =
+                HttpLoggingFields.RequestProperties |
+                HttpLoggingFields.RequestBody |
+                HttpLoggingFields.ResponseBody;
         });
 
         return services;
