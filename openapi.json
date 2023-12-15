@@ -739,7 +739,7 @@
         }
       }
     },
-    "/api/users/{id}": {
+    "/api/users/{userId}": {
       "put": {
         "tags": [
           "Users"
@@ -747,7 +747,7 @@
         "operationId": "updateUser",
         "parameters": [
           {
-            "name": "id",
+            "name": "userId",
             "in": "path",
             "required": true,
             "style": "simple",
@@ -770,11 +770,12 @@
         "responses": {
           "200": {
             "description": "Success"
+          },
+          "403": {
+            "description": "Forbidden"
           }
         }
-      }
-    },
-    "/api/users/{userId}": {
+      },
       "delete": {
         "tags": [
           "Users"
@@ -795,6 +796,42 @@
         "responses": {
           "200": {
             "description": "Success"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "operationId": "getUser",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetUserResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden"
           }
         }
       }
@@ -811,7 +848,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/GetCurrentUserResponse"
+                  "$ref": "#/components/schemas/GetUserResponse"
                 }
               }
             }
@@ -961,28 +998,6 @@
         ],
         "type": "integer",
         "format": "int32"
-      },
-      "GetCurrentUserResponse": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "userName": {
-            "type": "string",
-            "nullable": true
-          },
-          "email": {
-            "type": "string",
-            "nullable": true
-          },
-          "avatarUrl": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
       },
       "GetMealResponse": {
         "type": "object",
@@ -1183,6 +1198,28 @@
             "items": {
               "$ref": "#/components/schemas/GetRecipeResponse"
             },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetUserResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "userName": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "avatarUrl": {
+            "type": "string",
             "nullable": true
           }
         },
