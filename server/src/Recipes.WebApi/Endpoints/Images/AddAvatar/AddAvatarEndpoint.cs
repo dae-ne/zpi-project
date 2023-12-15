@@ -10,13 +10,13 @@ public sealed class AddAvatarEndpoint(IMediator mediator) : IConfigurableApiEndp
         .WithName("addAvatar")
         .DisableAntiforgery()
         .Produces(201);
-    
+
     [ApiEndpointHandler]
     public async Task<IResult> HandleAsync(IFormFile file, HttpContext httpContext)
     {
         var command = new AddAvatarCommand(file.ToByteArray(), file.FileName);
         var fileName = await mediator.Send(command);
-        var avatarUrl = httpContext.GenerateAvatarUrl(fileName);
+        var avatarUrl = httpContext.Request.GenerateAvatarUrl(fileName);
         return Results.Created(avatarUrl, null);
     }
 }

@@ -10,13 +10,13 @@ public sealed class AddFoodImageEndpoint(IMediator mediator) : IConfigurableApiE
         .WithName("addFoodImage")
         .DisableAntiforgery()
         .Produces(201);
-    
+
     [ApiEndpointHandler]
     public async Task<IResult> HandleAsync(IFormFile file, HttpContext httpContext)
     {
         var command = new AddFoodImageCommand(file.ToByteArray(), file.FileName);
         var fileName = await mediator.Send(command);
-        var imageUrl = httpContext.GenerateFoodImageUrl(fileName);
+        var imageUrl = httpContext.Request.GenerateFoodImageUrl(fileName);
         return Results.Created(imageUrl, null);
     }
 }
