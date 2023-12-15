@@ -7,18 +7,20 @@ public sealed class RemoveUserEndpoint(IMediator mediator, CurrentUser currentUs
 {
     public void Configure(RouteHandlerBuilder builder) => builder
         .WithTags("Users")
-        .WithName("removeUser");
-    
+        .WithName("removeUser")
+        .Produces(200)
+        .Produces(403);
+
     [ApiEndpointHandler]
     public async Task<IResult> HandleAsync(int userId)
     {
         var currentUserId = currentUser.GetId();
-        
+
         if (currentUserId != userId)
         {
             return Results.Forbid();
         }
-        
+
         var command = new RemoveUserCommand(userId);
         await mediator.Send(command);
         return Results.Ok();
