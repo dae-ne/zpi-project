@@ -7,9 +7,15 @@ import Link from '@mui/material/Link';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { AccountService, LoginRequest } from '../../sdk';
+import { AccessTokenResponse, AccountService, LoginRequest, OpenAPI } from '../../sdk';
+import Cookies from 'universal-cookie';
+import "./security.scss"
+import { useNavigate } from 'react-router-dom';
+import { ACCESS_TOKEN_NAME, REFRESH_TOKEN_NAME } from '../../constants/cookies';
+import { RECIPE_LIST, ROOT } from '../../constants/app-route';
 
-function Copyright(props: any) {
+
+const Copyright = (props: any) => {
     return (
         <Typography variant="body2" color="text.secondary" align="center" {...props}>
             {'Copyright © '}
@@ -21,27 +27,57 @@ function Copyright(props: any) {
         </Typography>
     );
 }
-
+const REFRESH_TOKEN_MAX_AGE = 604800
 const LoginPage = () => {
+    const [login, setLogin] = useState<string>("a@a.pl")
+    const [password, setPassword] = useState<string>("Dupa123!")
+    const [isLoginError, setIsLoginError] = useState<boolean>(false)
 
-    const [login, setLogin] = useState<string>("")
-    const [password, setPassword] = useState<string>("")
+    const navigate = useNavigate();
+    const cookies = new Cookies()
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        console.log(login)
-        // console.log({
-        //     email: data.get('email'),
-        //     password: data.get('password'),
-        // });
         let loginRequest: LoginRequest = {
             email: login,
             password: password,
         }
-        const a = AccountService.login(true, false, loginRequest)
-        console.log(a)
+
+        AccountService.login(false, false, loginRequest).then((response: AccessTokenResponse) => {
+            setIsLoginError(false)
+            handleLoginSuccess(response)
+        }).catch(() => {
+            setIsLoginError(true)
+        })
+
     };
 
+    const handleLoginSuccess = (response: AccessTokenResponse) => {
+        if (!response.accessToken) return;
+
+        cookies.set(
+            ACCESS_TOKEN_NAME,
+            response.accessToken,
+            {
+                maxAge: response.expiresIn,
+                sameSite: "strict",
+                path: ROOT
+            }
+        )
+        cookies.set(
+            REFRESH_TOKEN_NAME,
+            response.refreshToken,
+            {
+                maxAge: REFRESH_TOKEN_MAX_AGE,
+                sameSite: "strict",
+                path: ROOT
+            }
+        )
+
+        OpenAPI.TOKEN = response.accessToken;
+
+        navigate(RECIPE_LIST);
+    }
     return (
 
         <Container component="div" maxWidth="xs">
@@ -74,6 +110,8 @@ const LoginPage = () => {
                         color="primary"
                     />
                     <TextField
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
                         margin="normal"
                         required
                         fullWidth
@@ -85,6 +123,8 @@ const LoginPage = () => {
                         color="primary"
                     />
 
+                    {isLoginError && <div className="login-error">Wrong password or email</div>}
+
                     <Button
                         type="submit"
                         fullWidth
@@ -92,6 +132,7 @@ const LoginPage = () => {
                         sx={{ mt: 3, mb: 2, backgroundColor: 'primary' }} >
                         Zaloguj się
                     </Button>
+
 
 
                     <Link href="#" variant="body2" color="secondary">
@@ -108,3 +149,7 @@ const LoginPage = () => {
 }
 
 export default LoginPage
+
+function jwt(accessToken: string | null | undefined) {
+    throw new Error('Function not implemented.');
+}

@@ -14,51 +14,57 @@
 
 .recipe-edit-container {
     width: 100%;
+}
 
-    .recipe-edit-ingredients-add {
-        display: flex;
+.recipe-edit-ingredients-add {
+    display: flex;
+    width: 100%;
+
+    .recipe-edit-ingredients-textbox {
         width: 100%;
-
-        .recipe-edit-ingredients-textbox {
-            width: 100%;
-        }
-
-        .recipe-edit-ingredients-button {
-            border-radius: 0 $small-border-radius $small-border-radius 0;
-        }
     }
 
-    .recipe-edit-direction-add {
-        position: relative;
-        top: -42px;
-        left: calc(100% - 42px);
-        border-radius: $small-border-radius 0 $small-border-radius 0;
+    .recipe-edit-ingredients-button {
+        border-radius: 0 $small-border-radius $small-border-radius 0;
+    }
+}
+
+.recipe-edit-direction-add {
+    position: relative;
+    top: -42px;
+    left: calc(100% - 42px);
+    border-radius: $small-border-radius 0 $small-border-radius 0;
+}
+
+.recipe-ingridients-edit-list {
+
+    li::before {
+        margin-top: 3px;
+        margin-right: 0;
     }
 
-    .recipe-ingridients-edit-list {
-
-        li::before {
-            margin-top: 3px;
-            margin-right: 0;
-        }
-
-        .recipe-ingridient-edit {
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .recipe-ingridient-label {
-            display: flex;
-            align-items: center;
-            width: 80%;
-        }
-    }
-
-    .recipe-direction-header-edit {
+    .recipe-ingridient-edit {
         display: flex;
         justify-content: space-between;
     }
+
+    .recipe-ingridient-label {
+        display: flex;
+        align-items: center;
+        width: 80%;
+    }
 }
+
+.recipe-direction-header-edit {
+    display: flex;
+    justify-content: space-between;
+}
+
+.recipe-edit-save {
+    margin-top: 25px;
+    border-radius: $small-border-radius ;
+}
+
 
 .recipe-edit-image {
     width: 100%;
@@ -103,4 +109,8 @@
 
 .recipe-edit-tag-header {
     margin-top: 1em;
+}
+
+.recipe-no-arraydata {
+    margin: 10px 0;
 }

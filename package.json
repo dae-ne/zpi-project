@@ -2,11 +2,12 @@
   "name": "zpi-project",
   "private": true,
   "scripts": {
+    "start": "turbo run start",
     "sync": "turbo run sync",
     "test": "turbo run test"
   },
   "workspaces": [
-    "web/*",
+    "web",
     "lib/*"
   ],
   "devDependencies": {

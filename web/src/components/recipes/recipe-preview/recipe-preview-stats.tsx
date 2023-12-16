@@ -1,20 +1,26 @@
 import React from "react"
+import { DifficultyLevel } from "../../../sdk"
 
-const RecipePreviewStats = () => {
+interface RecipePreviewStatsInterface {
+    difficultyLevel: DifficultyLevel,
+    time: number,
+    calories: number
+}
+const RecipePreviewStats = ({ difficultyLevel, time, calories }: RecipePreviewStatsInterface) => {
 
     return (
         <div className="recipe-stat-info recipe-preview-info-grid">
             <div className="recipe-preview-info-grid-element">
                 <div className="recipe-preview-info-grid-element-header">Energy</div>
-                <div className="recipe-preview-info-grid-element-text">450 kcal</div>
+                <div className="recipe-preview-info-grid-element-text">{calories} kcal</div>
             </div>
             <div className="recipe-preview-info-grid-element">
                 <div className="recipe-preview-info-grid-element-header">Time:</div>
-                <div className="recipe-preview-info-grid-element-text">60 min.</div>
+                <div className="recipe-preview-info-grid-element-text">{time} min.</div>
             </div>
             <div className="recipe-preview-info-grid-element">
                 <div className="recipe-preview-info-grid-element-header">Difficulty level:</div>
-                <div className="recipe-preview-info-grid-element-text">Easy</div>
+                <div className="recipe-preview-info-grid-element-text">{difficultyLevel}</div>
             </div>
         </div>
     )

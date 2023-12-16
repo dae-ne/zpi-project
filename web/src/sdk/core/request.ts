@@ -157,11 +157,11 @@ export const getHeaders = async (config: OpenAPIConfig, options: ApiRequestOptio
     ...options.headers,
     ...formHeaders,
   })
-    .filter(([_, value]) => isDefined(value))
-    .reduce((headers, [key, value]) => ({
-      ...headers,
-      [key]: String(value),
-    }), {} as Record<string, string>);
+  .filter(([_, value]) => isDefined(value))
+  .reduce((headers, [key, value]) => ({
+    ...headers,
+    [key]: String(value),
+  }), {} as Record<string, string>);
 
   if (isStringWithValue(token)) {
     headers['Authorization'] = `Bearer ${token}`;
@@ -214,7 +214,7 @@ export const sendRequest = async <T>(
     withCredentials: config.WITH_CREDENTIALS,
     cancelToken: source.token,
   };
-  console.log(requestConfig)
+
   onCancel(() => source.cancel('The user aborted a request.'));
 
   try {

@@ -1,10 +1,10 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import DeleteIcon from '@mui/icons-material/Delete';
-import { CreateRecipeIngredientDto } from "../../../sdk";
+import { CreateRecipeTagDto } from "../../../sdk";
 import { RecipeEditDataInterface } from "./recipe-edit-content";
 
 
-const RecipeEditIngredients = ({ data, onDataChange }: RecipeEditDataInterface<CreateRecipeIngredientDto>) => {
+const RecipeEditTags = ({ data, onDataChange }: RecipeEditDataInterface<CreateRecipeTagDto>) => {
 
     const handleDelete = (index: number) => {
         if (!data || data.length - 1 < index) return;
@@ -14,19 +14,17 @@ const RecipeEditIngredients = ({ data, onDataChange }: RecipeEditDataInterface<C
 
     return (
         <>
-            <div className="recipe-header">Ingredients</div>
+            <div className="recipe-header recipe-edit-tag-header">Tags</div>
 
             {data && data.length > 0 ?
                 <ul className="recipe-ingridients-list recipe-ingridients-edit-list">
 
-                    {data.map((ingredient: CreateRecipeIngredientDto, index: number) => {
+                    {data.map((tag: CreateRecipeTagDto, index: number) => {
                         return (
                             <li className="recipe-ingridient recipe-ingridient-edit" key={"ingr" + index}>
-                                <div className="recipe-ingridient-label">{ingredient.name}
+                                <div className="recipe-ingridient-label">{tag.name}
                                 </div>
                                 <div className="recipe-ingridient-icons">
-                                    {/* <ExpandLessIcon onClick={() => onPositionChange(index, -1)} />
-                                    <ExpandMoreIcon onClick={() => onPositionChange(index, 1)} /> */}
                                     <DeleteIcon onClick={() => handleDelete(index)} />
                                 </div>
                             </li>
@@ -36,10 +34,10 @@ const RecipeEditIngredients = ({ data, onDataChange }: RecipeEditDataInterface<C
 
                 </ul>
 
-                : <div className="recipe-no-arraydata" >No ingredients</div>
+                : <div className="recipe-no-arraydata" >No tags</div>
             }
         </>
     )
 }
 
-export default RecipeEditIngredients
+export default RecipeEditTags

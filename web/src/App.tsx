@@ -13,34 +13,46 @@ import RecipeList from './components/recipes/recipe-list';
 import { ThemeProvider } from '@mui/material/styles';
 import RecipePreview from "./components/recipes/recipe-preview";
 import LoginPage from "./components/security/login";
+import { SECURITY_ROOT, SECURITY_LOGIN, SECURITY_REGISTER, SECURITY_DEFAULT, RECIPE_LIST, RECIPE_EDIT, RECIPE_PREVIEW, PLAN_LIST, GROCERY_LIST, ROOT_DEFAULT, ROOT, EMPTY } from "./constants/app-route";
+import Cookies from "universal-cookie";
+import { ACCESS_TOKEN_NAME } from "./constants/cookies";
+import { OpenAPI } from "./sdk";
 
-const App = () => (
-  <ThemeProvider theme={appTheme}>
+const App = () => {
+  const cookies = new Cookies()
+  OpenAPI.TOKEN = cookies.get(ACCESS_TOKEN_NAME)
 
-    <BrowserRouter>
-      <Routes>
-        <Route path="/security">
-          <Route path="/security/login" element={<LoginPage />} />
-          <Route path="/security/register" element={<LoginPage />} />
-          <Route path="/security/?*" element={<LoginPage />} />
+  return (
+    <ThemeProvider theme={appTheme}>
 
-        </Route>
+      <BrowserRouter>
+        <Routes>
 
-        <Route path="/" element={<Navigation />}>
+          <Route path={EMPTY} element={<LoginPage />} />
 
-          <Route path="/recipe/list" element={<RecipeList />} />
-          <Route path="/recipe/edit" element={<RecipeEdit />} />
-          <Route path="/recipe/preview" element={<RecipePreview />} />
-          <Route path="/plan/list" element={<PlanList />} />
-          <Route path="/grocery/list" element={<GroceryList />} />
-          <Route path="/*" element={<PlanList />} />
 
-        </Route>
+          <Route path={SECURITY_ROOT} element={<LoginPage />}>
+            <Route path={SECURITY_LOGIN} element={<LoginPage />} />
+            <Route path={SECURITY_REGISTER} element={<LoginPage />} />
+            <Route path={SECURITY_DEFAULT} element={<LoginPage />} />
 
-      </Routes>
-    </BrowserRouter >
+          </Route>
 
-  </ThemeProvider>
-)
+          <Route path={ROOT} element={<Navigation />}>
+
+            <Route path={RECIPE_LIST} element={<RecipeList />} />
+            <Route path={RECIPE_EDIT} element={<RecipeEdit />} />
+            <Route path={RECIPE_PREVIEW} element={<RecipePreview />} />
+            <Route path={PLAN_LIST} element={<PlanList />} />
+            <Route path={GROCERY_LIST} element={<GroceryList />} />
+            <Route path={ROOT_DEFAULT} element={<RecipeList />} />
+
+          </Route>
+
+        </Routes>
+      </BrowserRouter >
+
+    </ThemeProvider>)
+}
 
 export default App;

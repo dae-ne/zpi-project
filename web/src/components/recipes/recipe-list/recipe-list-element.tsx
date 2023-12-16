@@ -1,33 +1,37 @@
 import { Box } from "@mui/material"
 import React from "react"
+import { GetRecipeResponse, GetRecipeTagResponse } from "../../../sdk"
 
+interface RecipeListElementInterface {
+    data: GetRecipeResponse,
+    onTitleClick: (recipeId: number) => void
+}
+const MAX_DESCRIPTION_LENGTH: number = 250
+const RecipeListElement = ({ data, onTitleClick }: RecipeListElementInterface) => {
 
-const RecipeListElement = () => {
 
     return (
         <Box height={220} className="recipe-list-item">   {/* tutaj ewnutalie cos zmienić */}
 
             <Box width={600} className="recipe-list-item-image">
-                <img src="/static/images/tmp_image.png" />
+                <img src={data.imageUrl || "/static/images/empty-image.png"} />
             </Box>
 
             <Box className="recipe-list-item-content">
-                <div className="recipe-list-item-header">
-                    Crispy shredded chicken
+                <div className="recipe-list-item-header" onClick={() => onTitleClick(data.id || 0)}>
+                    {data.title}
                 </div>
-                <div className="recipe-list-item-energy">430kcal.</div>
+                <div className="recipe-list-item-energy">{data.calories} kcal.</div>
                 <div className="recipe-list-item-description">
-                    Try this takeaway favourite served with rice, or simply on its own as part of a buffet-style meal.
-                    It can work as a main course or starter to share
+                    {data?.description && data?.description?.length > MAX_DESCRIPTION_LENGTH
+                        ? data.description.substring(0, MAX_DESCRIPTION_LENGTH) + "..." : data.description}
                 </div>
 
 
                 <div className="recipe-list-item-tags">
-                    <div className="recipe-list-item-tag">Lunch</div>
-                    <div className="recipe-list-item-tag">Tag 2</div>
-                    <div className="recipe-list-item-tag">Tag 3</div>
-                    <div className="recipe-list-item-tag">Tag 3</div>
-                    <div className="recipe-list-item-tag">Tag23432 3</div>
+                    {data.tags?.map((tag: GetRecipeTagResponse, index: number) =>
+                        (<div key={"tag" + index} className="recipe-list-item-tag">{tag.name}</div>))}
+
                 </div>
             </Box>
         </Box>

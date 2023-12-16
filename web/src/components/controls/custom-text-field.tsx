@@ -8,12 +8,13 @@ interface CustomTextField {
     fullWidth?: boolean,
     inputStyles?: any,
     rows?: number,
-    maxLength?: number
+    maxLength?: number,
+    onChange?: (e: any) => void,
+    value?: string
 }
+const fontColor = appTheme.palette.secondary.main
 
 const CustomTextField = (props: CustomTextField) => {
-    const fontColor = appTheme.palette.secondary.main
-
     return (
         <TextField
             margin="normal"
@@ -22,6 +23,8 @@ const CustomTextField = (props: CustomTextField) => {
             color="primary"
             fullWidth={props.fullWidth}
             size="small"
+            value={props.value}
+            onChange={(e) => props.onChange && props.onChange(e.target.value)}
             multiline={(props.rows && props.rows > 0) ? true : false}
             rows={props.rows}
             inputProps={{ maxLength: props.maxLength ? props.maxLength : 2000 }}

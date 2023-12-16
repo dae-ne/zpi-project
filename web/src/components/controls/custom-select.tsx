@@ -3,39 +3,46 @@ import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from "@m
 
 import appTheme from "../theme"
 import React, { useState } from "react"
+import { DifficultyLevel } from "../../sdk"
 
-interface CustomSelect {
+interface CustomSelect<T> {
     name: string,
     placeholder: string,
-    fullWidth?: boolean
+    values: Array<T>,
+    fullWidth?: boolean,
+    value: T,
+    setValue: (e: T) => void
 }
 
-const CustomSelect = (props: CustomSelect) => {
-    const [value, setValue] = useState<string>("");
+const CustomSelect = (props: CustomSelect<DifficultyLevel>) => {
+    const { name, values, fullWidth, value, setValue } = props
 
     const handleChange = (event: SelectChangeEvent) => {
-        setValue(event.target.value as string);
+        setValue(event.target.value as unknown as DifficultyLevel);
     };
 
     return (
-        <FormControl fullWidth={props.fullWidth} size="small">
+        <FormControl fullWidth={fullWidth} size="small">
             {/* <InputLabel id={"selectbox-" + props.name} sx={{ fontSize: "1em" }}>{props.placeholder}</InputLabel> */}
             <Select
-                labelId={"selectbox-" + props.name}
+                labelId={"selectbox-" + name}
                 color="primary"
-                value={value}
+                value={value.toString()}
                 onChange={handleChange}
-                name={props.name}
+                name={name}
                 sx={{
                     input: { fontSize: "1em" },
                     "& fieldset": { border: 'none' },
                     backgroundColor: "white"
                 }}
             >
-
-                <MenuItem value={10}>Ten</MenuItem>
-                <MenuItem value={20}>Twenty</MenuItem>
-                <MenuItem value={30}>Thirty</MenuItem>
+                {
+                    values.map((value) => {
+                        return (
+                            <MenuItem key={value} value={value}>{value}</MenuItem>
+                        )
+                    })
+                }
             </Select>
         </FormControl>
 

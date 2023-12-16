@@ -7,6 +7,12 @@ import type { ApiRequestOptions } from './ApiRequestOptions';
 type Resolver<T> = (options: ApiRequestOptions) => Promise<T>;
 type Headers = Record<string, string>;
 
+
+const corsHeadrer: Headers = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers': 'Content-Type'
+};
+
 export type OpenAPIConfig = {
   BASE: string;
   VERSION: string;
@@ -23,7 +29,7 @@ export const OpenAPI: OpenAPIConfig = {
   BASE: 'http://localhost:8080',
   VERSION: '1',
   WITH_CREDENTIALS: false,
-  CREDENTIALS: 'include',
+  CREDENTIALS: 'omit',
   TOKEN: undefined,
   USERNAME: undefined,
   PASSWORD: undefined,

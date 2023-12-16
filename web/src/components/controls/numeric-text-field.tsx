@@ -6,6 +6,8 @@ interface NumericTextField {
     name: string,
     placeholder: string,
     fullWidth?: boolean,
+    onChange?: (e: any) => void,
+    value?: number
 }
 
 const NumericTextField = (props: NumericTextField) => {
@@ -18,6 +20,8 @@ const NumericTextField = (props: NumericTextField) => {
             name={props.name}
             color="primary"
             fullWidth={props.fullWidth}
+            value={props.value}
+            onChange={(e) => props.onChange && props.onChange(e.target.value)}
             size="small"
             inputProps={{ type: 'number' }}
             sx={{

@@ -22,8 +22,8 @@ export class AccountService {
    * @throws ApiError
    */
   public static register(
-requestBody?: RegisterRequest,
-): CancelablePromise<any> {
+    requestBody?: RegisterRequest,
+  ): CancelablePromise<any> {
     return __request(OpenAPI, {
       method: 'POST',
       url: '/api/account/register',
@@ -43,10 +43,10 @@ requestBody?: RegisterRequest,
    * @throws ApiError
    */
   public static login(
-useCookies?: boolean,
-useSessionCookies?: boolean,
-requestBody?: LoginRequest,
-): CancelablePromise<AccessTokenResponse> {
+    useCookies?: boolean,
+    useSessionCookies?: boolean,
+    requestBody?: LoginRequest,
+  ): CancelablePromise<AccessTokenResponse> {
     return __request(OpenAPI, {
       method: 'POST',
       url: '/api/account/login',
@@ -65,8 +65,8 @@ requestBody?: LoginRequest,
    * @throws ApiError
    */
   public static refresh(
-requestBody?: RefreshRequest,
-): CancelablePromise<AccessTokenResponse> {
+    requestBody?: RefreshRequest,
+  ): CancelablePromise<AccessTokenResponse> {
     return __request(OpenAPI, {
       method: 'POST',
       url: '/api/account/refresh',
@@ -83,10 +83,10 @@ requestBody?: RefreshRequest,
    * @throws ApiError
    */
   public static confirmEmail(
-userId?: string,
-code?: string,
-changedEmail?: string,
-): CancelablePromise<any> {
+    userId?: string,
+    code?: string,
+    changedEmail?: string,
+  ): CancelablePromise<any> {
     return __request(OpenAPI, {
       method: 'GET',
       url: '/api/account/confirmEmail',
@@ -104,8 +104,8 @@ changedEmail?: string,
    * @throws ApiError
    */
   public static resendConfirmationEmail(
-requestBody?: ResendConfirmationEmailRequest,
-): CancelablePromise<any> {
+    requestBody?: ResendConfirmationEmailRequest,
+  ): CancelablePromise<any> {
     return __request(OpenAPI, {
       method: 'POST',
       url: '/api/account/resendConfirmationEmail',
@@ -135,8 +135,8 @@ requestBody?: ResendConfirmationEmailRequest,
    * @throws ApiError
    */
   public static updateAccountInfo(
-requestBody?: InfoRequest,
-): CancelablePromise<InfoResponse> {
+    requestBody?: InfoRequest,
+  ): CancelablePromise<InfoResponse> {
     return __request(OpenAPI, {
       method: 'POST',
       url: '/api/account/manage/info',
