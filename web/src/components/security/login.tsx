@@ -75,7 +75,7 @@ const LoginPage = () => {
         )
 
         OpenAPI.TOKEN = response.accessToken;
-
+        console.log(response.accessToken)
         navigate(RECIPE_LIST);
     }
     return (

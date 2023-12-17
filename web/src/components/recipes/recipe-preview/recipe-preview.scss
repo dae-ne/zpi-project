@@ -61,3 +61,21 @@
 
 
 }
+
+.recipie-preview-info-tags {
+    background-color: white;
+    margin: 2em;
+    padding: 1em;
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.8em;
+    word-wrap: break-word;
+
+    .recipe-preview-item-tag {
+        background-color: #F0F0F0;
+        color: $black-opacity-dark;
+        border-radius: 1em;
+        text-align: center;
+        padding: 0.3em 1.4em;
+    }
+}

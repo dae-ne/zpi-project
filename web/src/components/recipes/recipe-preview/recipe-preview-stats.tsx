@@ -8,7 +8,7 @@ interface RecipePreviewStatsInterface {
 }
 const RecipePreviewStats = ({ difficultyLevel, time, calories }: RecipePreviewStatsInterface) => {
 
-    return (
+    return (<>
         <div className="recipe-stat-info recipe-preview-info-grid">
             <div className="recipe-preview-info-grid-element">
                 <div className="recipe-preview-info-grid-element-header">Energy</div>
@@ -23,6 +23,15 @@ const RecipePreviewStats = ({ difficultyLevel, time, calories }: RecipePreviewSt
                 <div className="recipe-preview-info-grid-element-text">{difficultyLevel}</div>
             </div>
         </div>
+        <div className="recipie-preview-info-tags">
+
+            <div className="recipe-preview-item-tag">tagk1 </div>
+            <div className="recipe-preview-item-tag">tagk3 </div>
+            <div className="recipe-preview-item-tag">tagk41 </div>
+            <div className="recipe-preview-item-tag">tagk1532 </div>
+
+        </div>
+    </>
     )
 }
 
