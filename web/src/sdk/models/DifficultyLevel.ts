@@ -4,7 +4,21 @@
 /* eslint-disable */
 
 export enum DifficultyLevel {
-  '_0' = 0,
-  '_1' = 1,
-  '_2' = 2,
+  _0 = "Easy",
+  _1 = "More effort",
+  _2 = "Pro",
 }
+
+export const getDifficultyString = (difficulty: DifficultyLevel): string => {
+  return getDifficultyStringByNumber(parseInt(difficulty))
+}
+
+export const getDifficultyStringByNumber = (value: number): string => {
+  switch (value) {
+    case 0: return "Easy";
+    case 1: return "More effort";
+    case 2: return "Pro";
+  }
+  return "";
+}
+

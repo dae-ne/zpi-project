@@ -33,6 +33,6 @@ export const OpenAPI: OpenAPIConfig = {
   TOKEN: undefined,
   USERNAME: undefined,
   PASSWORD: undefined,
-  HEADERS: undefined,
+  HEADERS: corsHeadrer,
   ENCODE_PATH: undefined,
 };

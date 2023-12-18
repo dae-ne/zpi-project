@@ -149,7 +149,3 @@ const LoginPage = () => {
 }
 
 export default LoginPage
-
-function jwt(accessToken: string | null | undefined) {
-    throw new Error('Function not implemented.');
-}

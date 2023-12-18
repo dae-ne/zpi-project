@@ -1,5 +1,6 @@
 import React from "react"
 import { DifficultyLevel } from "../../../sdk"
+import { getDifficultyString } from "../../../sdk/models/DifficultyLevel";
 
 interface RecipePreviewStatsInterface {
     difficultyLevel: DifficultyLevel,
@@ -20,7 +21,7 @@ const RecipePreviewStats = ({ difficultyLevel, time, calories }: RecipePreviewSt
             </div>
             <div className="recipe-preview-info-grid-element">
                 <div className="recipe-preview-info-grid-element-header">Difficulty level:</div>
-                <div className="recipe-preview-info-grid-element-text">{difficultyLevel}</div>
+                <div className="recipe-preview-info-grid-element-text">{getDifficultyString(difficultyLevel)}</div>
             </div>
         </div>
         <div className="recipie-preview-info-tags">
