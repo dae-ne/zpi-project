@@ -17,6 +17,7 @@ import { SECURITY_ROOT, SECURITY_LOGIN, SECURITY_REGISTER, SECURITY_DEFAULT, REC
 import Cookies from "universal-cookie";
 import { ACCESS_TOKEN_NAME } from "./constants/cookies";
 import { OpenAPI } from "./sdk";
+import RegisterPage from "./components/security/register";
 
 const App = () => {
   const cookies = new Cookies()
@@ -31,9 +32,9 @@ const App = () => {
           <Route path={EMPTY} element={<LoginPage />} />
 
 
-          <Route path={SECURITY_ROOT} element={<LoginPage />}>
+          <Route path={SECURITY_ROOT}>
             <Route path={SECURITY_LOGIN} element={<LoginPage />} />
-            <Route path={SECURITY_REGISTER} element={<LoginPage />} />
+            <Route path={SECURITY_REGISTER} element={<RegisterPage />} />
             <Route path={SECURITY_DEFAULT} element={<LoginPage />} />
 
           </Route>

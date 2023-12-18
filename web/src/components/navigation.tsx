@@ -1,28 +1,46 @@
 import React from 'react';
 import "./main.scss"
 import "./recipes/recipes.scss"
-import { Outlet, useLocation, Link } from "react-router-dom";
+import { Outlet, useLocation, Link, useNavigate } from "react-router-dom";
 import appTheme from './theme';
 import { AppBar, Avatar, Box, Button, Container, IconButton, Menu, MenuItem, Toolbar, Tooltip, Typography } from '@mui/material';
+import Cookies from 'universal-cookie';
+import { ACCESS_TOKEN_NAME, REFRESH_TOKEN_NAME } from '../constants/cookies';
+import { AccountService, OpenAPI } from '../sdk';
+import { ROOT, SECURITY_LOGIN } from '../constants/app-route';
+
+const logout: string = "Logout"
+const settings = [logout];
+
+const pages = [
+    { name: 'RECIPES', address: "/recipe/list" },
+    { name: 'PLAN', address: "/plan/list" },
+    { name: 'GROCERY LIST', address: "/grocery/list" }];
 
 const Navigation = () => {
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
-    const location = useLocation()
+
+    const navigate = useNavigate();
+    const cookies = new Cookies()
 
     const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElUser(event.currentTarget);
     };
 
-    const handleCloseUserMenu = () => {
+    const handleCloseUserMenu = (value: string) => {
         setAnchorElUser(null);
+
+        if (value === logout)
+            handleLogOut()
     };
 
-    const pages = [
-        { name: 'RECIPES', address: "/recipe/list" },
-        { name: 'PLAN', address: "/plan/list" },
-        { name: 'GROCERY LIST', address: "/grocery/list" }];
+    const handleLogOut = () => {
+        cookies.remove(ACCESS_TOKEN_NAME, { path: ROOT });
+        cookies.remove(REFRESH_TOKEN_NAME, { path: ROOT });
+        OpenAPI.TOKEN = undefined;
+        navigate(SECURITY_LOGIN)
+    }
 
-    const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
     return (
         <>
@@ -65,7 +83,8 @@ const Navigation = () => {
                                 onClose={handleCloseUserMenu}
                             >
                                 {settings.map((setting) => (
-                                    <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                                    <MenuItem key={setting}
+                                        onClick={() => handleCloseUserMenu(setting)}>
                                         <Typography textAlign="center">{setting}</Typography>
                                     </MenuItem>
                                 ))}
