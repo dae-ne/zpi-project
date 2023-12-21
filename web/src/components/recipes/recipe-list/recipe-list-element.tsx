@@ -11,7 +11,7 @@ const RecipeListElement = ({ data, onTitleClick }: RecipeListElementInterface) =
 
 
     return (
-        <Box height={220} className="recipe-list-item">   {/* tutaj ewnutalie cos zmienić */}
+        <Box height={220} className="recipe-list-item">
 
             <Box width={600} className="recipe-list-item-image">
                 <img src={data.imageUrl || "/static/images/empty-image.png"} />

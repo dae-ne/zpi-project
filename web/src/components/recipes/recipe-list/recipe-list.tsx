@@ -3,7 +3,7 @@ import RecipeListHeader from "./recipe-list-header"
 import RecipeListContent from "./recipe-list-content"
 import "./recipe-list.scss"
 import { RecipesService, GetRecipesResponse, GetRecipeResponse, GetRecipeTagResponse, DifficultyLevel } from "../../../sdk"
-import { getDifficultyStringByNumber } from "../../../sdk/models/DifficultyLevel"
+import { getDifficultyNameByNumber } from "../../../sdk/models/DifficultyLevel"
 
 const RecipeList = () => {
     const [recipes, setRecipes] = useState<Array<GetRecipeResponse> | null>(null)

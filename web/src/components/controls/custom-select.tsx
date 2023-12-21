@@ -14,11 +14,11 @@ interface CustomSelect<T> {
     setValue: (e: T) => void
 }
 
-const CustomSelect = (props: CustomSelect<DifficultyLevel>) => {
+const CustomSelect = (props: CustomSelect<string>) => {
     const { name, values, fullWidth, value, setValue } = props
 
     const handleChange = (event: SelectChangeEvent) => {
-        setValue(event.target.value as unknown as DifficultyLevel);
+        setValue(event.target.value as string);
     };
 
     return (

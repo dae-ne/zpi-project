@@ -13,7 +13,7 @@ import RecipeList from './components/recipes/recipe-list';
 import { ThemeProvider } from '@mui/material/styles';
 import RecipePreview from "./components/recipes/recipe-preview";
 import LoginPage from "./components/security/login";
-import { SECURITY_ROOT, SECURITY_LOGIN, SECURITY_REGISTER, SECURITY_DEFAULT, RECIPE_LIST, RECIPE_EDIT, RECIPE_PREVIEW, PLAN_LIST, GROCERY_LIST, ROOT_DEFAULT, ROOT, EMPTY } from "./constants/app-route";
+import { SECURITY_ROOT, SECURITY_LOGIN, SECURITY_REGISTER, SECURITY_DEFAULT, RECIPE_LIST, RECIPE_EDIT, RECIPE_PREVIEW, PLAN_LIST, GROCERY_LIST, ROOT_DEFAULT, ROOT, EMPTY, RECIPE_NEW } from "./constants/app-route";
 import Cookies from "universal-cookie";
 import { ACCESS_TOKEN_NAME } from "./constants/cookies";
 import { OpenAPI } from "./sdk";
@@ -56,8 +56,9 @@ const App = () => {
           <Route path={ROOT} element={<Navigation />}>
 
             <Route path={RECIPE_LIST} element={<ProtectedRoute><RecipeList /></ProtectedRoute>} />
-            <Route path={RECIPE_EDIT} element={<RecipeEdit />} />
-            <Route path={RECIPE_PREVIEW} element={<RecipePreview />} />
+            <Route path={RECIPE_NEW} element={<ProtectedRoute><RecipeEdit /></ProtectedRoute>} />
+            <Route path={RECIPE_EDIT} element={<ProtectedRoute><RecipeEdit /></ProtectedRoute>} />
+            <Route path={RECIPE_PREVIEW} element={<ProtectedRoute><RecipePreview /></ProtectedRoute>} />
             <Route path={PLAN_LIST} element={<PlanList />} />
             <Route path={GROCERY_LIST} element={<GroceryList />} />
             <Route path={ROOT_DEFAULT} element={<RecipeList />} />

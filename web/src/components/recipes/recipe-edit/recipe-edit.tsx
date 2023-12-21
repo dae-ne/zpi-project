@@ -1,9 +1,12 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import "./recipe-edit.scss"
 import RecipeEditContent from "./recipe-edit-content"
 import RecipeEditStats from "./recipe-edit-stats"
 import Grid from "@mui/material/Grid"
-import { CreateRecipeDirectionDto, CreateRecipeIngredientDto, CreateRecipeRequest, CreateRecipeTagDto, DifficultyLevel, OpenAPI, RecipesService } from "../../../sdk"
+import { CreateRecipeDirectionDto, CreateRecipeIngredientDto, CreateRecipeRequest, CreateRecipeTagDto, DifficultyLevel, ImagesService, OpenAPI, RecipesService } from "../../../sdk"
+import { useLocation, useNavigate } from "react-router-dom"
+import { RECIPE_EDIT, RECIPE_LIST, RECIPE_NEW } from "../../../constants/app-route"
+import { getDifficultyId } from "../../../sdk/models/DifficultyLevel"
 
 export enum Mode {
     Edit,
@@ -15,19 +18,21 @@ export interface RecipeEditInterface {
 }
 
 const RecipeEdit = () => {
-
-    const mode = Mode.New;
+    const location = useLocation();
+    const navigate = useNavigate();
 
     const [title, setTitle] = useState<string>("");
     const [description, setDescription] = useState<string>("");
     const [difficultyLevel, setDifficultyLevel] = useState<DifficultyLevel>(DifficultyLevel._0);
     const [imageUrl, setImageUrl] = useState<string>("");
-    const [time, setTime] = useState<number>(60);
+    const [imageFile, setImageFile] = useState<File | null>(null);
+    const [time, setTime] = useState<number>(0);
     const [calories, setCalories] = useState<number>(0);
-    const [ingredients, setIngredients] = useState<Array<CreateRecipeIngredientDto> | null>(null);
-    const [directions, setDirections] = useState<Array<CreateRecipeDirectionDto> | null>(null);
-    const [tags, setTags] = useState<Array<CreateRecipeTagDto> | null>(null);
-    console.log(console.log(OpenAPI))
+    const [ingredients, setIngredients] = useState<Array<CreateRecipeIngredientDto>>([]);
+    const [directions, setDirections] = useState<Array<CreateRecipeDirectionDto>>([]);
+    const [tags, setTags] = useState<Array<CreateRecipeTagDto>>([]);
+
+    const [mode, setMode] = useState<Mode>()
     const submitForm = () => {
 
         const recipe: CreateRecipeRequest = {
@@ -42,19 +47,41 @@ const RecipeEdit = () => {
             tags: tags
         }
         console.log(recipe)
+        console.log(JSON.stringify(recipe))
 
         mode === Mode.New ? addRecipe(recipe) : saveRecipe(recipe)
     }
 
     const addRecipe = (addRecipeRequest: CreateRecipeRequest) => {
-        console.log(OpenAPI)
-        RecipesService.createRecipe(addRecipeRequest)
+
+        if (!imageFile) {
+            alert("No selected image");
+            return;
+        }
+
+        ImagesService.addFoodImage({ file: imageFile })
+            .then((response) => {
+                addRecipeRequest.imageUrl = ""//TODO link z response
+                RecipesService.createRecipe(addRecipeRequest)
+                    .then(() => {
+                        alert("Recipe has been created.")
+                        //    navigate(RECIPE_LIST)
+                    })
+                    .catch(() => {
+                        alert("Not all fields was fulfilled")
+                    })
+
+            })
     }
 
     const saveRecipe = (addRecipeRequest: CreateRecipeRequest) => {
         //TODO   brak metody do edycji
         //   RecipesService.editRecipe(addRecipeRequest)
     }
+
+    useEffect(() => {
+        setMode(location.pathname == RECIPE_NEW ? Mode.New : Mode.Edit)
+    }, [])
 
     return (
         <Grid container sx={{ my: 4 }}>
@@ -79,7 +106,7 @@ const RecipeEdit = () => {
                     calories={calories}
                     tags={tags}
                     onDifficultyLevelChange={setDifficultyLevel}
-                    onImageUrlChange={setImageUrl}
+                    onImageChange={setImageFile}
                     onTimeChange={setTime}
                     onCaloriesChange={setCalories}
                     onTagsChange={setTags}

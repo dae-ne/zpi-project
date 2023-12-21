@@ -18,14 +18,14 @@ interface RecipeEditContentInterface {
     directions: Array<CreateRecipeDirectionDto> | null,
     onTitleChange: (value: string) => void,
     onDescriptionChange: (value: string) => void,
-    onIngredientsChange: (value: Array<CreateRecipeIngredientDto> | null) => void,
-    onDirectionsChange: (value: Array<CreateRecipeDirectionDto> | null) => void
+    onIngredientsChange: (value: Array<CreateRecipeIngredientDto>) => void,
+    onDirectionsChange: (value: Array<CreateRecipeDirectionDto>) => void
     onSubmit: () => void
 }
 
 export interface RecipeEditDataInterface<T> {
     data: Array<T> | null,
-    onDataChange: (value: Array<T> | null) => void
+    onDataChange: (value: Array<T>) => void
 }
 
 

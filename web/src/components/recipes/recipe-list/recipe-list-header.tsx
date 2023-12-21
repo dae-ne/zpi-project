@@ -1,19 +1,23 @@
-import { Grid, TextField } from "@mui/material"
+import { Grid } from "@mui/material"
 import React, { useState } from "react"
 
 import AddIcon from '@mui/icons-material/Add';
 import CustomTextField from "../../controls/custom-text-field";
+import { useNavigate } from "react-router-dom";
+import { RECIPE_NEW } from "../../../constants/app-route";
 
 interface RecipeListHeaderInterface {
-    //  inputValue: string,
-    //   onInput: (value: string) => void,
     onSearchSubmit: (value: string) => void
-
 }
 
 const RecipeListHeader = ({ onSearchSubmit }: RecipeListHeaderInterface) => {
+    const navigate = useNavigate();
 
     const [searchValue, setSearchValue] = useState<string>("")
+
+    const handleNewRecipe = () => {
+        navigate(RECIPE_NEW);
+    }
 
     return (
         <Grid container>
@@ -32,7 +36,7 @@ const RecipeListHeader = ({ onSearchSubmit }: RecipeListHeaderInterface) => {
             </Grid>
 
             <Grid item xs={1} sx={{ pt: 3 }} display="flex" justifyContent="flex-end" color="white">
-                <div className="button-std add-button">
+                <div className="button-std add-button" onClick={handleNewRecipe}>
                     <AddIcon />
                 </div>
             </Grid>

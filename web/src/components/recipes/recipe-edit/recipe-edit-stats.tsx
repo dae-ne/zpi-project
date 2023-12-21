@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import CustomTextField from "../../controls/custom-text-field"
 import AddIcon from '@mui/icons-material/Add';
 import CustomSelect from "../../controls/custom-select";
@@ -9,6 +9,7 @@ import Button from "@mui/material/Button";
 import DeleteIcon from '@mui/icons-material/Delete';
 import { IconButton, Tooltip } from "@mui/material";
 import { toBase64 } from "../../../tools/files";
+import { getDifficultyId, getDifficultyName } from "../../../sdk/models/DifficultyLevel";
 
 
 interface RecipeEditStatsInterface {
@@ -18,20 +19,32 @@ interface RecipeEditStatsInterface {
     calories: number,
     tags: Array<CreateRecipeTagDto> | null,
     onDifficultyLevelChange: (value: DifficultyLevel) => void,
-    onImageUrlChange: (value: string) => void,
+    onImageChange: (value: File) => void,
     onTimeChange: (value: number) => void,
     onCaloriesChange: (value: number) => void,
-    onTagsChange: (value: Array<CreateRecipeTagDto> | null) => void,
+    onTagsChange: (value: Array<CreateRecipeTagDto>) => void,
 }
 const inputStyle = { borderRadius: "5px 0 0 5px", fontSize: "0.9em" }
+const DEFAULT_DIFFICULTIES: Array<string> = [
+    getDifficultyName(DifficultyLevel._0),
+    getDifficultyName(DifficultyLevel._1),
+    getDifficultyName(DifficultyLevel._2)
+]
 
 const RecipeEditStats = (props: RecipeEditStatsInterface) => {
     const [tag, setTag] = useState<string>("");
-    const [image, setImage] = useState<string>("");
+    const [image, setImage] = useState<File | null>(null);
+    const [imagePreview, setImagePreview] = useState<string>("");
+    const [difficultyLevelName, setDifficultyLevelName] = useState<string>("");
 
     const { difficultyLevel, imageUrl, time, calories, tags,
-        onDifficultyLevelChange, onImageUrlChange, onTimeChange, onCaloriesChange, onTagsChange } = props;
+        onDifficultyLevelChange, onImageChange, onTimeChange, onCaloriesChange, onTagsChange } = props;
 
+
+    const handleDifficultyChange = (value: string) => {
+        setDifficultyLevelName(value)
+        onDifficultyLevelChange(getDifficultyId(value))
+    }
 
     const handleAddTag = () => {
         if (!tag) return;
@@ -45,11 +58,12 @@ const RecipeEditStats = (props: RecipeEditStatsInterface) => {
 
     const handleCapture = ({ target }: any) => {
         const file: File | null = target.files[0]
-
         if (!file) return;
+
+        onImageChange(file)
         try {
             toBase64(file).then((result) => {
-                setImage(result as string)
+                setImagePreview(result as string)
             })
         } catch (error) {
             console.error(error);
@@ -57,13 +71,16 @@ const RecipeEditStats = (props: RecipeEditStatsInterface) => {
         }
     };
 
+    useEffect(() => {
+        setDifficultyLevelName(getDifficultyName(difficultyLevel))
+    }, [])
 
     return (
         <div className="recipe-stat-info">
             <div className="recipe-edit-sub-header">Image</div>
             <div className="recipe-edit-image">
-                {image ?
-                    <img className="recipe-edit-image-preview" src={image} />
+                {imagePreview ?
+                    <img className="recipe-edit-image-preview" src={imagePreview} />
                     : <img className="recipe-edit-image-background" src="/static/images/empty-image.png" />
                 }
             </div>
@@ -77,9 +94,9 @@ const RecipeEditStats = (props: RecipeEditStatsInterface) => {
                 name={"difficulty"}
                 placeholder={"Difficulty level"}
                 fullWidth
-                values={[DifficultyLevel._0, DifficultyLevel._1, DifficultyLevel._2]}
-                value={difficultyLevel}
-                setValue={onDifficultyLevelChange}
+                values={DEFAULT_DIFFICULTIES}
+                value={difficultyLevelName}
+                setValue={handleDifficultyChange}
             />
 
             <div className="recipe-edit-sub-header">Time</div>

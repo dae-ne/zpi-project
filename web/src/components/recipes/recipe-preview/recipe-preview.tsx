@@ -40,6 +40,7 @@ const RecipePreview = () => {
 
         RecipesService.getRecipe(recipeId)
             .then((response: GetRecipeResponse) => {
+                console.log(response)
                 setTitle(response.title);
                 setDescription(response.description);
                 setDifficultyLevel(response.difficultyLevel);
@@ -75,6 +76,7 @@ const RecipePreview = () => {
                     difficultyLevel={difficultyLevel || DifficultyLevel._0}
                     time={time || 0}
                     calories={calories || 0}
+                    tags={tags}
                 />
             </Grid>
 

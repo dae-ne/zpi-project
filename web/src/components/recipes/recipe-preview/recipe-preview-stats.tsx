@@ -1,13 +1,14 @@
 import React from "react"
-import { DifficultyLevel } from "../../../sdk"
-import { getDifficultyString } from "../../../sdk/models/DifficultyLevel";
+import { CreateRecipeTagDto, DifficultyLevel } from "../../../sdk"
+import { getDifficultyName } from "../../../sdk/models/DifficultyLevel";
 
 interface RecipePreviewStatsInterface {
     difficultyLevel: DifficultyLevel,
     time: number,
-    calories: number
+    calories: number,
+    tags: Array<CreateRecipeTagDto> | null | undefined
 }
-const RecipePreviewStats = ({ difficultyLevel, time, calories }: RecipePreviewStatsInterface) => {
+const RecipePreviewStats = ({ difficultyLevel, time, calories, tags }: RecipePreviewStatsInterface) => {
 
     return (<>
         <div className="recipe-stat-info recipe-preview-info-grid">
@@ -21,16 +22,15 @@ const RecipePreviewStats = ({ difficultyLevel, time, calories }: RecipePreviewSt
             </div>
             <div className="recipe-preview-info-grid-element">
                 <div className="recipe-preview-info-grid-element-header">Difficulty level:</div>
-                <div className="recipe-preview-info-grid-element-text">{getDifficultyString(difficultyLevel)}</div>
+                <div className="recipe-preview-info-grid-element-text">{getDifficultyName(difficultyLevel)}</div>
             </div>
         </div>
         <div className="recipie-preview-info-tags">
-
-            <div className="recipe-preview-item-tag">tagk1 </div>
-            <div className="recipe-preview-item-tag">tagk3 </div>
-            <div className="recipe-preview-item-tag">tagk41 </div>
-            <div className="recipe-preview-item-tag">tagk1532 </div>
-
+            {
+                tags?.map((tag: CreateRecipeTagDto, index: number) => {
+                    return (<div key={"tag" + index} className="recipe-preview-item-tag">{tag.name}</div>)
+                })
+            }
         </div>
     </>
     )
