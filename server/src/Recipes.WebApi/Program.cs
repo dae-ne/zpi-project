@@ -15,16 +15,18 @@ builder.Services
     .AddSwaggerGenerator()
     .AddCorsConfig()
 #if DEBUG
-    .AddFullHttpLogging();
+    .AddHttpLogging(fullLogging: true);
 #else
-    .AddBasicHttpLogging();
+    .AddHttpLogging();
 #endif
 
 builder.Services
     .AddApplication()
+#if DEBUG
+    .AddInfrastructure(builder.Configuration, logSensitiveData: true);
+#else
     .AddInfrastructure(builder.Configuration);
-
-var serviceProvider = builder.Services.BuildServiceProvider();
+#endif
 
 var app = builder.Build();
 
@@ -40,6 +42,6 @@ app.UseHttpsRedirection();
 app.UseCors();
 app.UseAuthentication();
 app.UseAuthorization();
-app.UseEndpoints(serviceProvider);
+app.UseEndpoints();
 
 app.Run();

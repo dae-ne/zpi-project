@@ -21,14 +21,14 @@ internal static class ServiceCollectionExtensions
         return services;
     }
 
-    public static IServiceCollection AddFullHttpLogging(this IServiceCollection services)
+    public static IServiceCollection AddHttpLogging(this IServiceCollection services, bool fullLogging = false)
     {
-        services.AddHttpLogging(_ => { });
-        return services;
-    }
+        if (fullLogging)
+        {
+            services.AddHttpLogging(_ => { });
+            return services;
+        }
 
-    public static IServiceCollection AddBasicHttpLogging(this IServiceCollection services)
-    {
         services.AddHttpLogging(options =>
         {
             options.LoggingFields =
