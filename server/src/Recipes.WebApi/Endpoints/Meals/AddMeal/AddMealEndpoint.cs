@@ -10,14 +10,14 @@ public sealed class AddMealEndpoint(IMediator mediator, CurrentUser currentUser)
         .WithTags("Meals")
         .WithName("addMeal")
         .Produces(201);
-    
+
     [ApiEndpointHandler]
-    public async Task<IResult> HandleAsync(AddMealRequest request)
+    public async Task<IResult> HandleAsync(AddMealRequest request, HttpContext httpContext) // TODO: HttpRequest?
     {
         var userId = currentUser.GetId();
         var command = request.ToCommand(userId);
         var mealId = await mediator.Send(command);
-        // TODO: link
-        return Results.Created();
+        var url = httpContext.Request.GenerateUrlForCreatedItem(mealId);
+        return Results.Created(url, null);
     }
 }

@@ -7,11 +7,11 @@ namespace Recipes.Application.Meals.Commands.UpdateMeal;
 public sealed class UpdateMealCommand : IRequest
 {
     public int MealId { get; init; }
-    
+
     public int UserId { get; init; }
-    
+
     public DateTime? Date { get; init; }
-    
+
     public bool? Completed { get; init; }
 }
 
@@ -34,22 +34,15 @@ internal sealed class UpdateMealCommandHandler(IAppDbContext db) : IRequestHandl
         {
             // TODO: handle unauthorized
         }
-        
+
         var oldMeal = (Meal)meal.Clone();
-        
+
         // TODO: find better way to write this
-        if (request.Date is not null)
-        {
-            meal.Date = request.Date.Value;
-        }
-        
-        if (request.Completed is not null)
-        {
-            meal.Completed = request.Completed.Value;
-        }
-        
+        if (request.Date is not null) meal.Date = request.Date.Value;
+        if (request.Completed is not null) meal.Completed = request.Completed.Value;
+
         meal.AddDomainEvent(new MealUpdatedEvent(oldMeal, meal));
-        
+
         await db.SaveChangesAsync(cancellationToken);
     }
 }
