@@ -1,7 +1,7 @@
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace Recipes.WebApi.Swagger;
+namespace Recipes.WebApi.Swagger.Filters;
 
 internal sealed class AddLocationHeaderToPostResponseFilter : IOperationFilter
 {

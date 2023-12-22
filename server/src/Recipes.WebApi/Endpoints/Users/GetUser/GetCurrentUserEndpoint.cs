@@ -1,4 +1,6 @@
 using Recipes.Application.Users.Queries.GetUser;
+using Recipes.WebApi.Infrastructure.Attributes;
+using Recipes.WebApi.Infrastructure.Interfaces;
 
 namespace Recipes.WebApi.Endpoints.Users.GetUser;
 

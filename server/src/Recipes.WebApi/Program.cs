@@ -3,6 +3,7 @@ using Microsoft.Extensions.Hosting;
 using Recipes.WebApi.Swagger;
 using Recipes.Infrastructure;
 using Recipes.Application;
+using Recipes.WebApi.Infrastructure.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 

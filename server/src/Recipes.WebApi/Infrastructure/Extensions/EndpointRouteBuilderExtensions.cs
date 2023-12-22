@@ -2,8 +2,9 @@ using System.Linq.Expressions;
 using System.Reflection;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
+using Recipes.WebApi.Infrastructure.Attributes;
 
-namespace Recipes.WebApi.Infrastructure;
+namespace Recipes.WebApi.Infrastructure.Extensions;
 
 internal static class EndpointRouteBuilderExtensions
 {
@@ -21,29 +22,29 @@ internal static class EndpointRouteBuilderExtensions
             throw new InvalidOperationException(
                 $"Unable to find any method with the '{nameof(ApiEndpointHandlerAttribute)}' attribute in the '{endpoint.Name}' type.");
         }
-        
+
         if (methods.Count > 1)
         {
             throw new InvalidOperationException(
                 $"Found more than one method with the '{nameof(ApiEndpointHandlerAttribute)}' attribute in the '{endpoint.Name}' type.");
         }
-        
+
         var method = methods.Single();
-        
+
         if (method.ReturnType != typeof(Task<IResult>))
         {
             throw new InvalidOperationException(
                 $"The '{method.Name}' method in the '{endpoint.Name}' type must return a '{typeof(Task<IResult>).Name}' type.");
         }
-        
+
         var constructorParams = endpoint
             .GetConstructors().Single()
             .GetParameters()
             .Select(parameter => serviceProvider.GetRequiredService(parameter.ParameterType))
             .ToArray();
-        
+
         instance = Activator.CreateInstance(endpoint, constructorParams)!;
-        
+
         var route = endpoint.GetCustomAttribute<ApiEndpointAttribute>()!.Route;
         var pattern = $"{route}";
 
@@ -52,9 +53,9 @@ internal static class EndpointRouteBuilderExtensions
             .Select(a => a.GetType())
             .Distinct()
             .Single();
-        
+
         var handlerDelegate = method.CreateDelegate(instance);
-        
+
         var builder = apiAttributeType switch
         {
             _ when apiAttributeType == typeof(ApiEndpointGetAttribute) =>
@@ -72,7 +73,7 @@ internal static class EndpointRouteBuilderExtensions
 
         return builder.RequireAuthorization();
     }
-    
+
     private static Delegate CreateDelegate(this MethodInfo method, object instance)
     {
         return method.CreateDelegate(Expression.GetDelegateType(

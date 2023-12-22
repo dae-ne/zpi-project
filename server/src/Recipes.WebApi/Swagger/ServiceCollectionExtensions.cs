@@ -1,5 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
+using Recipes.WebApi.Swagger.Filters;
 
 namespace Recipes.WebApi.Swagger;
 
@@ -20,8 +21,8 @@ internal static class ServiceCollectionExtensions
                 Name = "Authorization",
                 Type = SecuritySchemeType.ApiKey
             });
-            options.DocInclusionPredicate(AccountEndpointsHelper.IsEndpointValid);
-            options.CustomOperationIds(OperationIdHelper.GetOperationId);
+            options.DocInclusionPredicate(SwaggerEndpointsConfigHelper.IsEndpointValid);
+            options.CustomOperationIds(SwaggerEndpointsConfigHelper.GetOperationId);
             // options.OperationFilter<ExcludeTwoFactorAuthPropertiesFilter>();
             options.OperationFilter<AddLocationHeaderToPostResponseFilter>();
             options.AddSecurityRequirement(new OpenApiSecurityRequirement

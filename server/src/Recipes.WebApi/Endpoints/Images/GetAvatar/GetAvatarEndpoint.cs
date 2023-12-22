@@ -1,4 +1,6 @@
 using Recipes.Application.Images.Queries.GetAvatar;
+using Recipes.WebApi.Infrastructure.Attributes;
+using Recipes.WebApi.Infrastructure.Interfaces;
 
 namespace Recipes.WebApi.Endpoints.Images.GetAvatar;
 

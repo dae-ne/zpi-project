@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.HttpLogging;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Recipes.WebApi.Infrastructure;
+namespace Recipes.WebApi.Infrastructure.Extensions;
 
 internal static class ServiceCollectionExtensions
 {

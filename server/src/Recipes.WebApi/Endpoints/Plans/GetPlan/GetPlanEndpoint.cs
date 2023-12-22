@@ -1,4 +1,6 @@
 using Recipes.Application.Plans.Queries.GetPlan;
+using Recipes.WebApi.Infrastructure.Attributes;
+using Recipes.WebApi.Infrastructure.Interfaces;
 
 namespace Recipes.WebApi.Endpoints.Plans.GetPlan;
 

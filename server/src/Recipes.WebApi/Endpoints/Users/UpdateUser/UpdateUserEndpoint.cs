@@ -1,3 +1,6 @@
+using Recipes.WebApi.Infrastructure.Attributes;
+using Recipes.WebApi.Infrastructure.Interfaces;
+
 namespace Recipes.WebApi.Endpoints.Users.UpdateUser;
 
 [ApiEndpointPut("/api/users/{userId}")]

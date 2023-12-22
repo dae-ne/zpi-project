@@ -1,4 +1,6 @@
 using Recipes.Application.Meals.Commands.RemoveMeal;
+using Recipes.WebApi.Infrastructure.Attributes;
+using Recipes.WebApi.Infrastructure.Interfaces;
 
 namespace Recipes.WebApi.Endpoints.Meals.RemoveMeal;
 
