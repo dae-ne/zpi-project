@@ -13,7 +13,8 @@ internal static class ServiceCollectionExtensions
             {
                 builder.AllowAnyOrigin()
                     .AllowAnyHeader()
-                    .AllowAnyMethod();
+                    .AllowAnyMethod()
+                    .WithExposedHeaders("Location");
             });
         });
 

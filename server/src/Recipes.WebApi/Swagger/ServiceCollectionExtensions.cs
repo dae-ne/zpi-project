@@ -23,6 +23,7 @@ internal static class ServiceCollectionExtensions
             options.DocInclusionPredicate(AccountEndpointsHelper.IsEndpointValid);
             options.CustomOperationIds(OperationIdHelper.GetOperationId);
             // options.OperationFilter<ExcludeTwoFactorAuthPropertiesFilter>();
+            options.OperationFilter<AddLocationHeaderToPostResponseFilter>();
             options.AddSecurityRequirement(new OpenApiSecurityRequirement
             {
                 {
