@@ -1,4 +1,3 @@
-using Recipes.Application.Plans.Queries.GetPlans;
 using Recipes.WebApi.Infrastructure.Attributes;
 using Recipes.WebApi.Infrastructure.Interfaces;
 

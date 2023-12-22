@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Http;
-using Recipes.WebApi.Infrastructure;
 using Recipes.WebApi.Infrastructure.Attributes;
 using Recipes.WebApi.Infrastructure.Interfaces;
 

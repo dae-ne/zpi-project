@@ -1,4 +1,3 @@
-using Recipes.Application.Meals.Queries.GetMeals;
 using Recipes.WebApi.Infrastructure.Attributes;
 using Recipes.WebApi.Infrastructure.Interfaces;
 
