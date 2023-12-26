@@ -1,4 +1,6 @@
 using Recipes.Application.Images.Queries.GetAvatar;
+using Recipes.WebApi.Infrastructure.Attributes;
+using Recipes.WebApi.Infrastructure.Interfaces;
 
 namespace Recipes.WebApi.Endpoints.Images.GetAvatar;
 
@@ -8,8 +10,9 @@ public sealed class GetAvatarEndpoint(IMediator mediator) : IConfigurableApiEndp
     public void Configure(RouteHandlerBuilder builder) => builder
         .WithTags("Images")
         .WithName("getAvatar")
+        .AllowAnonymous()
         .Produces<byte[]>(200, "image/png", "image/jpeg", "image/gif", "application/octet-stream");
-    
+
     [ApiEndpointHandler]
     public async Task<IResult> HandleAsync(string fileName)
     {
