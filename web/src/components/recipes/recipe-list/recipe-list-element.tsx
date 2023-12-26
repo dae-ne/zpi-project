@@ -4,14 +4,15 @@ import { GetRecipeResponse, GetRecipeTagResponse } from "../../../sdk"
 
 interface RecipeListElementInterface {
     data: GetRecipeResponse,
+    isOutlined?: boolean,
     onTitleClick: (recipeId: number) => void
 }
 const MAX_DESCRIPTION_LENGTH: number = 250
-const RecipeListElement = ({ data, onTitleClick }: RecipeListElementInterface) => {
+const RecipeListElement = ({ data, onTitleClick, isOutlined }: RecipeListElementInterface) => {
 
 
     return (
-        <Box height={220} className="recipe-list-item">
+        <Box height={220} className="recipe-list-item" sx={{ border: isOutlined ? "2px #50C655 solid" : "none" }}>
 
             <Box width={600} className="recipe-list-item-image">
                 <img src={data.imageUrl || "/static/images/empty-image.png"} />

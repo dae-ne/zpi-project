@@ -1,21 +1,25 @@
 import React, { useEffect, useState } from "react"
 import RecipeListHeader from "./recipe-list-header"
 import RecipeListContent from "./recipe-list-content"
+import { RecipesService, GetRecipesResponse, GetRecipeResponse, DifficultyLevel } from "../../../sdk"
+import { RecipeListMode } from "../../../enums/recipe"
 import "./recipe-list.scss"
-import { RecipesService, GetRecipesResponse, GetRecipeResponse, GetRecipeTagResponse, DifficultyLevel } from "../../../sdk"
-import { getDifficultyNameByNumber } from "../../../sdk/models/DifficultyLevel"
 
-const RecipeList = () => {
+interface RecipeListInterface {
+    mode: RecipeListMode,
+    onAccept?: (value: Date, recipe: GetRecipeResponse) => void
+}
+const RecipeList = ({ mode, onAccept }: RecipeListInterface) => {
     const [recipes, setRecipes] = useState<Array<GetRecipeResponse> | null>(null)
     const [displayRecipes, setDisplayRecipes] = useState<Array<GetRecipeResponse> | null>(null)
     const [tags, setTags] = useState<Array<string> | null>(null)
+    const [selectedRecipe, setSelectedRecipe] = useState<GetRecipeResponse | null>(null)
 
     const handleSearchData = (searchValue: string) => {
         setDisplayRecipes(filterByName(searchValue))
     }
 
     const handleDifficultyLevel = (levels: DifficultyLevel[] | undefined) => {
-        console.log(levels)
         setDisplayRecipes(filterByDifficultyLevel(levels))
     }
 
@@ -31,6 +35,14 @@ const RecipeList = () => {
         if (!tags)
             return;
         setDisplayRecipes(filterByTag(tags))
+    }
+
+    const handleSelectRecipe = (time: Date) => {
+        console.log(time)
+        if (!onAccept || !selectedRecipe)
+            return;
+
+        onAccept(time, selectedRecipe)
     }
 
     const filterByDifficultyLevel = (levels: DifficultyLevel[] | undefined): Array<GetRecipeResponse> | null => {
@@ -125,14 +137,18 @@ const RecipeList = () => {
     }, [])
     return (
         <>
-            <RecipeListHeader onSearchSubmit={handleSearchData}
+            <RecipeListHeader
+                onSearchSubmit={handleSearchData}
+                onSelectRecipeSubmit={handleSelectRecipe}
+                mode={mode}
             />
             <RecipeListContent tags={tags}
                 data={displayRecipes}
                 onTagSelectionChange={handleTags}
                 onDifficultyLevelChange={handleDifficultyLevel}
                 onTimeRangeChange={handleTime}
-                onEnergyRangeChange={handleEnergy} />
+                onEnergyRangeChange={handleEnergy}
+                onRecipeSelect={setSelectedRecipe} />
         </>
     )
 }

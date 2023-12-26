@@ -12,7 +12,8 @@ interface RecipeListContentInterface {
     onTagSelectionChange: (value: string[] | undefined) => void,
     onDifficultyLevelChange: (value: DifficultyLevel[] | undefined) => void,
     onTimeRangeChange: (min: number, max: number) => void,
-    onEnergyRangeChange: (min: number, max: number) => void
+    onEnergyRangeChange: (min: number, max: number) => void,
+    onRecipeSelect?: (value: GetRecipeResponse) => void
 }
 
 const RecipeListContent = (props: RecipeListContentInterface) => {
@@ -23,7 +24,9 @@ const RecipeListContent = (props: RecipeListContentInterface) => {
         navigate(RECIPE_PREVIEW_RAW + recipeId)
     }
 
+    const handleRecipeSelect = (index: number) => {
 
+    }
 
     return (
         <Grid container sx={{ mt: 1 }}>
@@ -37,7 +40,7 @@ const RecipeListContent = (props: RecipeListContentInterface) => {
                 />
             </Grid>
 
-            <Grid item xs={9} >
+            <Grid item xs={9}>
                 {
                     data?.sort((a, b) => (b.id || 0) - (a.id || 0))
                         .map((recipe: GetRecipeResponse, index: number) =>
@@ -45,6 +48,7 @@ const RecipeListContent = (props: RecipeListContentInterface) => {
                                 key={"recipe" + index}
                                 data={recipe}
                                 onTitleClick={handleListClick}
+                                isOutlined={false}
                             />
                         )
                 }
