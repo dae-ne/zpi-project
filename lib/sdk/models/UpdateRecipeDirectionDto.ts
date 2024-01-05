@@ -3,7 +3,8 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type GetRecipeIngredientResponse = {
-  id?: number;
-  name?: string | null;
+export type UpdateRecipeDirectionDto = {
+  id?: number | null;
+  description?: string | null;
+  order?: number;
 };

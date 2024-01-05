@@ -130,7 +130,7 @@ const RecipeList = ({ mode, onAccept }: RecipeListInterface) => {
                 loadTags(result.data)
 
             })
-            .catch((err) => {
+            .catch(() => {
                 //  console.log(err)
             })
 

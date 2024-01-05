@@ -2,7 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { GetCurrentUserResponse } from '../models/GetCurrentUserResponse';
+import type { GetUserResponse } from '../models/GetUserResponse';
 import type { UpdateUserRequest } from '../models/UpdateUserRequest';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
@@ -12,23 +12,26 @@ import { request as __request } from '../core/request';
 export class UsersService {
 
   /**
-   * @param id 
+   * @param userId 
    * @param requestBody 
    * @returns any Success
    * @throws ApiError
    */
   public static updateUser(
-id: number,
+userId: number,
 requestBody: UpdateUserRequest,
 ): CancelablePromise<any> {
     return __request(OpenAPI, {
       method: 'PUT',
-      url: '/api/users/{id}',
+      url: '/api/users/{userId}',
       path: {
-        'id': id,
+        'userId': userId,
       },
       body: requestBody,
       mediaType: 'application/json',
+      errors: {
+        403: `Forbidden`,
+      },
     });
   }
 
@@ -46,14 +49,37 @@ userId: number,
       path: {
         'userId': userId,
       },
+      errors: {
+        403: `Forbidden`,
+      },
     });
   }
 
   /**
-   * @returns GetCurrentUserResponse Success
+   * @param userId 
+   * @returns GetUserResponse Success
    * @throws ApiError
    */
-  public static getCurrentUser(): CancelablePromise<GetCurrentUserResponse> {
+  public static getUser(
+userId: number,
+): CancelablePromise<GetUserResponse> {
+    return __request(OpenAPI, {
+      method: 'GET',
+      url: '/api/users/{userId}',
+      path: {
+        'userId': userId,
+      },
+      errors: {
+        403: `Forbidden`,
+      },
+    });
+  }
+
+  /**
+   * @returns GetUserResponse Success
+   * @throws ApiError
+   */
+  public static getCurrentUser(): CancelablePromise<GetUserResponse> {
     return __request(OpenAPI, {
       method: 'GET',
       url: '/api/users/me',

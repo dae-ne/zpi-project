@@ -69,29 +69,39 @@ mealId: number,
   }
 
   /**
+   * @param from 
+   * @param to 
    * @returns GetMealsResponse Success
    * @throws ApiError
    */
-  public static getMeals(): CancelablePromise<GetMealsResponse> {
+  public static getMeals(
+from?: string,
+to?: string,
+): CancelablePromise<GetMealsResponse> {
     return __request(OpenAPI, {
       method: 'GET',
       url: '/api/meals',
+      query: {
+        'from': from,
+        'to': to,
+      },
     });
   }
 
   /**
    * @param requestBody 
-   * @returns any Created
+   * @returns string Created
    * @throws ApiError
    */
   public static addMeal(
 requestBody: AddMealRequest,
-): CancelablePromise<any> {
+): CancelablePromise<string> {
     return __request(OpenAPI, {
       method: 'POST',
       url: '/api/meals',
       body: requestBody,
       mediaType: 'application/json',
+      responseHeader: 'location',
     });
   }
 

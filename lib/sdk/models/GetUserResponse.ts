@@ -3,4 +3,9 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type HttpValidationProblemDetails = Record<string, any>;
+export type GetUserResponse = {
+  id?: number;
+  userName?: string | null;
+  email?: string | null;
+  avatarUrl?: string | null;
+};

@@ -3,7 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type GetRecipeTagResponse = {
-  id?: number;
+export type UpdateRecipeIngredientDto = {
+  id?: number | null;
   name?: string | null;
 };

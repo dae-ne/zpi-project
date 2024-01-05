@@ -40,7 +40,6 @@ const RecipePreview = () => {
 
         RecipesService.getRecipe(recipeId)
             .then((response: GetRecipeResponse) => {
-                console.log(response)
                 setTitle(response.title);
                 setDescription(response.description);
                 setDifficultyLevel(response.difficultyLevel);
@@ -51,7 +50,7 @@ const RecipePreview = () => {
                 setDirections(response.directions);
                 setTags(response.tags);
             })
-            .catch((err) => {
+            .catch(() => {
                 //  console.log(err)
             })
     }, [])
@@ -71,7 +70,7 @@ const RecipePreview = () => {
                 />
             </Grid>
 
-            <Grid item xs={3.8} >
+            <Grid item xs={3.8}>
                 <RecipePreviewStats
                     difficultyLevel={difficultyLevel || DifficultyLevel._0}
                     time={time || 0}

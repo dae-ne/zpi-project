@@ -14,7 +14,6 @@ export type { CreateRecipeIngredientDto } from './models/CreateRecipeIngredientD
 export type { CreateRecipeRequest } from './models/CreateRecipeRequest';
 export type { CreateRecipeTagDto } from './models/CreateRecipeTagDto';
 export { DifficultyLevel } from './models/DifficultyLevel';
-export type { GetCurrentUserResponse } from './models/GetCurrentUserResponse';
 export type { GetMealResponse } from './models/GetMealResponse';
 export type { GetMealsResponse } from './models/GetMealsResponse';
 export type { GetPlanResponse } from './models/GetPlanResponse';
@@ -24,6 +23,7 @@ export type { GetRecipeIngredientResponse } from './models/GetRecipeIngredientRe
 export type { GetRecipeResponse } from './models/GetRecipeResponse';
 export type { GetRecipesResponse } from './models/GetRecipesResponse';
 export type { GetRecipeTagResponse } from './models/GetRecipeTagResponse';
+export type { GetUserResponse } from './models/GetUserResponse';
 export type { HttpValidationProblemDetails } from './models/HttpValidationProblemDetails';
 export type { InfoRequest } from './models/InfoRequest';
 export type { InfoResponse } from './models/InfoResponse';
@@ -32,6 +32,10 @@ export type { RefreshRequest } from './models/RefreshRequest';
 export type { RegisterRequest } from './models/RegisterRequest';
 export type { ResendConfirmationEmailRequest } from './models/ResendConfirmationEmailRequest';
 export type { UpdateMealRequest } from './models/UpdateMealRequest';
+export type { UpdateRecipeDirectionDto } from './models/UpdateRecipeDirectionDto';
+export type { UpdateRecipeIngredientDto } from './models/UpdateRecipeIngredientDto';
+export type { UpdateRecipeRequest } from './models/UpdateRecipeRequest';
+export type { UpdateRecipeTagDto } from './models/UpdateRecipeTagDto';
 export type { UpdateUserRequest } from './models/UpdateUserRequest';
 
 export { AccountService } from './services/AccountService';

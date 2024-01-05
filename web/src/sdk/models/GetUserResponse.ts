@@ -3,6 +3,9 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type RefreshRequest = {
-  refreshToken?: string | null;
+export type GetUserResponse = {
+  id?: number;
+  userName?: string | null;
+  email?: string | null;
+  avatarUrl?: string | null;
 };

@@ -10,7 +10,8 @@ export const ROOT_DEFAULT: string = "*";
 
 export const RECIPE_LIST: string = "/recipe/list";
 export const RECIPE_NEW: string = "/recipe/new";
-export const RECIPE_EDIT: string = "/recipe/edit";
+export const RECIPE_EDIT: string = "/recipe/edit/:id";
+export const RECIPE_EDIT_RAW: string = "/recipe/edit/";
 export const RECIPE_PREVIEW: string = "/recipe/preview/:id";
 export const RECIPE_PREVIEW_RAW: string = "/recipe/preview/";
 export const PLAN_LIST: string = "/plan/list";

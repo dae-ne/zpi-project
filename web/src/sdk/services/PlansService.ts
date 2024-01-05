@@ -29,13 +29,22 @@ day: string,
   }
 
   /**
+   * @param from 
+   * @param to 
    * @returns GetPlansResponse Success
    * @throws ApiError
    */
-  public static getPlans(): CancelablePromise<GetPlansResponse> {
+  public static getPlans(
+from?: string,
+to?: string,
+): CancelablePromise<GetPlansResponse> {
     return __request(OpenAPI, {
       method: 'GET',
       url: '/api/plans',
+      query: {
+        'from': from,
+        'to': to,
+      },
     });
   }
 

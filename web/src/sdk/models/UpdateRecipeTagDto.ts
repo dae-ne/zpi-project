@@ -3,7 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type AddMealRequest = {
-  recipeId?: number;
-  date?: string | null;
+export type UpdateRecipeTagDto = {
+  id?: number | null;
+  name?: string | null;
 };

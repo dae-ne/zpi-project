@@ -32,14 +32,13 @@ const DEFAULT_DIFFICULTIES: Array<string> = [
 ]
 
 const RecipeEditStats = (props: RecipeEditStatsInterface) => {
-    const [tag, setTag] = useState<string>("");
-    const [image, setImage] = useState<File | null>(null);
-    const [imagePreview, setImagePreview] = useState<string>("");
-    const [difficultyLevelName, setDifficultyLevelName] = useState<string>("");
 
     const { difficultyLevel, imageUrl, time, calories, tags,
         onDifficultyLevelChange, onImageChange, onTimeChange, onCaloriesChange, onTagsChange } = props;
 
+    const [tag, setTag] = useState<string>("");
+    const [imagePreview, setImagePreview] = useState<string>("");
+    const [difficultyLevelName, setDifficultyLevelName] = useState<string>("");
 
     const handleDifficultyChange = (value: string) => {
         setDifficultyLevelName(value)
@@ -54,7 +53,6 @@ const RecipeEditStats = (props: RecipeEditStatsInterface) => {
         onTagsChange(tagTmp);
         setTag("")
     }
-
 
     const handleCapture = ({ target }: any) => {
         const file: File | null = target.files[0]
@@ -74,6 +72,10 @@ const RecipeEditStats = (props: RecipeEditStatsInterface) => {
     useEffect(() => {
         setDifficultyLevelName(getDifficultyName(difficultyLevel))
     }, [])
+
+    useEffect(() => {
+        setImagePreview(imageUrl)
+    }, [imageUrl])
 
     return (
         <div className="recipe-stat-info">

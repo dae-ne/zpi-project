@@ -4,7 +4,7 @@
 /* eslint-disable */
 
 export type UpdateMealRequest = {
-  recipeId?: number | null;
+  recipeId?: number;
   date?: string | null;
-  completed?: boolean | null;
+  completed?: boolean;
 };

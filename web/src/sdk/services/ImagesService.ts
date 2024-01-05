@@ -14,8 +14,8 @@ export class ImagesService {
    * @throws ApiError
    */
   public static removeFoodImage(
-fileName: string,
-): CancelablePromise<any> {
+    fileName: string,
+  ): CancelablePromise<any> {
     return __request(OpenAPI, {
       method: 'DELETE',
       url: '/images/food/{fileName}',
@@ -31,8 +31,8 @@ fileName: string,
    * @throws ApiError
    */
   public static getFoodImage(
-fileName: string,
-): CancelablePromise<string> {
+    fileName: string,
+  ): CancelablePromise<string> {
     return __request(OpenAPI, {
       method: 'GET',
       url: '/images/food/{fileName}',
@@ -48,8 +48,8 @@ fileName: string,
    * @throws ApiError
    */
   public static removeAvatar(
-fileName: string,
-): CancelablePromise<any> {
+    fileName: string,
+  ): CancelablePromise<any> {
     return __request(OpenAPI, {
       method: 'DELETE',
       url: '/images/avatar/{fileName}',
@@ -65,8 +65,8 @@ fileName: string,
    * @throws ApiError
    */
   public static getAvatar(
-fileName: string,
-): CancelablePromise<string> {
+    fileName: string,
+  ): CancelablePromise<string> {
     return __request(OpenAPI, {
       method: 'GET',
       url: '/images/avatar/{fileName}',
@@ -78,37 +78,39 @@ fileName: string,
 
   /**
    * @param formData 
-   * @returns any Created
+   * @returns string Created
    * @throws ApiError
    */
   public static addFoodImage(
-formData?: {
-file: Blob;
-},
-): CancelablePromise<any> {
+    formData?: {
+      file: Blob;
+    },
+  ): CancelablePromise<string> {
     return __request(OpenAPI, {
       method: 'POST',
       url: '/images/food',
       formData: formData,
       mediaType: 'multipart/form-data',
+      responseHeader: 'location',
     });
   }
 
   /**
    * @param formData 
-   * @returns any Created
+   * @returns string Created
    * @throws ApiError
    */
   public static addAvatar(
-formData?: {
-file: Blob;
-},
-): CancelablePromise<any> {
+    formData?: {
+      file: Blob;
+    },
+  ): CancelablePromise<string> {
     return __request(OpenAPI, {
       method: 'POST',
       url: '/images/avatar',
       formData: formData,
       mediaType: 'multipart/form-data',
+      responseHeader: 'location',
     });
   }
 

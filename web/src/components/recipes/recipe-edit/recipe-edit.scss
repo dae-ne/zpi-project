@@ -14,6 +14,13 @@
 
 .recipe-edit-container {
     width: 100%;
+
+    .recipe-edit-direction-add {
+        position: relative;
+        top: -42px;
+        left: calc(100% - 42px);
+        border-radius: $small-border-radius 0 $small-border-radius 0;
+    }
 }
 
 .recipe-edit-ingredients-add {
@@ -27,13 +34,6 @@
     .recipe-edit-ingredients-button {
         border-radius: 0 $small-border-radius $small-border-radius 0;
     }
-}
-
-.recipe-edit-direction-add {
-    position: relative;
-    top: -42px;
-    left: calc(100% - 42px);
-    border-radius: $small-border-radius 0 $small-border-radius 0;
 }
 
 .recipe-ingridients-edit-list {
@@ -79,7 +79,7 @@
     .recipe-edit-image-preview {
         width: 100%;
         height: 100%;
-        border-radius: $small-border-radius;
+        border-radius: $small-border-radius $small-border-radius 0 0;
         object-fit: cover;
     }
 
