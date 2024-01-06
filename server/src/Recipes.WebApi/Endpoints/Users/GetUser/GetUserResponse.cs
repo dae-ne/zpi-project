@@ -1,6 +1,6 @@
-namespace Recipes.WebApi.Endpoints.Users.GetCurrentUser;
+namespace Recipes.WebApi.Endpoints.Users.GetUser;
 
-public sealed class GetCurrentUserResponse
+public sealed class GetUserResponse
 {
     public int Id { get; init; }
     

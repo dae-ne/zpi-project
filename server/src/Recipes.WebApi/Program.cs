@@ -3,6 +3,7 @@ using Microsoft.Extensions.Hosting;
 using Recipes.WebApi.Swagger;
 using Recipes.Infrastructure;
 using Recipes.Application;
+using Recipes.WebApi.Infrastructure.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,13 +13,20 @@ builder.Services
     .AddHttpContextAccessor()
     .AddEndpointsApiExplorer()
     .AddSwaggerGenerator()
-    .AddCorsConfig();
+    .AddCorsConfig()
+#if DEBUG
+    .AddHttpLogging(fullLogging: true);
+#else
+    .AddHttpLogging();
+#endif
 
 builder.Services
     .AddApplication()
+#if DEBUG
+    .AddInfrastructure(builder.Configuration, logSensitiveData: true);
+#else
     .AddInfrastructure(builder.Configuration);
-
-var serviceProvider = builder.Services.BuildServiceProvider();
+#endif
 
 var app = builder.Build();
 
@@ -29,10 +37,11 @@ if (app.Environment.IsDevelopment() ||
     app.UseSwaggerUI();
 }
 
+app.UseHttpLogging();
 app.UseHttpsRedirection();
 app.UseCors();
 app.UseAuthentication();
 app.UseAuthorization();
-app.UseEndpoints(serviceProvider);
+app.UseEndpoints();
 
 app.Run();

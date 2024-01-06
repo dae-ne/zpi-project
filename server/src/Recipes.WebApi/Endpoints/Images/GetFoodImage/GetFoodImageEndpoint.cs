@@ -1,4 +1,6 @@
 using Recipes.Application.Images.Queries.GetFoodImage;
+using Recipes.WebApi.Infrastructure.Attributes;
+using Recipes.WebApi.Infrastructure.Interfaces;
 
 namespace Recipes.WebApi.Endpoints.Images.GetFoodImage;
 
@@ -8,6 +10,7 @@ public sealed class GetFoodImageEndpoint(IMediator mediator) : IConfigurableApiE
     public void Configure(RouteHandlerBuilder builder) => builder
         .WithTags("Images")
         .WithName("getFoodImage")
+        .AllowAnonymous()
         .Produces<byte[]>(200, "image/png", "image/jpeg", "image/gif", "application/octet-stream");
 
     [ApiEndpointHandler]

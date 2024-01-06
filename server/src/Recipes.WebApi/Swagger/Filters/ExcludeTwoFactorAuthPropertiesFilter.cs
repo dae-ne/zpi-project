@@ -1,7 +1,7 @@
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace Recipes.WebApi.Swagger;
+namespace Recipes.WebApi.Swagger.Filters;
 
 // TODO: it's not working
 internal sealed class ExcludeTwoFactorAuthPropertiesFilter : IOperationFilter

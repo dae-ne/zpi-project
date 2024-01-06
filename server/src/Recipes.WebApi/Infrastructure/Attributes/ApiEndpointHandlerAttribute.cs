@@ -1,4 +1,4 @@
-namespace Recipes.WebApi.Infrastructure;
+namespace Recipes.WebApi.Infrastructure.Attributes;
 
 [AttributeUsage(AttributeTargets.Method)]
 [MeansImplicitUse]

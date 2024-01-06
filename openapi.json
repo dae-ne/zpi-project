@@ -422,7 +422,16 @@
         },
         "responses": {
           "201": {
-            "description": "Created"
+            "description": "Created",
+            "headers": {
+              "location": {
+                "description": "The URL of the newly created resource",
+                "schema": {
+                  "type": "string",
+                  "format": "uri"
+                }
+              }
+            }
           }
         }
       }
@@ -458,7 +467,16 @@
         },
         "responses": {
           "201": {
-            "description": "Created"
+            "description": "Created",
+            "headers": {
+              "location": {
+                "description": "The URL of the newly created resource",
+                "schema": {
+                  "type": "string",
+                  "format": "uri"
+                }
+              }
+            }
           }
         }
       }
@@ -557,6 +575,24 @@
           "Meals"
         ],
         "operationId": "getMeals",
+        "parameters": [
+          {
+            "name": "from",
+            "in": "query",
+            "style": "form",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "to",
+            "in": "query",
+            "style": "form",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "Success",
@@ -587,7 +623,16 @@
         },
         "responses": {
           "201": {
-            "description": "Created"
+            "description": "Created",
+            "headers": {
+              "location": {
+                "description": "The URL of the newly created resource",
+                "schema": {
+                  "type": "string",
+                  "format": "uri"
+                }
+              }
+            }
           }
         }
       }
@@ -629,6 +674,24 @@
           "Plans"
         ],
         "operationId": "getPlans",
+        "parameters": [
+          {
+            "name": "from",
+            "in": "query",
+            "style": "form",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "to",
+            "in": "query",
+            "style": "form",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "Success",
@@ -644,6 +707,39 @@
       }
     },
     "/api/recipes/{recipeId}": {
+      "put": {
+        "tags": [
+          "Recipes"
+        ],
+        "operationId": "updateRecipe",
+        "parameters": [
+          {
+            "name": "recipeId",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateRecipeRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
       "delete": {
         "tags": [
           "Recipes"
@@ -734,12 +830,21 @@
         },
         "responses": {
           "201": {
-            "description": "Created"
+            "description": "Created",
+            "headers": {
+              "location": {
+                "description": "The URL of the newly created resource",
+                "schema": {
+                  "type": "string",
+                  "format": "uri"
+                }
+              }
+            }
           }
         }
       }
     },
-    "/api/users/{id}": {
+    "/api/users/{userId}": {
       "put": {
         "tags": [
           "Users"
@@ -747,7 +852,7 @@
         "operationId": "updateUser",
         "parameters": [
           {
-            "name": "id",
+            "name": "userId",
             "in": "path",
             "required": true,
             "style": "simple",
@@ -770,11 +875,12 @@
         "responses": {
           "200": {
             "description": "Success"
+          },
+          "403": {
+            "description": "Forbidden"
           }
         }
-      }
-    },
-    "/api/users/{userId}": {
+      },
       "delete": {
         "tags": [
           "Users"
@@ -795,6 +901,42 @@
         "responses": {
           "200": {
             "description": "Success"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "operationId": "getUser",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetUserResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden"
           }
         }
       }
@@ -811,7 +953,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/GetCurrentUserResponse"
+                  "$ref": "#/components/schemas/GetUserResponse"
                 }
               }
             }
@@ -961,28 +1103,6 @@
         ],
         "type": "integer",
         "format": "int32"
-      },
-      "GetCurrentUserResponse": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "userName": {
-            "type": "string",
-            "nullable": true
-          },
-          "email": {
-            "type": "string",
-            "nullable": true
-          },
-          "avatarUrl": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
       },
       "GetMealResponse": {
         "type": "object",
@@ -1188,6 +1308,28 @@
         },
         "additionalProperties": false
       },
+      "GetUserResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "userName": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "avatarUrl": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "HttpValidationProblemDetails": {
         "type": "object",
         "properties": {
@@ -1317,15 +1459,116 @@
         "properties": {
           "recipeId": {
             "type": "integer",
-            "format": "int32",
-            "nullable": true
+            "format": "int32"
           },
           "date": {
             "type": "string",
             "nullable": true
           },
           "completed": {
-            "type": "boolean",
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateRecipeDirectionDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "order": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateRecipeIngredientDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateRecipeRequest": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "difficultyLevel": {
+            "$ref": "#/components/schemas/DifficultyLevel"
+          },
+          "imageUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "time": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "calories": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "ingredients": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UpdateRecipeIngredientDto"
+            },
+            "nullable": true
+          },
+          "directions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UpdateRecipeDirectionDto"
+            },
+            "nullable": true
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UpdateRecipeTagDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateRecipeTagDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
             "nullable": true
           }
         },

@@ -1,4 +1,5 @@
-using Recipes.Application.Meals.Queries.GetMeals;
+using Recipes.WebApi.Infrastructure.Attributes;
+using Recipes.WebApi.Infrastructure.Interfaces;
 
 namespace Recipes.WebApi.Endpoints.Meals.GetMeals;
 
@@ -9,12 +10,12 @@ public sealed class GetMealsEndpoint(IMediator mediator, CurrentUser currentUser
         .WithTags("Meals")
         .WithName("getMeals")
         .Produces<GetMealsResponse>(200, "application/json");
-    
+
     [ApiEndpointHandler]
-    public async Task<IResult> HandleAsync()
+    public async Task<IResult> HandleAsync([AsParameters] GetMealsQueryParams queryParams)
     {
         var userId = currentUser.GetId();
-        var query = new GetMealsQuery(userId);
+        var query = queryParams.ToQuery(userId);
         var meals = await mediator.Send(query);
         var dto = meals.ToDto();
         return Results.Ok(dto);

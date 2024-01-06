@@ -1,4 +1,5 @@
-using Recipes.Application.Plans.Queries.GetPlans;
+using Recipes.WebApi.Infrastructure.Attributes;
+using Recipes.WebApi.Infrastructure.Interfaces;
 
 namespace Recipes.WebApi.Endpoints.Plans.GetPlans;
 
@@ -11,10 +12,10 @@ public sealed class GetPlansEndpoint(IMediator mediator, CurrentUser currentUser
         .Produces<GetPlansResponse>(200, "application/json");
 
     [ApiEndpointHandler]
-    public async Task<IResult> HandleAsync()
+    public async Task<IResult> HandleAsync([AsParameters] GetPlansQueryParams queryParams)
     {
         var userId = currentUser.GetId();
-        var query = new GetPlansQuery { UserId = userId };
+        var query = queryParams.ToQuery(userId);
         var plans = await mediator.Send(query);
         var dto = plans.ToDto();
         return Results.Ok(dto);

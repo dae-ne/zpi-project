@@ -1,4 +1,6 @@
 using Recipes.Application.Recipes.Queries.GetRecipe;
+using Recipes.WebApi.Infrastructure.Attributes;
+using Recipes.WebApi.Infrastructure.Interfaces;
 
 namespace Recipes.WebApi.Endpoints.Recipes.GetRecipe;
 

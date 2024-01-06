@@ -6,7 +6,7 @@ internal static class UpdateUserMapper
 {
     public static UpdateUserCommand ToCommand(this UpdateUserRequest request, int id) => new()
     {
-        Id = id,
+        UserId = id,
         UserName = request.UserName,
         AvatarUrl = request.AvatarUrl
     };
