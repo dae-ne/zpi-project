@@ -1,7 +1,6 @@
+using Dietly.Application.Meals.Queries.GetMeal;
 using Dietly.WebApi.Infrastructure.Attributes;
 using Dietly.WebApi.Infrastructure.Interfaces;
-using Dietly.WebApi.Services;
-using Dietly.Application.Meals.Queries.GetMeal;
 
 namespace Dietly.WebApi.Endpoints.Meals.GetMeal;
 

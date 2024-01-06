@@ -4,7 +4,8 @@ using Microsoft.Extensions.Logging;
 namespace Dietly.Application.Common.Behaviors;
 
 public sealed class PerformanceBehavior<TRequest, TResponse>(ILogger<TRequest> logger)
-    : IPipelineBehavior<TRequest, TResponse> where TRequest : notnull
+    : IPipelineBehavior<TRequest, TResponse>
+    where TRequest : notnull
 {
     public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
     {
@@ -25,9 +26,7 @@ public sealed class PerformanceBehavior<TRequest, TResponse>(ILogger<TRequest> l
 
         var requestName = typeof(TRequest).Name;
 
-        logger.LogWarning(
-            "Long Running Request: {RequestName} ({ElapsedMilliseconds} ms) {@Request}",
-            requestName, elapsedMilliseconds, request);
+        logger.LogWarning("Long Running Request: {RequestName} ({ElapsedMilliseconds} ms) {@Request}", requestName, elapsedMilliseconds, request);
 
         return response;
     }

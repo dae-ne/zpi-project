@@ -12,7 +12,7 @@ public sealed class UpdateUserCommand : IRequest
 }
 
 [UsedImplicitly]
-internal sealed class UpdateUserCommandHandler(IUserService userService, IAvatarStorage avatarStorage) : IRequestHandler<UpdateUserCommand>
+internal sealed class UpdateUserCommandHandler(IUserService userService) : IRequestHandler<UpdateUserCommand>
 {
     public async Task Handle(UpdateUserCommand request, CancellationToken cancellationToken)
     {

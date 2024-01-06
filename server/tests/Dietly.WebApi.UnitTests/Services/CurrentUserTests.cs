@@ -1,8 +1,8 @@
 using System.Security.Authentication;
 using System.Security.Claims;
+using Dietly.WebApi.Services;
 using Microsoft.AspNetCore.Http;
 using Moq;
-using Dietly.WebApi.Services;
 
 namespace Dietly.WebApi.UnitTests.Services;
 

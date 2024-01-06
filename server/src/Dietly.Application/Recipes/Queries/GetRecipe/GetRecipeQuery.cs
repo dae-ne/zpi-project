@@ -21,11 +21,14 @@ internal sealed class GetRecipeQueryHandler(IAppDbContext db) : IRequestHandler<
             // TODO: handle not found
         }
 
+        // TODO: remove pragma
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
         if (recipe.UserId != request.UserId)
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
         {
             // TODO: handle unauthorized
         }
-        
+
         return recipe;
     }
 }

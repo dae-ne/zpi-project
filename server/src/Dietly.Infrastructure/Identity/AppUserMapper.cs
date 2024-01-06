@@ -7,8 +7,8 @@ public static class AppUserMapper
     public static User ToDomain(this AppUser appUser) => new()
     {
         Id = appUser.Id,
-        UserName = appUser.UserName ?? "",
-        Email = appUser.Email ?? "",
-        AvatarUrl = appUser.AvatarUrl ?? ""
+        UserName = appUser.UserName ?? string.Empty,
+        Email = appUser.Email ?? string.Empty,
+        AvatarUrl = appUser.AvatarUrl ?? string.Empty
     };
 }

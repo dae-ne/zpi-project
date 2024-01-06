@@ -1,6 +1,6 @@
-﻿using Dietly.Infrastructure.Identity;
+﻿using Dietly.Domain.Entities;
+using Dietly.Infrastructure.Identity;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Dietly.Domain.Entities;
 
 namespace Dietly.Infrastructure.Data.Configurations;
 

@@ -1,6 +1,6 @@
+using Dietly.Application.Images.Commands.AddAvatar;
 using Dietly.WebApi.Infrastructure.Attributes;
 using Dietly.WebApi.Infrastructure.Interfaces;
-using Dietly.Application.Images.Commands.AddAvatar;
 
 namespace Dietly.WebApi.Endpoints.Images.AddAvatar;
 

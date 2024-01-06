@@ -1,5 +1,5 @@
-using Microsoft.AspNetCore.Http;
 using Dietly.WebApi.Extensions;
+using Microsoft.AspNetCore.Http;
 
 namespace Dietly.WebApi.UnitTests.Extensions;
 

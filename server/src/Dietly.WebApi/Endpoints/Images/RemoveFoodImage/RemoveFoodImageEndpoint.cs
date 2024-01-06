@@ -1,6 +1,6 @@
+using Dietly.Application.Images.Commands.RemoveFoodImage;
 using Dietly.WebApi.Infrastructure.Attributes;
 using Dietly.WebApi.Infrastructure.Interfaces;
-using Dietly.Application.Images.Commands.RemoveFoodImage;
 
 namespace Dietly.WebApi.Endpoints.Images.RemoveFoodImage;
 

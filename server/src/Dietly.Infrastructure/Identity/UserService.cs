@@ -1,5 +1,5 @@
-using Dietly.Domain.Entities;
 using Dietly.Application.Common.Interfaces;
+using Dietly.Domain.Entities;
 using Dietly.Infrastructure.Data;
 
 namespace Dietly.Infrastructure.Identity;

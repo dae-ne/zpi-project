@@ -9,6 +9,6 @@ internal sealed class RemoveUserCommandHandler(IUserService userService) : IRequ
 {
     public async Task Handle(RemoveUserCommand request, CancellationToken cancellationToken)
     {
-        await userService.RemoveUserAsync(request.UserId, cancellationToken);    
+        await userService.RemoveUserAsync(request.UserId, cancellationToken);
     }
 }

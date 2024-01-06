@@ -1,6 +1,5 @@
 using Dietly.WebApi.Infrastructure.Attributes;
 using Dietly.WebApi.Infrastructure.Interfaces;
-using Dietly.WebApi.Services;
 
 namespace Dietly.WebApi.Endpoints.Users.UpdateUser;
 

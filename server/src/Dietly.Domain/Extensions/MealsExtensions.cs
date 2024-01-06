@@ -8,7 +8,7 @@ public static class MealsExtensions
     {
         return meals.ToDayPlans(day, day, userId).Single();
     }
-    
+
     public static IEnumerable<DayPlan> ToDayPlans(this IEnumerable<Meal> meals, DateOnly from, DateOnly to, int userId)
     {
         var mealList = meals
@@ -17,19 +17,19 @@ public static class MealsExtensions
             .Where(m => m.Date.Date >= from.ToDateTime(TimeOnly.MinValue) &&
                         m.Date.Date <= to.ToDateTime(TimeOnly.MaxValue))
             .ToList();
-        
+
         if (mealList.Count < 1)
         {
             return Enumerable.Empty<DayPlan>();
         }
-        
+
         var plans = mealList
             .GroupBy(m => DateOnly.FromDateTime(m.Date.Date))
             .Select(CreateDayPlanFromGroup);
 
         return plans;
     }
-    
+
     private static DayPlan CreateDayPlanFromGroup(IGrouping<DateOnly, Meal> group)
     {
         var totalCalories = group
@@ -37,7 +37,7 @@ public static class MealsExtensions
         var consumedCalories = group
             .Where(g => g.Completed)
             .Sum(m => m.Recipe.Calories);
-        
+
         return new DayPlan
         {
             Meals = group,

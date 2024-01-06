@@ -24,7 +24,7 @@ internal abstract class BlobStorageBaseClient(BlobServiceClient client, string c
         var blob = await GetBlobClientAsync(fileName, cancellationToken);
         await blob.DeleteIfExistsAsync(cancellationToken: cancellationToken);
     }
-    
+
     private async Task<BlobClient> GetBlobClientAsync(string fileName, CancellationToken cancellationToken)
     {
         var container = client.GetBlobContainerClient(containerName);

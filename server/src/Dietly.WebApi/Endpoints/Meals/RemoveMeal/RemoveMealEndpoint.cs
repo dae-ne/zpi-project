@@ -1,7 +1,6 @@
+using Dietly.Application.Meals.Commands.RemoveMeal;
 using Dietly.WebApi.Infrastructure.Attributes;
 using Dietly.WebApi.Infrastructure.Interfaces;
-using Dietly.WebApi.Services;
-using Dietly.Application.Meals.Commands.RemoveMeal;
 
 namespace Dietly.WebApi.Endpoints.Meals.RemoveMeal;
 

@@ -1,15 +1,15 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore.Diagnostics;
-using Microsoft.Extensions.Azure;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Dietly.Application.Common.Interfaces;
+﻿using Dietly.Application.Common.Interfaces;
 using Dietly.Infrastructure.Blob;
 using Dietly.Infrastructure.Data;
 using Dietly.Infrastructure.Data.Interceptors;
 using Dietly.Infrastructure.Email;
 using Dietly.Infrastructure.Identity;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore.Diagnostics;
+using Microsoft.Extensions.Azure;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace Dietly.Infrastructure;
 

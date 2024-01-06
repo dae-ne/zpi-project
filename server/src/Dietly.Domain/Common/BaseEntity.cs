@@ -4,12 +4,13 @@ namespace Dietly.Domain.Common;
 
 public abstract class BaseEntity : BaseEntity<int>;
 
-public abstract class BaseEntity<TKey> where TKey : IEquatable<TKey>
+public abstract class BaseEntity<TKey>
+    where TKey : IEquatable<TKey>
 {
+    private readonly List<BaseEvent> _domainEvents = [];
+
     public TKey Id { get; set; } = default!;
-    
-    private readonly List<BaseEvent> _domainEvents = new();
-    
+
     [NotMapped]
     public IReadOnlyCollection<BaseEvent> DomainEvents => _domainEvents.AsReadOnly();
 

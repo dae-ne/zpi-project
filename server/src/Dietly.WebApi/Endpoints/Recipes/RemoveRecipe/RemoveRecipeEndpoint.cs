@@ -1,6 +1,6 @@
+using Dietly.Application.Recipes.Commands.RemoveRecipe;
 using Dietly.WebApi.Infrastructure.Attributes;
 using Dietly.WebApi.Infrastructure.Interfaces;
-using Dietly.Application.Recipes.Commands.RemoveRecipe;
 
 namespace Dietly.WebApi.Endpoints.Recipes.RemoveRecipe;
 

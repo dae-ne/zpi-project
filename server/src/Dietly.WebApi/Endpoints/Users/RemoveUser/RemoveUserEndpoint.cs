@@ -1,7 +1,6 @@
+using Dietly.Application.Users.Commands.RemoveUser;
 using Dietly.WebApi.Infrastructure.Attributes;
 using Dietly.WebApi.Infrastructure.Interfaces;
-using Dietly.WebApi.Services;
-using Dietly.Application.Users.Commands.RemoveUser;
 
 namespace Dietly.WebApi.Endpoints.Users.RemoveUser;
 

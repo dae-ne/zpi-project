@@ -1,14 +1,15 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Dietly.Application.Common.Interfaces;
 using Dietly.Domain.Entities;
-using Dietly.Application.Common.Interfaces;
 using Dietly.Infrastructure.Identity;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace Dietly.Infrastructure.Data;
 
 internal sealed class AppDbContext : IdentityDbContext<AppUser, IdentityRole<int>, int>, IAppDbContext
 {
-    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
+    public AppDbContext(DbContextOptions<AppDbContext> options)
+        : base(options)
     {
         AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
     }

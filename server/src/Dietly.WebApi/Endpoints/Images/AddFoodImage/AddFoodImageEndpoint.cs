@@ -1,6 +1,6 @@
+using Dietly.Application.Images.Commands.AddFoodImage;
 using Dietly.WebApi.Infrastructure.Attributes;
 using Dietly.WebApi.Infrastructure.Interfaces;
-using Dietly.Application.Images.Commands.AddFoodImage;
 
 namespace Dietly.WebApi.Endpoints.Images.AddFoodImage;
 

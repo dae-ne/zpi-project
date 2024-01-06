@@ -5,7 +5,7 @@ namespace Dietly.WebApi.Swagger;
 
 public static class SwaggerEndpointsConfigHelper
 {
-    public static bool IsEndpointValid(string _, ApiDescription apiDescription)
+    public static bool IsEndpointValid(string docName, ApiDescription apiDescription)
     {
         var pathsToExclude = new[]
         {
@@ -51,7 +51,7 @@ public static class SwaggerEndpointsConfigHelper
 
         if (!relativePath.Contains("api/account/manage"))
         {
-            return relativePath.Replace("api/account/", "");
+            return relativePath.Replace("api/account/", string.Empty);
         }
 
         return apiDescription.RelativePath switch

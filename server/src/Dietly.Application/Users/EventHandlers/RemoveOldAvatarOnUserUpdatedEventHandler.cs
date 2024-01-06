@@ -1,6 +1,3 @@
 namespace Dietly.Application.Users.EventHandlers;
 
-public class RemoveOldAvatarOnUserUpdatedEventHandler
-{
-    
-}
+public class RemoveOldAvatarOnUserUpdatedEventHandler;

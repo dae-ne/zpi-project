@@ -9,6 +9,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "items", "items", "{B34C76B5
 		nuget.config = nuget.config
 		.config\dotnet-tools.json = .config\dotnet-tools.json
 		Directory.Packages.props = Directory.Packages.props
+		Dietly.ruleset = Dietly.ruleset
+		Directory.Build.props = Directory.Build.props
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dietly.WebApi", "src\Dietly.WebApi\Dietly.WebApi.csproj", "{B7FCBD73-13C6-4FE7-82BC-1CCA1ADEE714}"

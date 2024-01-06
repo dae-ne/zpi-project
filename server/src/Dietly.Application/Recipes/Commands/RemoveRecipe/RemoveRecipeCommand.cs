@@ -21,7 +21,10 @@ internal sealed class RemoveRecipeCommandHandler(IAppDbContext db) : IRequestHan
             // TODO: handle not found
         }
 
+        // TODO: remove pragma
+#pragma warning disable CS8604 // Possible null reference argument.
         db.Recipes.Remove(recipe);
+#pragma warning restore CS8604 // Possible null reference argument.
         await db.SaveChangesAsync(cancellationToken);
     }
 }

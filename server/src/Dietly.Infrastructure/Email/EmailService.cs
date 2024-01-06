@@ -1,8 +1,8 @@
+using Dietly.Application.Common.Interfaces;
 using MailKit.Net.Smtp;
 using MailKit.Security;
 using Microsoft.Extensions.Options;
 using MimeKit;
-using Dietly.Application.Common.Interfaces;
 
 namespace Dietly.Infrastructure.Email;
 
@@ -14,7 +14,7 @@ internal sealed class EmailService(IOptions<EmailOptions> options) : IEmailServi
     {
         using var message = new MimeMessage();
         message.From.Add(new MailboxAddress(_options.Username, _options.AppEmail));
-        message.To.Add(new MailboxAddress("", to));
+        message.To.Add(new MailboxAddress(string.Empty, to));
         message.Subject = subject;
         message.Body = new TextPart("plain") { Text = htmlBody };
 

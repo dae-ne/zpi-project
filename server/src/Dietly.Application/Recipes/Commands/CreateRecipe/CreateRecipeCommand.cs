@@ -1,6 +1,6 @@
 using Dietly.Application.Common.Interfaces;
-using Microsoft.EntityFrameworkCore;
 using Dietly.Domain.Enums;
+using Microsoft.EntityFrameworkCore;
 
 namespace Dietly.Application.Recipes.Commands.CreateRecipe;
 

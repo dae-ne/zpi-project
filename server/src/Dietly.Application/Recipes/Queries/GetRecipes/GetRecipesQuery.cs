@@ -15,7 +15,7 @@ internal sealed class GetRecipesQueryHandler(IAppDbContext db) : IRequestHandler
             .Include(r => r.Directions)
             .Include(r => r.Tags)
             .ToListAsync(cancellationToken);
-        
+
         var userIds = recipes
             .Select(r => r.UserId)
             .Distinct()

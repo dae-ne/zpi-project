@@ -1,6 +1,6 @@
+using Dietly.Application.Images.Queries.GetFoodImage;
 using Dietly.WebApi.Infrastructure.Attributes;
 using Dietly.WebApi.Infrastructure.Interfaces;
-using Dietly.Application.Images.Queries.GetFoodImage;
 
 namespace Dietly.WebApi.Endpoints.Images.GetFoodImage;
 

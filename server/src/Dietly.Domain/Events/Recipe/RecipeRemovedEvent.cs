@@ -1,6 +1,3 @@
 namespace Dietly.Domain.Events.Recipe;
 
-public class RecipeRemovedEvent
-{
-    
-}
+public class RecipeRemovedEvent;

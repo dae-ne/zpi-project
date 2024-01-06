@@ -1,6 +1,6 @@
 using Azure.Storage.Blobs;
-using Microsoft.Extensions.Options;
 using Dietly.Application.Common.Interfaces;
+using Microsoft.Extensions.Options;
 
 namespace Dietly.Infrastructure.Blob;
 

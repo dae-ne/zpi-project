@@ -74,7 +74,8 @@ internal static class EndpointRouteBuilderExtensions
 
     private static Delegate CreateDelegate(this MethodInfo method, object instance)
     {
-        return method.CreateDelegate(Expression.GetDelegateType(
+        return method.CreateDelegate(
+            Expression.GetDelegateType(
                 method.GetParameters()
                     .Select(parameter => parameter.ParameterType)
                     .Concat(new[] { method.ReturnType })

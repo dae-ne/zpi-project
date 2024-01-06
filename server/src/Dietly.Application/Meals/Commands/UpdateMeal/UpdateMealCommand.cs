@@ -1,6 +1,6 @@
 using Dietly.Application.Common.Interfaces;
-using Microsoft.EntityFrameworkCore;
 using Dietly.Domain.Events.Meal;
+using Microsoft.EntityFrameworkCore;
 
 namespace Dietly.Application.Meals.Commands.UpdateMeal;
 
@@ -20,7 +20,6 @@ internal sealed class UpdateMealCommandHandler(IAppDbContext db) : IRequestHandl
 {
     public async Task Handle(UpdateMealCommand request, CancellationToken cancellationToken)
     {
-
         var meal = await db.Meals
             .Include(m => m.Recipe)
             .Where(m => m.Recipe!.UserId == request.UserId)
@@ -31,7 +30,10 @@ internal sealed class UpdateMealCommandHandler(IAppDbContext db) : IRequestHandl
             // TODO: handle not found
         }
 
+        // TODO: remove pragma
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
         if (meal.Recipe.UserId != request.UserId)
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
         {
             // TODO: handle unauthorized
         }

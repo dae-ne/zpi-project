@@ -9,12 +9,12 @@ public sealed class CurrentUser(IHttpContextAccessor httpContextAccessor)
     {
         var id = httpContextAccessor.HttpContext?.User
             .FindFirstValue(ClaimTypes.NameIdentifier);
-        
+
         if (id is null)
         {
             throw new AuthenticationException("User is not authenticated.");
         }
-        
+
         return int.Parse(id);
     }
 }

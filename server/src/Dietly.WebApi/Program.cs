@@ -1,9 +1,9 @@
+using Dietly.Application;
+using Dietly.Infrastructure;
+using Dietly.WebApi.Infrastructure.Extensions;
+using Dietly.WebApi.Swagger;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Dietly.WebApi.Swagger;
-using Dietly.Infrastructure;
-using Dietly.Application;
-using Dietly.WebApi.Infrastructure.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 

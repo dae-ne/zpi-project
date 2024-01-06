@@ -1,6 +1,6 @@
+using Dietly.Domain.Common;
 using MediatR;
 using Microsoft.EntityFrameworkCore.Diagnostics;
-using Dietly.Domain.Common;
 
 namespace Dietly.Infrastructure.Data.Interceptors;
 

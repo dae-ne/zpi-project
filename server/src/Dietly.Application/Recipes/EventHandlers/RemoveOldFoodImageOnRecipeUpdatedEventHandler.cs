@@ -1,6 +1,3 @@
 namespace Dietly.Application.Recipes.EventHandlers;
 
-public class RemoveOldFoodImageOnRecipeUpdatedEventHandler
-{
-    
-}
+public class RemoveOldFoodImageOnRecipeUpdatedEventHandler;

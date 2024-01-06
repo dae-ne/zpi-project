@@ -1,15 +1,15 @@
 using Dietly.Application.Common.Interfaces;
-using Microsoft.EntityFrameworkCore;
 using Dietly.Domain.Extensions;
+using Microsoft.EntityFrameworkCore;
 
 namespace Dietly.Application.Plans.Queries.GetPlans;
 
 public sealed class GetPlansQuery : IRequest<IList<DayPlan>>
 {
     public int UserId { get; init; }
-    
+
     public DateOnly StartDate { get; init; } = DateOnly.MinValue;
-    
+
     public DateOnly EndDate { get; init; } = DateOnly.MaxValue;
 }
 

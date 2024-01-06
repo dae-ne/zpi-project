@@ -1,6 +1,5 @@
 using Dietly.WebApi.Infrastructure.Attributes;
 using Dietly.WebApi.Infrastructure.Interfaces;
-using Dietly.WebApi.Services;
 
 namespace Dietly.WebApi.Endpoints.Meals.UpdateMeal;
 
@@ -10,7 +9,7 @@ public sealed class UpdateMealEndpoint(IMediator mediator, CurrentUser currentUs
     public void Configure(RouteHandlerBuilder builder) => builder
         .WithTags("Meals")
         .WithName("updateMeal");
-    
+
     [ApiEndpointHandler]
     public async Task<IResult> HandleAsync(int mealId, UpdateMealRequest request)
     {

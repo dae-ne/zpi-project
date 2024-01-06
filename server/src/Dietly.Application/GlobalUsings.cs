@@ -1,3 +1,3 @@
-﻿global using MediatR;
+﻿global using Dietly.Domain.Entities;
 global using JetBrains.Annotations;
-global using Dietly.Domain.Entities;
+global using MediatR;

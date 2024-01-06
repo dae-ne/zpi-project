@@ -4,7 +4,6 @@ using Dietly.Domain.Extensions;
 namespace Dietly.Domain.UnitTests;
 
 // TODO: more tests
-
 public class MealsExtensionsTests
 {
     [Fact]
@@ -13,9 +12,9 @@ public class MealsExtensionsTests
         // Arrange
         var meals = new List<Meal>
         {
+            // TODO: Add more meals as needed for different scenarios
             new Meal { Recipe = new Recipe { UserId = 1, Calories = 300 }, Date = DateTime.Now.Date, Completed = true },
             new Meal { Recipe = new Recipe { UserId = 1, Calories = 400 }, Date = DateTime.Now.Date, Completed = false }
-            // TODO: Add more meals as needed for different scenarios
         };
 
         var day = DateOnly.FromDateTime(DateTime.Now.Date);
@@ -25,9 +24,9 @@ public class MealsExtensionsTests
         var result = meals.ToDayPlan(day, userId);
 
         // Assert
+        // TODO: Add more assertions based on the expected behavior of ToDayPlan method
         Assert.NotNull(result);
         Assert.Equal(day, result.Date);
-        // TODO: Add more assertions based on the expected behavior of ToDayPlan method
     }
 
     [Fact]
@@ -36,10 +35,10 @@ public class MealsExtensionsTests
         // Arrange
         var meals = new List<Meal>
         {
+            // TODO: Add more meals as needed for different scenarios
             new Meal { Recipe = new Recipe { UserId = 1, Calories = 300 }, Date = DateTime.Now.Date, Completed = true },
             new Meal { Recipe = new Recipe { UserId = 1, Calories = 400 }, Date = DateTime.Now.Date.AddDays(-1), Completed = true },
             new Meal { Recipe = new Recipe { UserId = 1, Calories = 500 }, Date = DateTime.Now.Date.AddDays(1), Completed = true }
-            // TODO: Add more meals as needed for different scenarios
         };
 
         var from = DateOnly.FromDateTime(DateTime.Now.Date.AddDays(-1));
@@ -50,7 +49,7 @@ public class MealsExtensionsTests
         var result = meals.ToDayPlans(from, to, userId);
 
         // Assert
-        Assert.NotNull(result);
         // TODO: Add assertions to check the correctness of the returned DayPlans
+        Assert.NotNull(result);
     }
 }

@@ -20,6 +20,9 @@ internal sealed class GetMealQueryHandler(IAppDbContext db) : IRequestHandler<Ge
             // TODO: handle not found
         }
 
+        // TODO: remove pragma
+#pragma warning disable CS8603 // Possible null reference return.
         return meal;
+#pragma warning restore CS8603 // Possible null reference return.
     }
 }
