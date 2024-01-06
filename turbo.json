@@ -4,6 +4,7 @@
     "sync": {
       "cache": false
     },
+    "start": {},
     "test": {}
   }
 }

@@ -69,7 +69,9 @@ internal static class EndpointRouteBuilderExtensions
                 $"The '{apiAttributeType.Name}' attribute is not supported.")
         };
 
-        return builder.RequireAuthorization();
+           return builder
+            .RequireAuthorization()
+            .RequireCors();
     }
 
     private static Delegate CreateDelegate(this MethodInfo method, object instance)

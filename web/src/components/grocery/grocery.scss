@@ -1,0 +1,22 @@
+@import '../../variables.scss';
+
+.grocery-list-ingredients {
+    background-color: white;
+    border-radius: $large-border-radius;
+    padding: 2em;
+
+    .grocery-list-ingredients-header {
+        font-size: 2em;
+        font-weight: 600;
+    }
+
+}
+
+.grocery-list-menu {
+    margin-left: 2em;
+    padding-left: 2em;
+
+    .grocery-list-menu-header {
+        margin-bottom: 0.5em;
+    }
+}
