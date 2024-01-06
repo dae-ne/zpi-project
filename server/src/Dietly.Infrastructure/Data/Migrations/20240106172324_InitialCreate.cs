@@ -167,7 +167,7 @@ namespace Dietly.Infrastructure.Data.Migrations
                     id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     user_id = table.Column<int>(type: "integer", nullable: false),
-                    name = table.Column<string>(type: "text", nullable: false)
+                    name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -187,10 +187,10 @@ namespace Dietly.Infrastructure.Data.Migrations
                     id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     user_id = table.Column<int>(type: "integer", nullable: false),
-                    title = table.Column<string>(type: "text", nullable: false),
-                    description = table.Column<string>(type: "text", nullable: true),
+                    title = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    description = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
                     difficulty_level = table.Column<int>(type: "integer", nullable: false),
-                    image_url = table.Column<string>(type: "text", nullable: false),
+                    image_url = table.Column<string>(type: "text", nullable: true),
                     time = table.Column<TimeSpan>(type: "interval", nullable: false),
                     calories = table.Column<int>(type: "integer", nullable: false)
                 },
@@ -212,7 +212,7 @@ namespace Dietly.Infrastructure.Data.Migrations
                     id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     user_id = table.Column<int>(type: "integer", nullable: false),
-                    name = table.Column<string>(type: "text", nullable: false)
+                    name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -232,7 +232,7 @@ namespace Dietly.Infrastructure.Data.Migrations
                     id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     recipe_id = table.Column<int>(type: "integer", nullable: false),
-                    description = table.Column<string>(type: "text", nullable: false),
+                    description = table.Column<string>(type: "character varying(300)", maxLength: 300, nullable: false),
                     order = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
@@ -277,7 +277,7 @@ namespace Dietly.Infrastructure.Data.Migrations
                     id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     recipe_id = table.Column<int>(type: "integer", nullable: false),
-                    date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    date = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     completed = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
@@ -353,9 +353,10 @@ namespace Dietly.Infrastructure.Data.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "ix_directions_recipe_id",
+                name: "ix_directions_recipe_id_order",
                 table: "directions",
-                column: "recipe_id");
+                columns: new[] { "recipe_id", "order" },
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "ix_ingredient_recipe_recipe_id",
