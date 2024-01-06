@@ -1457,6 +1457,10 @@
       "UpdateMealRequest": {
         "type": "object",
         "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
           "recipeId": {
             "type": "integer",
             "format": "int32"
@@ -1577,6 +1581,10 @@
       "UpdateUserRequest": {
         "type": "object",
         "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
           "userName": {
             "type": "string",
             "nullable": true
