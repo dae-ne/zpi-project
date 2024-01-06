@@ -4,7 +4,7 @@ namespace Dietly.Domain.Entities;
 
 public class DayPlan : BaseCloneableEntity
 {
-    public IEnumerable<Meal> Meals { get; set; } = null!;
+    public IEnumerable<Meal> Meals { get; set; } = Enumerable.Empty<Meal>();
 
     public DateOnly Date { get; set; }
 

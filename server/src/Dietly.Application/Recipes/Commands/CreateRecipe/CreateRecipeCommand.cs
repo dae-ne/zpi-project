@@ -14,7 +14,7 @@ public sealed class CreateRecipeCommand : IRequest<int>
 
     public DifficultyLevel DifficultyLevel { get; init; }
 
-    public string ImageUrl { get; init; } = null!;
+    public string? ImageUrl { get; init; }
 
     public TimeSpan Time { get; init; }
 

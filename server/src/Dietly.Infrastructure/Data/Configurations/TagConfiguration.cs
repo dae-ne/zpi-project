@@ -13,5 +13,8 @@ internal sealed class TagConfiguration : IEntityTypeConfiguration<Tag>
             .HasForeignKey(t => t.UserId)
             .IsRequired()
             .OnDelete(DeleteBehavior.Cascade);
+
+        builder.Property(tag => tag.Name)
+            .HasMaxLength(100);
     }
 }

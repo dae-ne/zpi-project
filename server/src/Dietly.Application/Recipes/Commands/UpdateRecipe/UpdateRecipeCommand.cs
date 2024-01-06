@@ -16,7 +16,7 @@ public sealed class UpdateRecipeCommand : IRequest
 
     public DifficultyLevel DifficultyLevel { get; init; }
 
-    public string ImageUrl { get; init; } = null!;
+    public string? ImageUrl { get; init; }
 
     public TimeSpan Time { get; init; }
 
@@ -91,21 +91,24 @@ internal sealed class UpdateRecipeContractHandler(IAppDbContext db) : IRequestHa
         recipe.Time = request.Time;
         recipe.Calories = request.Calories;
 
-        recipe.Ingredients.Clear();
-        recipe.Ingredients.AddRange(ingredients);
-        recipe.Ingredients.AddRange(newIngredients);
+        var entityIngredients = new List<Ingredient>();
+        entityIngredients.AddRange(ingredients);
+        entityIngredients.AddRange(newIngredients);
+        recipe.Ingredients = entityIngredients.AsQueryable();
 
-        recipe.Tags.Clear();
-        recipe.Tags.AddRange(tags);
-        recipe.Tags.AddRange(newTags);
+        var entityTags = new List<Tag>();
+        entityTags.AddRange(tags);
+        entityTags.AddRange(newTags);
+        recipe.Tags = entityTags.AsQueryable();
 
-        recipe.Directions.Clear();
-        recipe.Directions.AddRange(request.Directions.Select(d => new Direction
+        var entityDirections = new List<Direction>();
+        entityDirections.AddRange(request.Directions.Select(d => new Direction
         {
             Id = d.Id,
             Description = d.Description,
             Order = d.Order
         }));
+        recipe.Directions = entityDirections.AsQueryable();
 
         await db.SaveChangesAsync(cancellationToken);
     }

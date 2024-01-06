@@ -13,5 +13,8 @@ internal sealed class IngredientConfiguration : IEntityTypeConfiguration<Ingredi
             .HasForeignKey(i => i.UserId)
             .IsRequired()
             .OnDelete(DeleteBehavior.Cascade);
+
+        builder.Property(ingredient => ingredient.Name)
+            .HasMaxLength(100);
     }
 }

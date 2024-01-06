@@ -13,15 +13,15 @@ public class Recipe : BaseCloneableEntity
 
     public DifficultyLevel DifficultyLevel { get; set; }
 
-    public string ImageUrl { get; set; } = null!;
+    public string? ImageUrl { get; set; }
 
     public TimeSpan Time { get; set; }
 
     public int Calories { get; set; }
 
-    public List<Ingredient> Ingredients { get; set; } = new();
+    public IQueryable<Ingredient> Ingredients { get; set; } = Enumerable.Empty<Ingredient>().AsQueryable();
 
-    public List<Direction> Directions { get; set; } = new();
+    public IQueryable<Direction> Directions { get; set; } = Enumerable.Empty<Direction>().AsQueryable();
 
-    public List<Tag> Tags { get; set; } = new();
+    public IQueryable<Tag> Tags { get; set; } = Enumerable.Empty<Tag>().AsQueryable();
 }
