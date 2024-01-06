@@ -1,9 +1,9 @@
 import React from "react"
 import { CreateRecipeTagDto, DifficultyLevel } from "../../../sdk"
 import { getDifficultyName } from "../../../sdk/models/DifficultyLevel";
-import EditIcon from '@mui/icons-material/Edit';
 import { useNavigate, useParams } from "react-router-dom";
 import { RECIPE_EDIT_RAW } from "../../../constants/app-route";
+import EditIcon from '@mui/icons-material/Edit';
 
 interface RecipePreviewStatsInterface {
     difficultyLevel: DifficultyLevel,

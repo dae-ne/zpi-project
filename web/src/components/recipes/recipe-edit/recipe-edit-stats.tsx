@@ -1,16 +1,12 @@
 import React, { useEffect, useState } from "react"
 import CustomTextField from "../../controls/custom-text-field"
-import AddIcon from '@mui/icons-material/Add';
 import CustomSelect from "../../controls/custom-select";
 import NumericTextField from "../../controls/numeric-text-field";
-import { CreateRecipeIngredientDto, CreateRecipeTagDto, DifficultyLevel } from "../../../sdk";
+import { CreateRecipeTagDto, DifficultyLevel } from "../../../sdk";
 import RecipeEditTags from "./recipe-edit-tags";
-import Button from "@mui/material/Button";
-import DeleteIcon from '@mui/icons-material/Delete';
-import { IconButton, Tooltip } from "@mui/material";
 import { toBase64 } from "../../../tools/files";
 import { getDifficultyId, getDifficultyName } from "../../../sdk/models/DifficultyLevel";
-
+import AddIcon from '@mui/icons-material/Add';
 
 interface RecipeEditStatsInterface {
     difficultyLevel: DifficultyLevel,
@@ -24,7 +20,9 @@ interface RecipeEditStatsInterface {
     onCaloriesChange: (value: number) => void,
     onTagsChange: (value: Array<CreateRecipeTagDto>) => void,
 }
+
 const inputStyle = { borderRadius: "5px 0 0 5px", fontSize: "0.9em" }
+
 const DEFAULT_DIFFICULTIES: Array<string> = [
     getDifficultyName(DifficultyLevel._0),
     getDifficultyName(DifficultyLevel._1),
@@ -32,7 +30,6 @@ const DEFAULT_DIFFICULTIES: Array<string> = [
 ]
 
 const RecipeEditStats = (props: RecipeEditStatsInterface) => {
-
     const { difficultyLevel, imageUrl, time, calories, tags,
         onDifficultyLevelChange, onImageChange, onTimeChange, onCaloriesChange, onTagsChange } = props;
 

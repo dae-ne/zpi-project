@@ -1,7 +1,6 @@
-import { FormGroup, FormControlLabel, Checkbox, Box, Slider } from "@mui/material"
-
 import React, { useEffect, useState } from "react"
 import { DifficultyLevel } from "../../../sdk"
+import { FormGroup, FormControlLabel, Checkbox, Box, Slider } from "@mui/material"
 
 interface RecipeListMenuInterface {
     tags: Array<string> | null,
@@ -121,11 +120,7 @@ const RecipeListMenu = (props: RecipeListMenuInterface) => {
                             key={"tag" + index} />
                     )
                 })}
-                {/* <FormControlLabel control={<Checkbox sx={checkBoxStyles} />} label="Easy" />
-            <FormControlLabel control={<Checkbox sx={checkBoxStyles} />} label="More effort" />
-            <FormControlLabel control={<Checkbox sx={checkBoxStyles} />} label="Pro" /> */}
             </FormGroup>
-
 
             <Box sx={{ mb: 1 }} className="recipe-search-menu-header">
                 Time
@@ -158,8 +153,7 @@ const RecipeListMenu = (props: RecipeListMenuInterface) => {
                 Tags
             </Box>
 
-            <FormGroup sx={{ mb: 3 }}            >
-
+            <FormGroup sx={{ mb: 3 }}>
                 {tagsData?.map((tag: CheckboxData, index: number) => {
                     return (
                         <FormControlLabel
@@ -173,7 +167,6 @@ const RecipeListMenu = (props: RecipeListMenuInterface) => {
                             key={"tag" + index} />
                     )
                 })}
-
             </FormGroup>
         </div>
     )

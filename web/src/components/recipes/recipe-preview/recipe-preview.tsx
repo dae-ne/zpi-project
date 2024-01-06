@@ -1,17 +1,17 @@
-
-import React, { useEffect, useState } from "react"
-import Grid from "@mui/material/Grid"
-
 import "./recipe-preview.scss"
-
+import React, { useEffect, useState } from "react"
 import RecipePreviewStats from "./recipe-preview-stats"
 import RecipePreviewContent from "./recipe-preview-content"
-import { RecipesService, GetRecipeResponse, CreateRecipeDirectionDto, CreateRecipeIngredientDto, CreateRecipeTagDto, DifficultyLevel } from "../../../sdk"
+import {
+    RecipesService, GetRecipeResponse, CreateRecipeDirectionDto,
+    CreateRecipeIngredientDto, CreateRecipeTagDto, DifficultyLevel
+} from "../../../sdk"
 import { useNavigate, useParams } from "react-router-dom"
 import { RECIPE_LIST } from "../../../constants/app-route"
 
-const RecipePreview = () => {
+import Grid from "@mui/material/Grid"
 
+const RecipePreview = () => {
     const [title, setTitle] = useState<string | null | undefined>("");
     const [description, setDescription] = useState<string | null | undefined>("");
     const [difficultyLevel, setDifficultyLevel] = useState<DifficultyLevel | null | undefined>(DifficultyLevel._0);
@@ -50,9 +50,7 @@ const RecipePreview = () => {
                 setDirections(response.directions);
                 setTags(response.tags);
             })
-            .catch(() => {
-                //  console.log(err)
-            })
+            .catch(() => { })
     }, [])
 
 

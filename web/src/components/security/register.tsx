@@ -1,4 +1,9 @@
+import "./security.scss"
 import React, { useState } from 'react';
+import { AccountService, ApiError, RegisterRequest } from '../../sdk';
+import { useNavigate } from 'react-router-dom';
+import { SECURITY_LOGIN } from '../../constants/app-route';
+import Copyright from './copyright';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -7,14 +12,6 @@ import Link from '@mui/material/Link';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { AccessTokenResponse, AccountService, ApiError, RegisterRequest } from '../../sdk';
-import "./security.scss"
-import { useNavigate } from 'react-router-dom';
-import { SECURITY_LOGIN } from '../../constants/app-route';
-import Copyright from './copyright';
-import Alert from '@mui/material/Alert';
-
-
 
 const RegisterPage = () => {
     const [login, setLogin] = useState<string>("")
@@ -46,7 +43,6 @@ const RegisterPage = () => {
             .catch((err: ApiError) => {
                 const error = err?.body?.errors
                 const firstKey = Object.keys(error)[0];
-                console.log(firstKey)
                 setErrorMessage(error[firstKey] || "Unexpected error")
             })
 

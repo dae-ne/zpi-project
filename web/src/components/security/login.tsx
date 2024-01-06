@@ -1,4 +1,12 @@
+import "./security.scss"
+
 import React, { useState } from 'react';
+import { AccessTokenResponse, AccountService, LoginRequest, OpenAPI } from '../../sdk';
+import { useNavigate } from 'react-router-dom';
+import { RECIPE_LIST, SECURITY_REGISTER } from '../../constants/app-route';
+import Copyright from './copyright';
+import { setLoginCookies } from '../../tools/security';
+
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -7,23 +15,13 @@ import Link from '@mui/material/Link';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { AccessTokenResponse, AccountService, LoginRequest, OpenAPI } from '../../sdk';
-import Cookies from 'universal-cookie';
-import "./security.scss"
-import { useNavigate } from 'react-router-dom';
-import { ACCESS_TOKEN_NAME, REFRESH_TOKEN_NAME } from '../../constants/cookies';
-import { RECIPE_LIST, ROOT, SECURITY_REGISTER } from '../../constants/app-route';
-import Copyright from './copyright';
 
-
-const REFRESH_TOKEN_MAX_AGE = 604800
 const LoginPage = () => {
     const [login, setLogin] = useState<string>("")
     const [password, setPassword] = useState<string>("")
     const [errorMessage, setErrorMessage] = useState<string>("")
 
     const navigate = useNavigate();
-    const cookies = new Cookies()
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -39,36 +37,18 @@ const LoginPage = () => {
         }).catch(() => {
             setErrorMessage("Wrong password or email")
         })
-
     };
 
     const handleLoginSuccess = (response: AccessTokenResponse) => {
         if (!response.accessToken) return;
 
-        cookies.set(
-            ACCESS_TOKEN_NAME,
-            response.accessToken,
-            {
-                maxAge: response.expiresIn,
-                sameSite: "strict",
-                path: ROOT
-            }
-        )
-        cookies.set(
-            REFRESH_TOKEN_NAME,
-            response.refreshToken,
-            {
-                maxAge: REFRESH_TOKEN_MAX_AGE,
-                sameSite: "strict",
-                path: ROOT
-            }
-        )
+        setLoginCookies(response)
 
         OpenAPI.TOKEN = response.accessToken;
         navigate(RECIPE_LIST);
     }
-    return (
 
+    return (
         <Container component="div" maxWidth="xs">
             <CssBaseline />
             <Box
@@ -124,8 +104,6 @@ const LoginPage = () => {
             <Copyright sx={{ mt: 8, mb: 4 }} />
 
         </Container >
-
-
     );
 }
 

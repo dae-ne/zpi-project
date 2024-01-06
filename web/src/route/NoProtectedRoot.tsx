@@ -1,11 +1,9 @@
-
-import { useNavigate } from "react-router-dom";
 import Cookies from "universal-cookie";
+import { useNavigate } from "react-router-dom";
 import { ACCESS_TOKEN_NAME } from "../constants/cookies";
-import { RECIPE_LIST, SECURITY_LOGIN } from "../constants/app-route";
+import { RECIPE_LIST } from "../constants/app-route";
 import { useEffect } from "react";
 import { OpenAPI } from "../sdk";
-
 
 const NoProtectedRoute = ({ children }: any) => {
     const cookies = new Cookies()

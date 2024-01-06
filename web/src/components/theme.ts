@@ -1,15 +1,5 @@
 import createTheme from "@mui/material/styles/createTheme";
 
-// declare module '@mui/material/styles' {
-//     interface Theme {
-//         backgroundColor: string;
-//     }
-//     interface ThemeOptions {
-//         backgroundColor: string
-//     }
-// }
-
-
 const appTheme = createTheme({
     palette: {
         background: {
@@ -34,6 +24,5 @@ const appTheme = createTheme({
         "fontSize": 16
     }
 })
-
 
 export default appTheme 

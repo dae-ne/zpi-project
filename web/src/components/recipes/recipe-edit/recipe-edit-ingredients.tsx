@@ -1,8 +1,7 @@
 import React from "react"
-import DeleteIcon from '@mui/icons-material/Delete';
 import { CreateRecipeIngredientDto } from "../../../sdk";
 import { RecipeEditDataInterface } from "./recipe-edit-content";
-
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const RecipeEditIngredients = ({ data, onDataChange }: RecipeEditDataInterface<CreateRecipeIngredientDto>) => {
 

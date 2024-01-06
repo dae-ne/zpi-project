@@ -1,9 +1,9 @@
 import React from "react"
+import { RecipeEditDataInterface } from "./recipe-edit-content";
+import { CreateRecipeDirectionDto } from "../../../sdk";
 import DeleteIcon from '@mui/icons-material/Delete';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { RecipeEditDataInterface } from "./recipe-edit-content";
-import { CreateRecipeDirectionDto } from "../../../sdk";
 
 const RecipeEditDirections = ({ data, onDataChange }: RecipeEditDataInterface<CreateRecipeDirectionDto>) => {
 
@@ -14,18 +14,14 @@ const RecipeEditDirections = ({ data, onDataChange }: RecipeEditDataInterface<Cr
     }
 
     const handleSwapPlaces = (index: number, swapWithPrevious: boolean) => {
-
-
         if (!data || index < 0 || index >= data.length) return;
 
         const directions = [...data];
         if (swapWithPrevious && index > 0) {
-            // Zamiana wartości z poprzednim elementem
             const temp = directions[index].order;
             directions[index].order = directions[index - 1].order;
             directions[index - 1].order = temp;
         } else if (!swapWithPrevious && index < directions.length - 1) {
-            // Zamiana wartości z następnym elementem
             const temp = directions[index].order;
             directions[index].order = directions[index + 1].order;
             directions[index + 1].order = temp;

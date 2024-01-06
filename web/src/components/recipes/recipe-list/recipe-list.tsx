@@ -1,9 +1,9 @@
+import "./recipe-list.scss"
 import React, { useEffect, useState } from "react"
 import RecipeListHeader from "./recipe-list-header"
 import RecipeListContent from "./recipe-list-content"
 import { RecipesService, GetRecipesResponse, GetRecipeResponse, DifficultyLevel } from "../../../sdk"
 import { RecipeListMode } from "../../../enums/recipe"
-import "./recipe-list.scss"
 
 interface RecipeListInterface {
     mode: RecipeListMode,
@@ -142,8 +142,10 @@ const RecipeList = ({ mode, onAccept }: RecipeListInterface) => {
                 onSelectRecipeSubmit={handleSelectRecipe}
                 mode={mode}
             />
-            <RecipeListContent tags={tags}
+            <RecipeListContent
+                tags={tags}
                 data={displayRecipes}
+                mode={mode}
                 onTagSelectionChange={handleTags}
                 onDifficultyLevelChange={handleDifficultyLevel}
                 onTimeRangeChange={handleTime}

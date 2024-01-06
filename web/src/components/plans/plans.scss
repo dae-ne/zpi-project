@@ -40,10 +40,11 @@
 
 .plans-list-buttons {
     display: flex;
+    align-items: center;
     column-gap: 10px;
 
-    .plans-list-menu-item {
-        background-color: #5C97DD;
+    .plans-list-calories {
+        margin-right: 3em;
     }
 }
 
@@ -61,7 +62,6 @@
 }
 
 .recipe-list-item-plans {
-
     .recipe-list-item-image {
         img {
             cursor: auto;
@@ -104,6 +104,8 @@
         background-color: $grey-light;
         padding: 0 2em;
         position: relative;
+        overflow-x: none;
+        overflow-y: auto;
 
         .plans-list-recipe-list-close {
 
@@ -112,4 +114,14 @@
             left: 1.3em;
         }
     }
+
+    .plans-list-recipe-list-wrapper ::-webkit-scrollbar {
+        display: none;
+    }
+
+    .plans-list-recipe-list-wrapper {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+
 }

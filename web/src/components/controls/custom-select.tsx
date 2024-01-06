@@ -1,9 +1,5 @@
-
-import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material"
-
-import appTheme from "../theme"
-import React, { useState } from "react"
-import { DifficultyLevel } from "../../sdk"
+import React from "react"
+import { FormControl, MenuItem, Select, SelectChangeEvent } from "@mui/material"
 
 interface CustomSelect<T> {
     name: string,
@@ -34,8 +30,7 @@ const CustomSelect = (props: CustomSelect<string>) => {
                     input: { fontSize: "1em" },
                     "& fieldset": { border: 'none' },
                     backgroundColor: "white"
-                }}
-            >
+                }}>
                 {
                     values.map((value) => {
                         return (
@@ -45,7 +40,6 @@ const CustomSelect = (props: CustomSelect<string>) => {
                 }
             </Select>
         </FormControl>
-
     )
 }
 

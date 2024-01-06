@@ -27,7 +27,6 @@ const RecipePreviewContent = ({ title, description, imageUrl, ingredients, direc
             </div>
 
             <div className="recipe-header recipe-preview-header">Ingredients</div>
-            {/* <DeleteIcon sx={{ cursor: "pointer" }} /> */}
 
             <ul className="recipe-ingridients-list">
                 {ingredients?.map((ingredient: CreateRecipeIngredientDto, index: number) =>

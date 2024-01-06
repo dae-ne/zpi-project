@@ -1,12 +1,13 @@
-import React from 'react';
 import "./main.scss"
 import "./recipes/recipes.scss"
-import { Outlet, useLocation, Link, useNavigate } from "react-router-dom";
-import appTheme from './theme';
+
+import React from 'react';
+import { Outlet, Link, useNavigate } from "react-router-dom";
 import { AppBar, Avatar, Box, Button, Container, IconButton, Menu, MenuItem, Toolbar, Tooltip, Typography } from '@mui/material';
+import appTheme from './theme';
 import Cookies from 'universal-cookie';
 import { ACCESS_TOKEN_NAME, REFRESH_TOKEN_NAME } from '../constants/cookies';
-import { AccountService, OpenAPI } from '../sdk';
+import { OpenAPI } from '../sdk';
 import { ROOT, SECURITY_LOGIN } from '../constants/app-route';
 
 const logout: string = "Logout"
@@ -40,7 +41,6 @@ const Navigation = () => {
         OpenAPI.TOKEN = undefined;
         navigate(SECURITY_LOGIN)
     }
-
 
     return (
         <>

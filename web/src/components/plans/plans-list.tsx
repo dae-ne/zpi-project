@@ -6,13 +6,14 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ListIcon from '@mui/icons-material/List';
 
 import "./plans.scss"
-import PlansListElement from "./plans-list-element";
+import PlansListElement from "./meal";
 import appTheme from "../theme";
 import moment from "moment";
 import CloseIcon from '@mui/icons-material/Close';
-import RecipeList from "../recipes/recipe-list";
 import { RecipeListMode } from "../../enums/recipe";
-import { GetRecipeResponse } from "../../sdk";
+import { AddMealRequest, GetMealResponse, GetPlanResponse, GetRecipeResponse, MealsService, PlansService } from "../../sdk";
+import Meal from "./meal";
+import RecipeList from "../recipes/recipe-list/recipe-list";
 
 const DAYS: Array<string> = [
     "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"
@@ -27,11 +28,17 @@ const DateDiffInDays = (date1: Date, date2: Date): number => {
 }
 
 const PlansList = () => {
-    const [dayOfWeek, setDayOfWeek] = useState<number>((new Date).getDay() - 1)
-    const [dayPrefix, setDayPrefix] = useState<string>("")
+
+    const [consumedCalories, setConsumedCalories] = useState<number | undefined>(0)
+    const [totalCalories, setTotalCalories] = useState<number | undefined>(0)
+    const [meals, setMeals] = useState<Array<GetMealResponse> | undefined | null>(null)
     const [selectedDay, setSelectedDay] = useState<Date>(new Date)
 
-    const [recipePanelVisible, setRecipePanelVisible] = useState<boolean>(true)
+    const [dayOfWeek, setDayOfWeek] = useState<number>((new Date).getDay() - 1)
+    const [dayPrefix, setDayPrefix] = useState<string>("")
+    const [forceRefreshMeals, setForceRefreshMeals] = useState<boolean>(false)
+
+    const [recipePanelVisible, setRecipePanelVisible] = useState<boolean>(false)
 
     const setDates = (operation: number) => {
         const newDay = moment(selectedDay).add(operation, 'days').toDate();
@@ -56,24 +63,59 @@ const PlansList = () => {
         }
     }
 
-    const addNewMeal = (date: Date, recipe: GetRecipeResponse) => {
-        console.log(date, recipe)
+    const addNewMeal = (hour: Date, recipe: GetRecipeResponse) => {
+        console.log(hour, recipe)
+        //todo dorobić godzinę
+        setRecipePanelVisible(false)
+        const mealData: AddMealRequest = {
+            recipeId: recipe.id,
+            date: moment(selectedDay).format("DD.MM.YYYY")
+        }
+        MealsService.addMeal(mealData)
+            .then(() => {
+                getPlanForDay(selectedDay)
+            })
+            .catch(() => { })
     }
 
+    const getPlanForDay = (day: Date) => {
+        PlansService.getPlan(moment(day).format("DD.MM.YYYY"))
+            .then((response: GetPlanResponse) => {
+                console.log(response)
+                setConsumedCalories(response.consumedCalories)
+                setTotalCalories(response.totalCalories)
+                setMeals(response.meals)
+            })
+            .catch((err) => {
+                setConsumedCalories(0)
+                setTotalCalories(0)
+                setMeals(null)
+            })
+    }
+    const handleRefreshAfterDelete = () => {
+        setForceRefreshMeals(!forceRefreshMeals)
+    }
     useEffect(() => {
-        calcDayPrefix(new Date)
+        const today: Date = new Date
+        calcDayPrefix(today)
+        //getPlanForDay(today)
     }, [])
+
+    useEffect(() => {
+        getPlanForDay(selectedDay)
+    }, [selectedDay, forceRefreshMeals])
+
     return (
         <>
             <Box sx={{ pt: 3, display: 'flex', justifyContent: "space-between" }}>
 
                 <div className="plans-list-navigation">
                     <div className="plans-list-navigation-arrows">
-                        <div className="button-std nav-button nav-button-left">
-                            <ArrowBackIcon htmlColor="black" fontSize="small" onClick={() => setDates(-1)} />
+                        <div className="button-std nav-button nav-button-left" onClick={() => setDates(-1)}>
+                            <ArrowBackIcon htmlColor="black" fontSize="small" />
                         </div>
-                        <div className="button-std nav-button nav-button-right">
-                            <ArrowForwardIcon htmlColor="black" fontSize="small" onClick={() => setDates(1)} />
+                        <div className="button-std nav-button nav-button-right" onClick={() => setDates(1)}>
+                            <ArrowForwardIcon htmlColor="black" fontSize="small" />
                         </div>
                     </div>
 
@@ -82,9 +124,7 @@ const PlansList = () => {
                 </div>
 
                 <div className="plans-list-buttons">
-                    {/* <div className="button-std add-button plans-list-menu-item" >
-                        <ListIcon />
-                    </div> */}
+                    <div className="plans-list-calories">{consumedCalories} / {totalCalories}kcal.</div>
 
                     <div className="button-std add-button" onClick={() => setRecipePanelVisible(true)}>
                         <AddIcon />
@@ -100,13 +140,15 @@ const PlansList = () => {
                             <div
                                 className="plans-list-day"
                                 key={"day" + index}
-                                style={{ backgroundColor: index == dayOfWeek ? appTheme.palette.primary.main : "transparent" }}
-                            >{day}</div>)
+                                style={{ backgroundColor: index == dayOfWeek ? appTheme.palette.primary.main : "transparent" }}>{day}</div>)
                     })}
                 </div>
             </Box>
             <Box sx={{ pt: 3 }}>
-                <PlansListElement />
+                {meals?.map((meal: GetMealResponse, index: number) => {
+                    return <Meal onDelete={handleRefreshAfterDelete} data={meal} key={"meal" + index} />
+                })}
+
             </Box>
 
             {recipePanelVisible &&

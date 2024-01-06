@@ -1,7 +1,4 @@
-import { Grid } from "@mui/material"
 import React, { useState } from "react"
-
-import AddIcon from '@mui/icons-material/Add';
 import CustomTextField from "../../controls/custom-text-field";
 import { useNavigate } from "react-router-dom";
 import { RECIPE_NEW } from "../../../constants/app-route";
@@ -10,9 +7,9 @@ import CheckIcon from '@mui/icons-material/Check';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
-
 import moment, { Moment } from "moment";
-import { ConstructionOutlined, Label } from "@mui/icons-material";
+import { Grid } from "@mui/material"
+import AddIcon from '@mui/icons-material/Add';
 
 interface RecipeListHeaderInterface {
     mode: RecipeListMode,
@@ -39,7 +36,6 @@ const RecipeListHeader = ({ mode, onSearchSubmit, onSelectRecipeSubmit: onSelect
         onSelectRecipe(time?.toDate())
     }
 
-    //  console.log(mode)
     return (
         <Grid container>
             <Grid item xs={3} />

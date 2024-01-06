@@ -1,4 +1,3 @@
-
 export const SECURITY_ROOT: string = "/security";
 export const SECURITY_LOGIN: string = "/security/login";
 export const SECURITY_REGISTER: string = "/security/register";

@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from "react"
-import DeleteIcon from '@mui/icons-material/Delete';
+import React from "react"
 import { CreateRecipeTagDto } from "../../../sdk";
 import { RecipeEditDataInterface } from "./recipe-edit-content";
-
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const RecipeEditTags = ({ data, onDataChange }: RecipeEditDataInterface<CreateRecipeTagDto>) => {
-
     const handleDelete = (index: number) => {
         if (!data || data.length - 1 < index) return;
 
