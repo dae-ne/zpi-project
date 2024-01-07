@@ -12,7 +12,7 @@ internal static class ServiceCollectionExtensions
         {
             options.SwaggerDoc("v1", new OpenApiInfo
             {
-                Title = "Recipes API",
+                Title = "Dietly API",
                 Version = "v1"
             });
             options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme

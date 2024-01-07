@@ -1,8 +1,9 @@
 using Dietly.Application.Common.Interfaces;
+using Dietly.Application.Common.Result;
 
 namespace Dietly.Application.Users.Commands.UpdateUser;
 
-public sealed class UpdateUserCommand : IRequest
+public sealed class UpdateUserCommand : IRequest<Result<object?>>
 {
     public int UserId { get; init; }
 
@@ -12,11 +13,12 @@ public sealed class UpdateUserCommand : IRequest
 }
 
 [UsedImplicitly]
-internal sealed class UpdateUserCommandHandler(IUserService userService) : IRequestHandler<UpdateUserCommand>
+internal sealed class UpdateUserCommandHandler(IUserService userService) : IRequestHandler<UpdateUserCommand, Result<object?>>
 {
-    public async Task Handle(UpdateUserCommand request, CancellationToken cancellationToken)
+    public async Task<Result<object?>> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
     {
         var user = request.ToDomain();
         await userService.UpdateUserAsync(user, cancellationToken);
+        return Results.Ok();
     }
 }

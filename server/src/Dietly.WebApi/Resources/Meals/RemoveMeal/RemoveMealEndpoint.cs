@@ -5,7 +5,7 @@ using Dietly.WebApi.Infrastructure.Interfaces;
 namespace Dietly.WebApi.Resources.Meals.RemoveMeal;
 
 [ApiEndpointDelete("/api/meals/{mealId}")]
-public sealed class RemoveMealEndpoint(IMediator mediator, CurrentUser currentUser) : IConfigurableApiEndpoint
+public sealed class RemoveMealEndpoint(IMediator mediator, CurrentUser currentUser) : IApiEndpoint
 {
     public void Configure(RouteHandlerBuilder builder) => builder
         .WithTags("Meals")
@@ -14,9 +14,9 @@ public sealed class RemoveMealEndpoint(IMediator mediator, CurrentUser currentUs
     [ApiEndpointHandler]
     public async Task<IResult> HandleAsync(int mealId)
     {
-        var userId = currentUser.GetId(); // TODO: Use this to validate that the user owns the meal
-        var command = new RemoveMealCommand(mealId);
-        await mediator.Send(command);
-        return Results.Ok();
+        var userId = currentUser.GetId();
+        var command = new RemoveMealCommand(MealId: mealId, UserId: userId);
+        var result = await mediator.Send(command);
+        return result.ToHttpResult();
     }
 }

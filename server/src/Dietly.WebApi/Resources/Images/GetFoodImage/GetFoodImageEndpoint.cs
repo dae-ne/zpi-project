@@ -5,7 +5,7 @@ using Dietly.WebApi.Infrastructure.Interfaces;
 namespace Dietly.WebApi.Resources.Images.GetFoodImage;
 
 [ApiEndpointGet("/images/food/{fileName}")]
-public sealed class GetFoodImageEndpoint(IMediator mediator) : IConfigurableApiEndpoint
+public sealed class GetFoodImageEndpoint(IMediator mediator) : IApiEndpoint
 {
     public void Configure(RouteHandlerBuilder builder) => builder
         .WithTags("Images")
@@ -17,16 +17,7 @@ public sealed class GetFoodImageEndpoint(IMediator mediator) : IConfigurableApiE
     public async Task<IResult> HandleAsync(string fileName)
     {
         var query = new GetFoodImageQuery(fileName);
-        var image = await mediator.Send(query);
-        var fileExtension = fileName.Split('.').Last();
-        var mimeType = fileExtension switch
-        {
-            "png" => "image/png",
-            "jpg" => "image/jpeg",
-            "jpeg" => "image/jpeg",
-            "gif" => "image/gif",
-            _ => "application/octet-stream"
-        };
-        return Results.File(image, mimeType);
+        var result = await mediator.Send(query);
+        return result.ToHttpResult();
     }
 }

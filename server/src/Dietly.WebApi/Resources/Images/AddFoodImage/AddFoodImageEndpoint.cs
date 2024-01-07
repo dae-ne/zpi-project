@@ -5,7 +5,7 @@ using Dietly.WebApi.Infrastructure.Interfaces;
 namespace Dietly.WebApi.Resources.Images.AddFoodImage;
 
 [ApiEndpointPost("/images/food")]
-public sealed class AddFoodImageEndpoint(IMediator mediator) : IConfigurableApiEndpoint
+public sealed class AddFoodImageEndpoint(IMediator mediator) : IApiEndpoint
 {
     public void Configure(RouteHandlerBuilder builder) => builder
         .WithTags("Images")
@@ -17,8 +17,7 @@ public sealed class AddFoodImageEndpoint(IMediator mediator) : IConfigurableApiE
     public async Task<IResult> HandleAsync(IFormFile file, HttpContext httpContext)
     {
         var command = new AddFoodImageCommand(file.ToByteArray(), file.FileName);
-        var fileName = await mediator.Send(command);
-        var imageUrl = httpContext.Request.GenerateFoodImageUrl(fileName);
-        return Results.Created(imageUrl, null);
+        var result = await mediator.Send(command);
+        return result.ToHttpResult(httpContext.Request.GenerateFoodImageUrl);
     }
 }

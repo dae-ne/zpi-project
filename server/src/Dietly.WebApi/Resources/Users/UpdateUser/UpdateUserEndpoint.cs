@@ -4,7 +4,7 @@ using Dietly.WebApi.Infrastructure.Interfaces;
 namespace Dietly.WebApi.Resources.Users.UpdateUser;
 
 [ApiEndpointPut("/api/users/{userId}")]
-public sealed class UpdateUserEndpoint(IMediator mediator, CurrentUser currentUser) : IConfigurableApiEndpoint
+public sealed class UpdateUserEndpoint(IMediator mediator, CurrentUser currentUser) : IApiEndpoint
 {
     public void Configure(RouteHandlerBuilder builder) => builder
         .WithTags("Users")
@@ -23,7 +23,7 @@ public sealed class UpdateUserEndpoint(IMediator mediator, CurrentUser currentUs
         }
 
         var command = request.ToCommand(userId);
-        await mediator.Send(command);
-        return Results.Ok();
+        var result = await mediator.Send(command);
+        return result.ToHttpResult();
     }
 }

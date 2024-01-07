@@ -1,6 +1,6 @@
 namespace Dietly.WebApi.Infrastructure.Interfaces;
 
-internal interface IConfigurableApiEndpoint
+internal interface IApiEndpoint
 {
     void Configure(RouteHandlerBuilder builder);
 }

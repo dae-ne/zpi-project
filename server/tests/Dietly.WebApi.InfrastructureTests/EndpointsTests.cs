@@ -63,7 +63,7 @@ public class EndpointsTests
 
         // Act
         var endpointsWithoutIConfigurableApiEndpoint = endpoints
-            .Where(t => !t.IsAssignableTo(typeof(IConfigurableApiEndpoint)))
+            .Where(t => !t.IsAssignableTo(typeof(IApiEndpoint)))
             .ToList();
 
         // Assert

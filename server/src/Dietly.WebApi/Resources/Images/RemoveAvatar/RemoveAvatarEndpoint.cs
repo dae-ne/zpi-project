@@ -5,7 +5,7 @@ using Dietly.WebApi.Infrastructure.Interfaces;
 namespace Dietly.WebApi.Resources.Images.RemoveAvatar;
 
 [ApiEndpointDelete("/images/avatar/{fileName}")]
-public sealed class RemoveAvatarEndpoint(IMediator mediator) : IConfigurableApiEndpoint
+public sealed class RemoveAvatarEndpoint(IMediator mediator) : IApiEndpoint
 {
     public void Configure(RouteHandlerBuilder builder) => builder
         .WithTags("Images")
@@ -15,7 +15,7 @@ public sealed class RemoveAvatarEndpoint(IMediator mediator) : IConfigurableApiE
     public async Task<IResult> HandleAsync(string fileName)
     {
         var command = new RemoveAvatarCommand(fileName);
-        await mediator.Send(command);
-        return Results.Ok();
+        var result = await mediator.Send(command);
+        return result.ToHttpResult();
     }
 }

@@ -5,7 +5,7 @@ using Dietly.WebApi.Infrastructure.Interfaces;
 namespace Dietly.WebApi.Resources.Users.GetUser;
 
 [ApiEndpointGet("/api/users/{userId}")]
-public sealed class GetUserEndpoint(IMediator mediator, CurrentUser currentUser) : IConfigurableApiEndpoint
+public sealed class GetUserEndpoint(IMediator mediator, CurrentUser currentUser) : IApiEndpoint
 {
     public void Configure(RouteHandlerBuilder builder) => builder
         .WithTags("Users")
@@ -24,8 +24,7 @@ public sealed class GetUserEndpoint(IMediator mediator, CurrentUser currentUser)
         }
 
         var query = new GetUserQuery(userId);
-        var user = await mediator.Send(query);
-        var dto = user.ToDto();
-        return Results.Ok(dto);
+        var result = await mediator.Send(query);
+        return result.ToHttpResult(GetUserMapper.ToDto);
     }
 }

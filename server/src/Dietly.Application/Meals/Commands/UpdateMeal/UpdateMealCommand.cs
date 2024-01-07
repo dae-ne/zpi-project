@@ -1,10 +1,11 @@
 using Dietly.Application.Common.Interfaces;
+using Dietly.Application.Common.Result;
 using Dietly.Domain.Events.Meal;
 using Microsoft.EntityFrameworkCore;
 
 namespace Dietly.Application.Meals.Commands.UpdateMeal;
 
-public sealed class UpdateMealCommand : IRequest
+public sealed class UpdateMealCommand : IRequest<Result<object?>>
 {
     public int MealId { get; init; }
 
@@ -16,9 +17,9 @@ public sealed class UpdateMealCommand : IRequest
 }
 
 [UsedImplicitly]
-internal sealed class UpdateMealCommandHandler(IAppDbContext db) : IRequestHandler<UpdateMealCommand>
+internal sealed class UpdateMealCommandHandler(IAppDbContext db) : IRequestHandler<UpdateMealCommand, Result<object?>>
 {
-    public async Task Handle(UpdateMealCommand request, CancellationToken cancellationToken)
+    public async Task<Result<object?>> Handle(UpdateMealCommand request, CancellationToken cancellationToken)
     {
         var meal = await db.Meals
             .Include(m => m.Recipe)
@@ -27,15 +28,12 @@ internal sealed class UpdateMealCommandHandler(IAppDbContext db) : IRequestHandl
 
         if (meal is null)
         {
-            // TODO: handle not found
+            return Results.NotFound("Meal not found");
         }
 
-        // TODO: remove pragma
-#pragma warning disable CS8602 // Dereference of a possibly null reference.
         if (meal.Recipe.UserId != request.UserId)
-#pragma warning restore CS8602 // Dereference of a possibly null reference.
         {
-            // TODO: handle unauthorized
+            return Results.Unauthorized("Meal does not belong to user");
         }
 
         var oldMeal = (Meal)meal.Clone();
@@ -45,6 +43,10 @@ internal sealed class UpdateMealCommandHandler(IAppDbContext db) : IRequestHandl
 
         meal.AddDomainEvent(new MealUpdatedEvent(oldMeal, meal));
 
-        await db.SaveChangesAsync(cancellationToken);
+        var changes = await db.SaveChangesAsync(cancellationToken);
+
+        return changes > 0
+            ? Results.Ok()
+            : Results.UnknownError();
     }
 }

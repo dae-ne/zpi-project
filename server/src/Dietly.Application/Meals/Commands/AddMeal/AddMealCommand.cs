@@ -1,9 +1,10 @@
 using Dietly.Application.Common.Interfaces;
+using Dietly.Application.Common.Result;
 using Dietly.Domain.Events.Meal;
 
 namespace Dietly.Application.Meals.Commands.AddMeal;
 
-public sealed class AddMealCommand : IRequest<int>
+public sealed class AddMealCommand : IRequest<Result<int>>
 {
     public int UserId { get; init; }
 
@@ -13,24 +14,20 @@ public sealed class AddMealCommand : IRequest<int>
 }
 
 [UsedImplicitly]
-internal sealed class AddMealCommandHandler(IAppDbContext db) : IRequestHandler<AddMealCommand, int>
+internal sealed class AddMealCommandHandler(IAppDbContext db) : IRequestHandler<AddMealCommand, Result<int>>
 {
-    public async Task<int> Handle(AddMealCommand request, CancellationToken cancellationToken)
+    public async Task<Result<int>> Handle(AddMealCommand request, CancellationToken cancellationToken)
     {
-        var recipe = await db.Recipes
-            .FindAsync(new object[] { request.RecipeId }, cancellationToken);
+        var recipe = await db.Recipes.FindAsync([request.RecipeId], cancellationToken);
 
         if (recipe is null)
         {
-            // TODO: handle not found
+            return Results.NotFound<int>("Recipe not found");
         }
 
-        // TODO: remove pragma
-#pragma warning disable CS8602 // Dereference of a possibly null reference.
         if (recipe.UserId != request.UserId)
-#pragma warning restore CS8602 // Dereference of a possibly null reference.
         {
-            // TODO: handle unauthorized
+            return Results.Unauthorized<int>("Recipe does not belong to user");
         }
 
         var meal = new Meal
@@ -43,8 +40,10 @@ internal sealed class AddMealCommandHandler(IAppDbContext db) : IRequestHandler<
         meal.AddDomainEvent(new MealAddedEvent(meal));
 
         db.Meals.Add(meal);
-        await db.SaveChangesAsync(cancellationToken);
+        var changes = await db.SaveChangesAsync(cancellationToken);
 
-        return meal.Id;
+        return changes > 0
+            ? Results.Created(meal.Id)
+            : Results.UnknownError<int>();
     }
 }

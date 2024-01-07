@@ -1,10 +1,11 @@
 using Dietly.Application.Common.Interfaces;
+using Dietly.Application.Common.Result;
 using Dietly.Domain.Extensions;
 using Microsoft.EntityFrameworkCore;
 
 namespace Dietly.Application.Plans.Queries.GetPlans;
 
-public sealed class GetPlansQuery : IRequest<IList<DayPlan>>
+public sealed class GetPlansQuery : IRequest<Result<IList<DayPlan>>>
 {
     public int UserId { get; init; }
 
@@ -14,9 +15,9 @@ public sealed class GetPlansQuery : IRequest<IList<DayPlan>>
 }
 
 [UsedImplicitly]
-internal sealed class GetPlansQueryHandler(IAppDbContext db) : IRequestHandler<GetPlansQuery, IList<DayPlan>>
+internal sealed class GetPlansQueryHandler(IAppDbContext db) : IRequestHandler<GetPlansQuery, Result<IList<DayPlan>>>
 {
-    public async Task<IList<DayPlan>> Handle(GetPlansQuery request, CancellationToken cancellationToken)
+    public async Task<Result<IList<DayPlan>>> Handle(GetPlansQuery request, CancellationToken cancellationToken)
     {
         var meals = await db.Meals
             .Include(m => m.Recipe)
@@ -25,10 +26,15 @@ internal sealed class GetPlansQueryHandler(IAppDbContext db) : IRequestHandler<G
                         DateOnly.FromDateTime(m.Date) <= request.EndDate)
             .ToListAsync(cancellationToken);
 
+        if (meals.Count == 0)
+        {
+            return Results.NotFound<IList<DayPlan>>("Plans not found");
+        }
+
         var plans = meals
             .ToDayPlans(request.StartDate, request.EndDate, request.UserId)
             .ToList();
 
-        return plans;
+        return Results.Ok<IList<DayPlan>>(plans);
     }
 }

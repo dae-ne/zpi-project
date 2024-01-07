@@ -9,4 +9,4 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-dotnet ./Recipes.WebApi.dll
+dotnet ./Dietly.WebApi.dll

@@ -5,7 +5,7 @@ using Dietly.WebApi.Infrastructure.Interfaces;
 namespace Dietly.WebApi.Resources.Recipes.GetRecipe;
 
 [ApiEndpointGet("/api/recipes/{recipeId}")]
-public sealed class GetRecipeEndpoint(IMediator mediator, CurrentUser currentUser) : IConfigurableApiEndpoint
+public sealed class GetRecipeEndpoint(IMediator mediator, CurrentUser currentUser) : IApiEndpoint
 {
     public void Configure(RouteHandlerBuilder builder) => builder
         .WithTags("Recipes")
@@ -17,8 +17,7 @@ public sealed class GetRecipeEndpoint(IMediator mediator, CurrentUser currentUse
     {
         var userId = currentUser.GetId();
         var query = new GetRecipeQuery(recipeId, userId);
-        var recipe = await mediator.Send(query);
-        var dto = recipe.ToDto();
-        return Results.Ok(dto);
+        var result = await mediator.Send(query);
+        return result.ToHttpResult(GetRecipeMapper.ToDto);
     }
 }

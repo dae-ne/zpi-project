@@ -1,14 +1,16 @@
 using Dietly.Application.Common.Interfaces;
+using Dietly.Application.Common.Result;
 
 namespace Dietly.Application.Images.Commands.RemoveAvatar;
 
-public sealed record RemoveAvatarCommand(string FileName) : IRequest;
+public sealed record RemoveAvatarCommand(string FileName) : IRequest<Result<object?>>;
 
 [UsedImplicitly]
-internal sealed class RemoveAvatarCommandHandler(IAvatarStorage storage) : IRequestHandler<RemoveAvatarCommand>
+internal sealed class RemoveAvatarCommandHandler(IAvatarStorage storage) : IRequestHandler<RemoveAvatarCommand, Result<object?>>
 {
-    public async Task Handle(RemoveAvatarCommand request, CancellationToken cancellationToken)
+    public async Task<Result<object?>> Handle(RemoveAvatarCommand request, CancellationToken cancellationToken)
     {
         await storage.DeleteAsync(request.FileName, cancellationToken);
+        return Results.Ok();
     }
 }

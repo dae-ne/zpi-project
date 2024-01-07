@@ -5,7 +5,7 @@ using Dietly.WebApi.Infrastructure.Interfaces;
 namespace Dietly.WebApi.Resources.Images.AddAvatar;
 
 [ApiEndpointPost("/images/avatar")]
-public sealed class AddAvatarEndpoint(IMediator mediator) : IConfigurableApiEndpoint
+public sealed class AddAvatarEndpoint(IMediator mediator) : IApiEndpoint
 {
     public void Configure(RouteHandlerBuilder builder) => builder
         .WithTags("Images")
@@ -17,8 +17,7 @@ public sealed class AddAvatarEndpoint(IMediator mediator) : IConfigurableApiEndp
     public async Task<IResult> HandleAsync(IFormFile file, HttpContext httpContext)
     {
         var command = new AddAvatarCommand(file.ToByteArray(), file.FileName);
-        var fileName = await mediator.Send(command);
-        var avatarUrl = httpContext.Request.GenerateAvatarUrl(fileName);
-        return Results.Created(avatarUrl, null);
+        var result = await mediator.Send(command);
+        return result.ToHttpResult(httpContext.Request.GenerateAvatarUrl);
     }
 }

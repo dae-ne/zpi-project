@@ -1,30 +1,41 @@
 using Dietly.Application.Common.Interfaces;
+using Dietly.Application.Common.Result;
 using Dietly.Domain.Events.Meal;
+using Microsoft.EntityFrameworkCore;
 
 namespace Dietly.Application.Meals.Commands.RemoveMeal;
 
-public sealed record RemoveMealCommand(int MealId) : IRequest;
+public sealed record RemoveMealCommand(int MealId, int UserId) : IRequest<Result<object?>>;
 
 [UsedImplicitly]
-internal sealed class RemoveMealCommandHandler(IAppDbContext db) : IRequestHandler<RemoveMealCommand>
+internal sealed class RemoveMealCommandHandler(IAppDbContext db) : IRequestHandler<RemoveMealCommand, Result<object?>>
 {
-    public async Task Handle(RemoveMealCommand request, CancellationToken cancellationToken)
+    public async Task<Result<object?>> Handle(RemoveMealCommand request, CancellationToken cancellationToken)
     {
-        // TODO: check user id
-        var meal = await db.Meals
-            .FindAsync(new object[] { request.MealId }, cancellationToken);
+        var meals = await db.Meals
+            .Include(m => m.Recipe)
+            .Where(m => m.Id == request.MealId)
+            .ToListAsync(cancellationToken);
 
-        if (meal is null)
+        if (meals.Count == 0)
         {
-            // TODO: handle not found
+            return Results.NotFound("Meal not found");
         }
 
-        // TODO: remove pragma
-#pragma warning disable CS8602 // Dereference of a possibly null reference.
+        var meal = meals.First();
+
+        if (meal.Recipe.UserId != request.UserId)
+        {
+            return Results.Unauthorized("Meal does not belong to user");
+        }
+
         meal.AddDomainEvent(new MealRemovedEvent(meal));
-#pragma warning restore CS8602 // Dereference of a possibly null reference.
 
         db.Meals.Remove(meal);
-        await db.SaveChangesAsync(cancellationToken);
+        var changes = await db.SaveChangesAsync(cancellationToken);
+
+        return changes > 0
+            ? Results.Ok()
+            : Results.UnknownError();
     }
 }

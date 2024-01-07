@@ -1,10 +1,11 @@
 using Dietly.Application.Common.Interfaces;
+using Dietly.Application.Common.Result;
 using Dietly.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 
 namespace Dietly.Application.Recipes.Commands.UpdateRecipe;
 
-public sealed class UpdateRecipeCommand : IRequest
+public sealed class UpdateRecipeCommand : IRequest<Result<object?>>
 {
     public int Id { get; init; }
 
@@ -36,9 +37,9 @@ public sealed class UpdateRecipeCommand : IRequest
 }
 
 [UsedImplicitly]
-internal sealed class UpdateRecipeContractHandler(IAppDbContext db) : IRequestHandler<UpdateRecipeCommand>
+internal sealed class UpdateRecipeContractHandler(IAppDbContext db) : IRequestHandler<UpdateRecipeCommand, Result<object?>>
 {
-    public async Task Handle(UpdateRecipeCommand request, CancellationToken cancellationToken)
+    public async Task<Result<object?>> Handle(UpdateRecipeCommand request, CancellationToken cancellationToken)
     {
         var existingIngredientIds = request.Ingredients
             .Where(i => i.Id is not null)
@@ -80,8 +81,7 @@ internal sealed class UpdateRecipeContractHandler(IAppDbContext db) : IRequestHa
 
         if (recipe is null)
         {
-            // TODO: exception type
-            throw new Exception();
+            return Results.NotFound("Recipe not found");
         }
 
         recipe.Title = request.Title;
@@ -110,6 +110,10 @@ internal sealed class UpdateRecipeContractHandler(IAppDbContext db) : IRequestHa
         }));
         recipe.Directions = entityDirections.AsQueryable();
 
-        await db.SaveChangesAsync(cancellationToken);
+        var changes = await db.SaveChangesAsync(cancellationToken);
+
+        return changes > 0
+            ? Results.Ok()
+            : Results.UnknownError();
     }
 }

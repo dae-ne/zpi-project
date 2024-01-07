@@ -1,10 +1,11 @@
 using Dietly.Application.Common.Interfaces;
+using Dietly.Application.Common.Result;
 using Dietly.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 
 namespace Dietly.Application.Recipes.Commands.CreateRecipe;
 
-public sealed class CreateRecipeCommand : IRequest<int>
+public sealed class CreateRecipeCommand : IRequest<Result<int>>
 {
     public int UserId { get; init; }
 
@@ -34,9 +35,9 @@ public sealed class CreateRecipeCommand : IRequest<int>
 }
 
 [UsedImplicitly]
-internal sealed class CreateRecipeContractHandler(IAppDbContext db) : IRequestHandler<CreateRecipeCommand, int>
+internal sealed class CreateRecipeContractHandler(IAppDbContext db) : IRequestHandler<CreateRecipeCommand, Result<int>>
 {
-    public async Task<int> Handle(CreateRecipeCommand request, CancellationToken cancellationToken)
+    public async Task<Result<int>> Handle(CreateRecipeCommand request, CancellationToken cancellationToken)
     {
         var existingIngredientIds = request.Ingredients
             .Where(i => i.Id is not null)
@@ -84,8 +85,10 @@ internal sealed class CreateRecipeContractHandler(IAppDbContext db) : IRequestHa
 
         db.Recipes.Add(recipe);
 
-        await db.SaveChangesAsync(cancellationToken);
+        var changes = await db.SaveChangesAsync(cancellationToken);
 
-        return recipe.Id;
+        return changes > 0
+            ? Results.Ok(recipe.Id)
+            : Results.UnknownError<int>();
     }
 }

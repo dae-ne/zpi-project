@@ -21,19 +21,16 @@ internal static class EndpointRouteBuilderExtensions
         switch (methods.Count)
         {
             case 0:
-                throw new InvalidOperationException(
-                    $"Unable to find any method with the '{nameof(ApiEndpointHandlerAttribute)}' attribute in the '{endpoint.Name}' type.");
+                throw new InvalidOperationException($"Unable to find any method with the '{nameof(ApiEndpointHandlerAttribute)}' attribute in the '{endpoint.Name}' type.");
             case > 1:
-                throw new InvalidOperationException(
-                    $"Found more than one method with the '{nameof(ApiEndpointHandlerAttribute)}' attribute in the '{endpoint.Name}' type.");
+                throw new InvalidOperationException($"Found more than one method with the '{nameof(ApiEndpointHandlerAttribute)}' attribute in the '{endpoint.Name}' type.");
         }
 
         var method = methods.Single();
 
         if (method.ReturnType != typeof(Task<IResult>))
         {
-            throw new InvalidOperationException(
-                $"The '{method.Name}' method in the '{endpoint.Name}' type must return a '{typeof(Task<IResult>).Name}' type.");
+            throw new InvalidOperationException($"The '{method.Name}' method in the '{endpoint.Name}' type must return a '{typeof(Task<IResult>).Name}' type.");
         }
 
         var constructorParams = endpoint
@@ -64,9 +61,8 @@ internal static class EndpointRouteBuilderExtensions
                 app.MapPut(route, handlerDelegate),
             _ when apiAttributeType == typeof(ApiEndpointDeleteAttribute) =>
                 app.MapDelete(route, handlerDelegate),
-            // TODO: exception type and message
-            _ => throw new InvalidOperationException(
-                $"The '{apiAttributeType.Name}' attribute is not supported.")
+            // TODO: more http methods support
+            _ => throw new InvalidOperationException($"The '{apiAttributeType.Name}' attribute is not supported.")
         };
 
         return builder.RequireAuthorization();

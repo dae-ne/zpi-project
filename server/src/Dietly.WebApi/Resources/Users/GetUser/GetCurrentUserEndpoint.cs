@@ -7,7 +7,7 @@ namespace Dietly.WebApi.Resources.Users.GetUser;
 // It's an alias for the standard /api/users/{userId} endpoint.
 // The only difference is that it uses the current user's ID instead of the one provided in the URL.
 [ApiEndpointGet("/api/users/me")]
-public sealed class GetCurrentUserEndpoint(IMediator mediator, CurrentUser currentUser) : IConfigurableApiEndpoint
+public sealed class GetCurrentUserEndpoint(IMediator mediator, CurrentUser currentUser) : IApiEndpoint
 {
     public void Configure(RouteHandlerBuilder builder) => builder
         .WithTags("Users")
@@ -19,8 +19,7 @@ public sealed class GetCurrentUserEndpoint(IMediator mediator, CurrentUser curre
     {
         var userId = currentUser.GetId();
         var query = new GetUserQuery(userId);
-        var user = await mediator.Send(query);
-        var dto = user.ToDto();
-        return Results.Ok(dto);
+        var result = await mediator.Send(query);
+        return result.ToHttpResult(GetUserMapper.ToDto);
     }
 }
