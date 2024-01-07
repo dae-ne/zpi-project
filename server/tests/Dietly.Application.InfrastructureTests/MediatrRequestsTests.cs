@@ -29,4 +29,22 @@ public class MediatrRequestsTests
 
         Assert.Equal(allRequestsInterfaces.Count, requestsWithResult.Count);
     }
+
+    [Fact]
+    public void EveryRequestShouldHaveHandler()
+    {
+        var allRequests = typeof(DependencyInjection).Assembly.GetTypes()
+            .Where(t => t.GetInterfaces().Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IRequest<>)))
+            .ToList();
+
+        var allHandlers = typeof(DependencyInjection).Assembly.GetTypes()
+            .Where(t => t.GetInterfaces().Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IRequestHandler<,>)))
+            .ToList();
+
+        var requestsWithoutHandler = allRequests
+            .Where(r => !allHandlers.Any(h => h.GetInterfaces().Any(i => i.GetGenericArguments().Any(a => a == r))))
+            .ToList();
+
+        Assert.Empty(requestsWithoutHandler);
+    }
 }
