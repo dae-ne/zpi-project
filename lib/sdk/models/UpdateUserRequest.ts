@@ -4,6 +4,7 @@
 /* eslint-disable */
 
 export type UpdateUserRequest = {
+  id?: number;
   userName?: string | null;
   avatarUrl?: string | null;
 };

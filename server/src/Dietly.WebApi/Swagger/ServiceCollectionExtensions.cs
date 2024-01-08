@@ -24,7 +24,8 @@ internal static class ServiceCollectionExtensions
             options.DocInclusionPredicate(SwaggerEndpointsConfigHelper.IsEndpointValid);
             options.CustomOperationIds(SwaggerEndpointsConfigHelper.GetOperationId);
             // options.OperationFilter<ExcludeTwoFactorAuthPropertiesFilter>();
-            options.OperationFilter<AddLocationHeaderToPostResponseFilter>();
+            options.OperationFilter<LocationHeaderOperationFilter>();
+            options.SchemaFilter<EnumSchemaFilter>();
             options.AddSecurityRequirement(new OpenApiSecurityRequirement
             {
                 {

@@ -3,7 +3,7 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Dietly.WebApi.Swagger.Filters;
 
-internal sealed class AddLocationHeaderToPostResponseFilter : IOperationFilter
+internal sealed class LocationHeaderOperationFilter : IOperationFilter
 {
     public void Apply(OpenApiOperation operation, OperationFilterContext context)
     {

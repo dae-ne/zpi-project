@@ -21,11 +21,11 @@ public sealed class GetRecipeResponse
 
     public int Calories { get; init; }
 
-    public List<GetRecipeIngredientResponse> Ingredients { get; init; } = new();
+    public List<GetRecipeIngredientResponse> Ingredients { get; init; } = [];
 
-    public List<GetRecipeDirectionResponse> Directions { get; init; } = new();
+    public List<GetRecipeDirectionResponse> Directions { get; init; } = [];
 
-    public List<GetRecipeTagResponse> Tags { get; init; } = new();
+    public List<GetRecipeTagResponse> Tags { get; init; } = [];
 
     public sealed record GetRecipeIngredientResponse(int Id, string Name);
 

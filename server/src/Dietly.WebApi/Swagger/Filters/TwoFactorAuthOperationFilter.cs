@@ -4,7 +4,7 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 namespace Dietly.WebApi.Swagger.Filters;
 
 // TODO: it's not working
-internal sealed class ExcludeTwoFactorAuthPropertiesFilter : IOperationFilter
+internal sealed class TwoFactorAuthOperationFilter : IOperationFilter
 {
     public void Apply(OpenApiOperation operation, OperationFilterContext context)
     {

@@ -1097,9 +1097,9 @@
       },
       "DifficultyLevel": {
         "enum": [
-          0,
-          1,
-          2
+          "Easy",
+          "More effort",
+          "Pro"
         ],
         "type": "integer",
         "format": "int32"
