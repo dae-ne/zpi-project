@@ -2,7 +2,7 @@ using Dietly.Domain.Entities;
 
 namespace Dietly.Infrastructure.Identity;
 
-public static class AppUserMapper
+internal static class AppUserMapper
 {
     public static User ToDomain(this AppUser appUser) => new()
     {

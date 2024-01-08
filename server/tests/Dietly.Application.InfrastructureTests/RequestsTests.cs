@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Dietly.Application.InfrastructureTests;
 
-public class MediatrRequestsTests
+public class RequestsTests
 {
     [Fact]
     public void AllRequestsHaveResponse()
@@ -46,5 +46,17 @@ public class MediatrRequestsTests
             .ToList();
 
         Assert.Empty(requestsWithoutHandler);
+    }
+
+    [Fact]
+    public void AllRequestsShouldBePublic()
+    {
+        var allRequests = typeof(DependencyInjection).Assembly.GetTypes()
+            .Where(t => t.GetInterfaces().Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IRequest<>)))
+            .ToList();
+
+        var publicRequests = allRequests.Where(r => r.IsPublic).ToList();
+
+        Assert.Equal(allRequests.Count, publicRequests.Count);
     }
 }
