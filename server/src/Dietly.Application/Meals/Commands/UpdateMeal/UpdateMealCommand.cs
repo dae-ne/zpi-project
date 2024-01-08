@@ -33,7 +33,7 @@ internal sealed class UpdateMealCommandHandler(IAppDbContext db) : IRequestHandl
 
         if (meal.Recipe.UserId != request.UserId)
         {
-            return Results.Unauthorized("Meal does not belong to user");
+            return Results.Forbidden("Meal does not belong to user");
         }
 
         var oldMeal = (Meal)meal.Clone();

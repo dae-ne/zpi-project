@@ -26,7 +26,7 @@ internal static class ResultExtensions
             ResultType.Created when dto?.GetType() == typeof(string) => Results.Created(dto as string, null),
             ResultType.Invalid => Results.BadRequest(result.Errors),
             ResultType.NotFound => Results.NotFound(result.Errors),
-            ResultType.Unauthorized => Results.Unauthorized(),
+            ResultType.Forbidden => Results.Forbid(),
             ResultType.ValidationError => Results.BadRequest(result.Errors),
             // ResultType.UnknownError => Results.StatusCode(StatusCodes.Status500InternalServerError),
             _ => Results.StatusCode(StatusCodes.Status500InternalServerError)

@@ -7,7 +7,7 @@ public enum ResultType
     Created,
     Invalid,
     NotFound,
-    Unauthorized,
+    Forbidden,
     ValidationError,
     UnknownError
 }

@@ -22,9 +22,9 @@ public static class Results
 
     public static Result<object?> NotFound(params string[] errors) => Result<object?>.NotFound(errors);
 
-    public static Result<TValue> Unauthorized<TValue>(params string[] errors) => Result<TValue>.Unauthorized(errors);
+    public static Result<TValue> Forbidden<TValue>(params string[] errors) => Result<TValue>.Forbidden(errors);
 
-    public static Result<object?> Unauthorized(params string[] errors) => Result<object?>.Unauthorized(errors);
+    public static Result<object?> Forbidden(params string[] errors) => Result<object?>.Forbidden(errors);
 
     public static Result<TValue> ValidationError<TValue>(params string[] errors) => Result<TValue>.ValidationError(errors);
 

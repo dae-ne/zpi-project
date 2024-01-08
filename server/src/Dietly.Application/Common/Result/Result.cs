@@ -1,5 +1,6 @@
 ﻿namespace Dietly.Application.Common.Result;
 
+// TODO: refactor this
 public class Result<TValue>
 {
     private Result()
@@ -53,7 +54,7 @@ public class Result<TValue>
 
     public static Result<TValue> NotFound(IEnumerable<string> errors) => new(ResultType.NotFound, errors);
 
-    public static Result<TValue> Unauthorized(IEnumerable<string> errors) => new(ResultType.Unauthorized, errors);
+    public static Result<TValue> Forbidden(IEnumerable<string> errors) => new(ResultType.Forbidden, errors);
 
     public static Result<TValue> ValidationError(IEnumerable<string> errors) => new(ResultType.ValidationError, errors);
 

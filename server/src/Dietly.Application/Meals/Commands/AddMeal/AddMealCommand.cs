@@ -27,7 +27,7 @@ internal sealed class AddMealCommandHandler(IAppDbContext db) : IRequestHandler<
 
         if (recipe.UserId != request.UserId)
         {
-            return Results.Unauthorized<int>("Recipe does not belong to user");
+            return Results.Forbidden<int>("Recipe does not belong to user");
         }
 
         var meal = new Meal
