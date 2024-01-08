@@ -1,10 +1,11 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "pipeline": {
+    "start": {},
+    "build": {},
     "sync": {
       "cache": false
     },
-    "start": {},
     "test": {}
   }
 }

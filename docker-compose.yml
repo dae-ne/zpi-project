@@ -26,7 +26,17 @@ services:
       - azurite
       - postgres
 
-  # TODO: node.js
+  node:
+    container_name: node
+    build:
+      context: .
+      dockerfile: infra/local/node/Dockerfile
+    volumes:
+      - node:/app
+    ports:
+      - 3000:3000
+    depends_on:
+      - dotnet
 
   postgres:
     container_name: postgres
@@ -45,5 +55,5 @@ services:
 volumes:
   azurite:
   dotnet:
-  # node:
+  node:
   postgres:

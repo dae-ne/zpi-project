@@ -3,6 +3,7 @@
   "private": true,
   "scripts": {
     "start": "turbo run start",
+    "build": "turbo run build",
     "sync": "turbo run sync",
     "test": "turbo run test"
   },
@@ -12,10 +13,5 @@
   ],
   "devDependencies": {
     "turbo": "^1.11.1"
-  },
-  "dependencies": {
-    "@mui/x-date-pickers": "^6.18.5",
-    "dayjs": "^1.11.10",
-    "moment": "^2.29.4"
   }
 }
