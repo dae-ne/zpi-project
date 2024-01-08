@@ -3,9 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type GetCurrentUserResponse = {
-  id?: number;
-  userName?: string | null;
-  email?: string | null;
-  avatarUrl?: string | null;
+export type CreateRecipeTagDto = {
+  id?: number | null;
+  name?: string | null;
 };

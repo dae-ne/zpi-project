@@ -1,0 +1,46 @@
+@import '../../variables.scss';
+
+.search-button {
+    border-radius: 0 5px 5px 0;
+    width: 20%;
+}
+
+.add-button {
+    width: 25px;
+    border-radius: 5px;
+}
+
+.recipe-header {
+    font-size: 1.65em;
+    font-weight: 600;
+}
+
+.recipe-ingridients-list {
+    font-size: $font-small;
+    padding-left: 1em;
+
+    .recipe-ingridient {
+        margin-bottom: 5px;
+        list-style: none;
+    }
+
+    li:before {
+        content: "•";
+        font-size: 20px;
+        margin-right: 5px;
+    }
+}
+
+.recipe-directions {
+
+    font-size: $font-small;
+
+    .recipe-direction-header {
+        margin-top: 15px;
+        font-weight: 600;
+    }
+
+    .recipe-direction-text {
+        margin: 5px 0;
+    }
+}

@@ -5,12 +5,34 @@
 import type { CreateRecipeRequest } from '../models/CreateRecipeRequest';
 import type { GetRecipeResponse } from '../models/GetRecipeResponse';
 import type { GetRecipesResponse } from '../models/GetRecipesResponse';
+import type { UpdateRecipeRequest } from '../models/UpdateRecipeRequest';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
 
 export class RecipesService {
+
+  /**
+   * @param recipeId 
+   * @param requestBody 
+   * @returns any Success
+   * @throws ApiError
+   */
+  public static updateRecipe(
+recipeId: number,
+requestBody: UpdateRecipeRequest,
+): CancelablePromise<any> {
+    return __request(OpenAPI, {
+      method: 'PUT',
+      url: '/api/recipes/{recipeId}',
+      path: {
+        'recipeId': recipeId,
+      },
+      body: requestBody,
+      mediaType: 'application/json',
+    });
+  }
 
   /**
    * @param recipeId 
@@ -59,17 +81,18 @@ recipeId: number,
 
   /**
    * @param requestBody 
-   * @returns any Created
+   * @returns string Created
    * @throws ApiError
    */
   public static createRecipe(
 requestBody: CreateRecipeRequest,
-): CancelablePromise<any> {
+): CancelablePromise<string> {
     return __request(OpenAPI, {
       method: 'POST',
       url: '/api/recipes',
       body: requestBody,
       mediaType: 'application/json',
+      responseHeader: 'location',
     });
   }
 

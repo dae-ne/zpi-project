@@ -78,37 +78,39 @@ fileName: string,
 
   /**
    * @param formData 
-   * @returns any Created
+   * @returns string Created
    * @throws ApiError
    */
   public static addFoodImage(
 formData?: {
 file: Blob;
 },
-): CancelablePromise<any> {
+): CancelablePromise<string> {
     return __request(OpenAPI, {
       method: 'POST',
       url: '/images/food',
       formData: formData,
       mediaType: 'multipart/form-data',
+      responseHeader: 'location',
     });
   }
 
   /**
    * @param formData 
-   * @returns any Created
+   * @returns string Created
    * @throws ApiError
    */
   public static addAvatar(
 formData?: {
 file: Blob;
 },
-): CancelablePromise<any> {
+): CancelablePromise<string> {
     return __request(OpenAPI, {
       method: 'POST',
       url: '/images/avatar',
       formData: formData,
       mediaType: 'multipart/form-data',
+      responseHeader: 'location',
     });
   }
 
