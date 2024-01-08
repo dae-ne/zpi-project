@@ -1,5 +1,5 @@
 {
-  "name": "codegen",
+  "name": "@dietly/codegen",
   "private": true,
   "scripts": {
     "sync": "openapi -i ../../openapi.json -o ../sdk -c axios --indent 2 && copy-file ../../openapi.json ./openapi.snapshot.json",

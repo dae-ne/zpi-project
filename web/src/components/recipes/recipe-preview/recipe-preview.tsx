@@ -5,7 +5,7 @@ import RecipePreviewContent from "./recipe-preview-content"
 import {
     RecipesService, GetRecipeResponse, CreateRecipeDirectionDto,
     CreateRecipeIngredientDto, CreateRecipeTagDto, DifficultyLevel
-} from "../../../sdk"
+} from "@dietly/sdk"
 import { useNavigate, useParams } from "react-router-dom"
 import { RECIPE_LIST } from "../../../constants/app-route"
 

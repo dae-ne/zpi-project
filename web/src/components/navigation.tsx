@@ -7,7 +7,7 @@ import { AppBar, Avatar, Box, Button, Container, IconButton, Menu, MenuItem, Too
 import appTheme from './theme';
 import Cookies from 'universal-cookie';
 import { ACCESS_TOKEN_NAME, REFRESH_TOKEN_NAME } from '../constants/cookies';
-import { OpenAPI } from '../sdk';
+import { OpenAPI } from '@dietly/sdk';
 import { ROOT, SECURITY_LOGIN } from '../constants/app-route';
 
 const logout: string = "Logout"

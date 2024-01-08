@@ -11,7 +11,7 @@ import appTheme from "../theme";
 import moment from "moment";
 import CloseIcon from '@mui/icons-material/Close';
 import { RecipeListMode } from "../../enums/recipe";
-import { AddMealRequest, GetMealResponse, GetPlanResponse, GetRecipeResponse, MealsService, PlansService } from "../../sdk";
+import { AddMealRequest, GetMealResponse, GetPlanResponse, GetRecipeResponse, MealsService, PlansService } from "@dietly/sdk";
 import Meal from "./meal";
 import RecipeList from "../recipes/recipe-list/recipe-list";
 

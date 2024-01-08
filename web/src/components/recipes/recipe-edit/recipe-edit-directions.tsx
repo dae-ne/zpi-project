@@ -1,6 +1,6 @@
 import React from "react"
 import { RecipeEditDataInterface } from "./recipe-edit-content";
-import { CreateRecipeDirectionDto } from "../../../sdk";
+import { CreateRecipeDirectionDto } from "@dietly/sdk";
 import DeleteIcon from '@mui/icons-material/Delete';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';

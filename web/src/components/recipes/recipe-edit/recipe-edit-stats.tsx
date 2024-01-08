@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react"
 import CustomTextField from "../../controls/custom-text-field"
 import CustomSelect from "../../controls/custom-select";
 import NumericTextField from "../../controls/numeric-text-field";
-import { CreateRecipeTagDto, DifficultyLevel } from "../../../sdk";
+import { CreateRecipeTagDto, DifficultyLevel } from "@dietly/sdk";
 import RecipeEditTags from "./recipe-edit-tags";
 import { toBase64 } from "../../../tools/files";
-import { getDifficultyId, getDifficultyName } from "../../../sdk/models/DifficultyLevel";
+import { getDifficultyId, getDifficultyName } from "@dietly/sdk/models/DifficultyLevel";
 import AddIcon from '@mui/icons-material/Add';
 
 interface RecipeEditStatsInterface {

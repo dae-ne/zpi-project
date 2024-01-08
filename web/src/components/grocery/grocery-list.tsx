@@ -7,7 +7,7 @@ import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment"
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider"
 import { Moment } from "moment"
 import moment from "moment"
-import { GetPlansResponse, PlansService } from "../../sdk"
+import { GetPlansResponse, PlansService } from "@dietly/sdk"
 
 const GroceryList = () => {
     const [dateFrom, setDateFrom] = useState<Moment | null>(moment(new Date()).startOf('day'))
