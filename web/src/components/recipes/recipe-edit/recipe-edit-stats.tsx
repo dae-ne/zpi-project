@@ -6,6 +6,7 @@ import { CreateRecipeTagDto, DifficultyLevel } from "@dietly/sdk";
 import RecipeEditTags from "./recipe-edit-tags";
 import { toBase64 } from "../../../tools/files";
 import AddIcon from '@mui/icons-material/Add';
+import { getDifficultyId, getDifficultyName } from "../../../tools/enums";
 
 interface RecipeEditStatsInterface {
     difficultyLevel: DifficultyLevel,
@@ -23,9 +24,9 @@ interface RecipeEditStatsInterface {
 const inputStyle = { borderRadius: "5px 0 0 5px", fontSize: "0.9em" }
 
 const DEFAULT_DIFFICULTIES: Array<string> = [
-    DifficultyLevel.EASY,
-    DifficultyLevel.MORE_EFFORT,
-    DifficultyLevel.PRO
+    getDifficultyName(DifficultyLevel._0),
+    getDifficultyName(DifficultyLevel._1),
+    getDifficultyName(DifficultyLevel._2)
 ]
 
 const RecipeEditStats = (props: RecipeEditStatsInterface) => {
@@ -34,8 +35,11 @@ const RecipeEditStats = (props: RecipeEditStatsInterface) => {
 
     const [tag, setTag] = useState<string>("");
     const [imagePreview, setImagePreview] = useState<string>("");
+    const [difficultyLevelName, setDifficultyLevelName] = useState<string>("");
 
     const handleDifficultyChange = (value: string) => {
+        setDifficultyLevelName(value)
+        onDifficultyLevelChange(getDifficultyId(value))
         if (!Object.values(DifficultyLevel).includes(value as DifficultyLevel)) {
             return;
         }
@@ -67,6 +71,10 @@ const RecipeEditStats = (props: RecipeEditStatsInterface) => {
     };
 
     useEffect(() => {
+        setDifficultyLevelName(getDifficultyName(difficultyLevel))
+    }, [])
+
+    useEffect(() => {
         setImagePreview(imageUrl)
     }, [imageUrl])
 
@@ -90,7 +98,7 @@ const RecipeEditStats = (props: RecipeEditStatsInterface) => {
                 placeholder={"Difficulty level"}
                 fullWidth
                 values={DEFAULT_DIFFICULTIES}
-                value={difficultyLevel}
+                value={difficultyLevelName}
                 setValue={handleDifficultyChange}
             />
 

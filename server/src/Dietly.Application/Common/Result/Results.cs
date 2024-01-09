@@ -1,6 +1,6 @@
 ﻿namespace Dietly.Application.Common.Result;
 
-public static class Results
+internal static class Results
 {
     public static Result<TValue> Ok<TValue>() => Result<TValue>.Ok();
 
@@ -25,10 +25,6 @@ public static class Results
     public static Result<TValue> Forbidden<TValue>(params string[] errors) => Result<TValue>.Forbidden(errors);
 
     public static Result<object?> Forbidden(params string[] errors) => Result<object?>.Forbidden(errors);
-
-    public static Result<TValue> ValidationError<TValue>(params string[] errors) => Result<TValue>.ValidationError(errors);
-
-    public static Result<object?> ValidationError(params string[] errors) => Result<object?>.ValidationError(errors);
 
     public static Result<TValue> UnknownError<TValue>() => Result<TValue>.UnknownError();
 

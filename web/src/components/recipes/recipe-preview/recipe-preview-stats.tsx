@@ -3,6 +3,7 @@ import { CreateRecipeTagDto, DifficultyLevel } from "@dietly/sdk"
 import { useNavigate, useParams } from "react-router-dom";
 import { RECIPE_EDIT_RAW } from "../../../constants/app-route";
 import EditIcon from '@mui/icons-material/Edit';
+import { getDifficultyName } from "../../../tools/enums";
 
 interface RecipePreviewStatsInterface {
     difficultyLevel: DifficultyLevel,
@@ -38,7 +39,7 @@ const RecipePreviewStats = ({ difficultyLevel, time, calories, tags }: RecipePre
             </div>
             <div className="recipe-preview-info-grid-element">
                 <div className="recipe-preview-info-grid-element-header">Difficulty level:</div>
-                <div className="recipe-preview-info-grid-element-text">{difficultyLevel}</div>
+                <div className="recipe-preview-info-grid-element-text">{getDifficultyName(difficultyLevel)}</div>
             </div>
         </div>
         <div className="recipie-preview-info-tags">

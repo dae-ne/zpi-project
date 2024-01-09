@@ -25,7 +25,7 @@ internal sealed partial class EnumSchemaFilter : ISchemaFilter
                 .OfType<EnumMemberAttribute>()
                 .FirstOrDefault();
             var label = enumMemberAttribute is null || string.IsNullOrWhiteSpace(enumMemberAttribute.Value)
-                ? RegexExpression().Replace(enumName, m => $" {m.ToString().ToLower()}")
+                ? enumName
                 : enumMemberAttribute.Value;
             model.Enum.Add(new OpenApiString(label));
         }

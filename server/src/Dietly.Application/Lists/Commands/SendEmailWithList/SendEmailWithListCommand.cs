@@ -19,7 +19,7 @@ internal sealed class SendEmailWithListCommandHandler(IUserService userService, 
     {
         if (!request.Ingredients.Any())
         {
-            return Results.ValidationError("Ingredients list is empty");
+            return Results.Invalid("Ingredients list is empty");
         }
 
         var user = await userService.GetUserAsync(request.UserId, cancellationToken);

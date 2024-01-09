@@ -56,7 +56,5 @@ public class Result<TValue>
 
     public static Result<TValue> Forbidden(IEnumerable<string> errors) => new(ResultType.Forbidden, errors);
 
-    public static Result<TValue> ValidationError(IEnumerable<string> errors) => new(ResultType.ValidationError, errors);
-
     public static Result<TValue> UnknownError() => new(ResultType.UnknownError);
 }

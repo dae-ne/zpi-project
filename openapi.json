@@ -907,6 +907,19 @@
         }
       }
     },
+    "/test": {
+      "get": {
+        "tags": [
+          "Test"
+        ],
+        "operationId": "test",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
     "/api/users/{userId}": {
       "put": {
         "tags": [
@@ -1160,9 +1173,9 @@
       },
       "DifficultyLevel": {
         "enum": [
-          "Easy",
-          "More effort",
-          "Pro"
+          0,
+          1,
+          2
         ],
         "type": "integer",
         "format": "int32"

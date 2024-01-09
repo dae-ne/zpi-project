@@ -3,8 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export enum DifficultyLevel {
-  '_0' = 0,
-  '_1' = 1,
-  '_2' = 2,
-}
+export type SendEmailWithListRequest = {
+  userId?: number;
+  ingredients?: Array<string> | null;
+};

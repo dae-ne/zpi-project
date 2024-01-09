@@ -8,6 +8,5 @@ public enum ResultType
     Invalid,
     NotFound,
     Forbidden,
-    ValidationError,
     UnknownError
 }

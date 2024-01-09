@@ -1,4 +1,5 @@
 ﻿using Dietly.Application.Common.Result;
+using Dietly.WebApi.Resources;
 using Results = Microsoft.AspNetCore.Http.Results;
 
 namespace Dietly.WebApi.Extensions;
@@ -24,10 +25,9 @@ internal static class ResultExtensions
             ResultType.Ok when result.Data is null => Results.Ok(),
             ResultType.Ok => Results.Ok(dto),
             ResultType.Created when dto?.GetType() == typeof(string) => Results.Created(dto as string, null),
-            ResultType.Invalid => Results.BadRequest(result.Errors),
-            ResultType.NotFound => Results.NotFound(result.Errors),
+            ResultType.Invalid => Results.BadRequest(new ErrorDto(400, result.Errors)),
+            ResultType.NotFound => Results.NotFound(new ErrorDto(404, result.Errors)),
             ResultType.Forbidden => Results.Forbid(),
-            ResultType.ValidationError => Results.BadRequest(result.Errors),
             // ResultType.UnknownError => Results.StatusCode(StatusCodes.Status500InternalServerError),
             _ => Results.StatusCode(StatusCodes.Status500InternalServerError)
         };
