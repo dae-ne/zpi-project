@@ -23,7 +23,7 @@ const RecipeEdit = () => {
 
     const [title, setTitle] = useState<string>("");
     const [description, setDescription] = useState<string>("");
-    const [difficultyLevel, setDifficultyLevel] = useState<DifficultyLevel>(DifficultyLevel._0);
+    const [difficultyLevel, setDifficultyLevel] = useState<DifficultyLevel>(DifficultyLevel.EASY);
     const [imageUrl, setImageUrl] = useState<string>("");
     const [imageFile, setImageFile] = useState<File | null>(null);
     const [time, setTime] = useState<number>(0);
@@ -123,7 +123,7 @@ const RecipeEdit = () => {
                 setIngredients(result.ingredients || [])
                 setDirections(result.directions || [])
                 setImageUrl(result.imageUrl || "")
-                setDifficultyLevel(result.difficultyLevel || DifficultyLevel._0)
+                setDifficultyLevel(result.difficultyLevel || DifficultyLevel.EASY)
                 setTime(result.time || 0)
                 setCalories(result.calories || 0)
                 setTags(result.tags || [])

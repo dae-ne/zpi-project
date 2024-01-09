@@ -14,7 +14,7 @@ import Grid from "@mui/material/Grid"
 const RecipePreview = () => {
     const [title, setTitle] = useState<string | null | undefined>("");
     const [description, setDescription] = useState<string | null | undefined>("");
-    const [difficultyLevel, setDifficultyLevel] = useState<DifficultyLevel | null | undefined>(DifficultyLevel._0);
+    const [difficultyLevel, setDifficultyLevel] = useState<DifficultyLevel | null | undefined>(DifficultyLevel.EASY);
     const [imageUrl, setImageUrl] = useState<string | null | undefined>("");
     const [time, setTime] = useState<number | null | undefined>(60);
     const [calories, setCalories] = useState<number | null | undefined>(0);
@@ -70,7 +70,7 @@ const RecipePreview = () => {
 
             <Grid item xs={3.8}>
                 <RecipePreviewStats
-                    difficultyLevel={difficultyLevel || DifficultyLevel._0}
+                    difficultyLevel={difficultyLevel || DifficultyLevel.EASY}
                     time={time || 0}
                     calories={calories || 0}
                     tags={tags}

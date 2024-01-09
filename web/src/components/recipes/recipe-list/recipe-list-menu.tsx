@@ -28,17 +28,17 @@ const DEFAULT_DIFF_LEVELS: CheckboxData[] = [{
     index: 0,
     checked: false,
     name: "Easy",
-    value: DifficultyLevel._0
+    value: DifficultyLevel.EASY
 }, {
     index: 1,
     checked: false,
     name: "More effort",
-    value: DifficultyLevel._1
+    value: DifficultyLevel.MORE_EFFORT
 }, {
     index: 2,
     checked: false,
     name: "Pro",
-    value: DifficultyLevel._2
+    value: DifficultyLevel.PRO
 }]
 
 const RecipeListMenu = (props: RecipeListMenuInterface) => {
