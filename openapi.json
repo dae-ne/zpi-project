@@ -1541,12 +1541,11 @@
             "type": "integer",
             "format": "int32"
           },
-          "from": {
-            "type": "string",
-            "nullable": true
-          },
-          "to": {
-            "type": "string",
+          "ingredients": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
             "nullable": true
           }
         },

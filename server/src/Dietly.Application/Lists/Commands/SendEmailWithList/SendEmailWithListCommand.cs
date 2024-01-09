@@ -8,33 +8,23 @@ public sealed class SendEmailWithListCommand : IRequest<Result<object?>>
 {
     public int UserId { get; init; }
 
-    public DateTime From { get; init; }
-
-    public DateTime To { get; init; }
+    public IEnumerable<string> Ingredients { get; init; } = Enumerable.Empty<string>();
 }
 
 [UsedImplicitly]
-internal sealed class SendEmailWithListCommandHandler(IAppDbContext db, IUserService userService, IEmailService emailService)
+internal sealed class SendEmailWithListCommandHandler(IUserService userService, IEmailService emailService)
     : IRequestHandler<SendEmailWithListCommand, Result<object?>>
 {
     public async Task<Result<object?>> Handle(SendEmailWithListCommand request, CancellationToken cancellationToken)
     {
+        if (!request.Ingredients.Any())
+        {
+            return Results.ValidationError("Ingredients list is empty");
+        }
+
         var user = await userService.GetUserAsync(request.UserId, cancellationToken);
 
-        var meals = await db.Meals
-            .Include(m => m.Recipe)
-            .ThenInclude(r => r.Ingredients)
-            .Where(m => m.Recipe.UserId == request.UserId)
-            .Where(m => m.Date >= request.From && m.Date <= request.To)
-            .ToListAsync(cancellationToken);
-
-        var ingredients = meals
-            .SelectMany(m => m.Recipe!.Ingredients)
-            .GroupBy(i => i.Id)
-            .Select(g => g.First())
-            .ToList();
-
-        var message = string.Join("\n", ingredients.Select(i => i.Name));
+        var message = string.Join("\n", request.Ingredients);
 
         await emailService.SendAsync(user.Email, "Shopping list", message);
 
