@@ -17,11 +17,12 @@ public sealed class UpdateUserEndpoint(IMediator mediator, CurrentUser currentUs
     {
         var currentUserId = currentUser.GetId();
 
-        // if (currentUserId != userId ||
-        //     currentUserId != request.Id)
-        // {
-        //     return Results.Forbid();
-        // }
+        if (currentUserId != userId ||
+            currentUserId != request.Id)
+        {
+            return Results.Forbid();
+        }
+
         var command = request.ToCommand(userId);
         var result = await mediator.Send(command);
         return result.ToHttpResult();

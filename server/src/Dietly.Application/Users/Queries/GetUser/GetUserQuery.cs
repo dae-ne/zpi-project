@@ -1,3 +1,4 @@
+using Dietly.Application.Common.Exceptions;
 using Dietly.Application.Common.Interfaces;
 using Dietly.Application.Common.Result;
 
@@ -10,7 +11,14 @@ internal sealed class GetUserQueryHandler(IUserService userService) : IRequestHa
 {
     public async Task<Result<User>> Handle(GetUserQuery request, CancellationToken cancellationToken)
     {
-        var user = await userService.GetUserAsync(request.UserId, cancellationToken);
-        return Results.Ok(user);
+        try
+        {
+            var user = await userService.GetUserAsync(request.UserId, cancellationToken);
+            return Results.Ok(user);
+        }
+        catch (NotFoundException e)
+        {
+            return Results.NotFound<User>(e.Message);
+        }
     }
 }

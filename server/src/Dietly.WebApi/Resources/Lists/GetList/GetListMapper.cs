@@ -8,8 +8,12 @@ internal static class GetListMapper
 {
     public static GetListQuery ToQuery(this GetListQueryString queryString, int userId)
     {
-        var from = DateTime.Parse(queryString.From);
-        var to = DateTime.Parse(queryString.To);
+        var from = string.IsNullOrWhiteSpace(queryString.From)
+            ? DateTime.MinValue
+            : DateTime.Parse(queryString.From);
+        var to = string.IsNullOrWhiteSpace(queryString.To)
+            ? DateTime.MaxValue
+            : DateTime.Parse(queryString.To);
         return new GetListQuery(userId, from, to);
     }
 

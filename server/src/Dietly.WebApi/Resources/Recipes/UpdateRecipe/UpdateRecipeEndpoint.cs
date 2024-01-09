@@ -15,7 +15,11 @@ public sealed class UpdateRecipeEndpoint(IMediator mediator, CurrentUser current
     {
         var userId = currentUser.GetId();
 
-        // TODO: request.Id should be equal to recipeId
+        if (request.Id != recipeId)
+        {
+            return Results.BadRequest(new ErrorDto(400, ["Wrong recipe id"]));
+        }
+
         var command = request.ToCommand(userId);
         var result = await mediator.Send(command);
         return result.ToHttpResult();

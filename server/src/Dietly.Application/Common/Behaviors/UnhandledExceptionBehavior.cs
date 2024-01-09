@@ -3,7 +3,6 @@ using Microsoft.Extensions.Logging;
 
 namespace Dietly.Application.Common.Behaviors;
 
-// TODO: add unit tests
 public sealed class UnhandledExceptionBehavior<TRequest, TResponse>(ILogger<TRequest> logger)
     : IPipelineBehavior<TRequest, TResponse>
     where TRequest : notnull

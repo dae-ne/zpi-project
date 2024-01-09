@@ -1,6 +1,5 @@
 ﻿using Dietly.Application.Common.Interfaces;
 using Dietly.Application.Common.Result;
-using Microsoft.EntityFrameworkCore;
 
 namespace Dietly.Application.Lists.Commands.SendEmailWithList;
 
