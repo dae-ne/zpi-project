@@ -139,8 +139,8 @@ namespace Dietly.Infrastructure.Data.Migrations
                         .HasColumnType("text")
                         .HasColumnName("image_url");
 
-                    b.Property<TimeSpan>("Time")
-                        .HasColumnType("interval")
+                    b.Property<int>("Time")
+                        .HasColumnType("integer")
                         .HasColumnName("time");
 
                     b.Property<string>("Title")

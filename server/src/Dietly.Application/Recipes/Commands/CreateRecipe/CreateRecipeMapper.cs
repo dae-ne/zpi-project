@@ -4,9 +4,9 @@ internal static class CreateRecipeMapper
 {
     public static Recipe ToDomain(
         this CreateRecipeCommand command,
-        IEnumerable<Ingredient> ingredients,
-        IEnumerable<Direction> directions,
-        IEnumerable<Tag> tags) => new()
+        List<Ingredient> ingredients,
+        List<Direction> directions,
+        List<Tag> tags) => new()
     {
         UserId = command.UserId,
         Title = command.Title,
@@ -15,8 +15,8 @@ internal static class CreateRecipeMapper
         ImageUrl = command.ImageUrl,
         Time = command.Time,
         Calories = command.Calories,
-        Ingredients = ingredients.AsQueryable(),
-        Directions = directions.AsQueryable(),
-        Tags = tags.AsQueryable()
+        Ingredients = ingredients,
+        Directions = directions,
+        Tags = tags
     };
 }

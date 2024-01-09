@@ -19,7 +19,7 @@ public sealed class UpdateRecipeCommand : IRequest<Result<object?>>
 
     public string? ImageUrl { get; init; }
 
-    public TimeSpan Time { get; init; }
+    public int Time { get; init; }
 
     public int Calories { get; init; }
 
@@ -91,15 +91,37 @@ internal sealed class UpdateRecipeContractHandler(IAppDbContext db) : IRequestHa
         recipe.Time = request.Time;
         recipe.Calories = request.Calories;
 
+        foreach (var ingredient in ingredients)
+        {
+            var requestIngredient = request.Ingredients
+                .SingleOrDefault(i => i.Id == ingredient.Id);
+
+            if (requestIngredient is not null)
+            {
+                ingredient.Name = requestIngredient.Name!;
+            }
+        }
+
         var entityIngredients = new List<Ingredient>();
         entityIngredients.AddRange(ingredients);
         entityIngredients.AddRange(newIngredients);
-        recipe.Ingredients = entityIngredients.AsQueryable();
+        recipe.Ingredients = entityIngredients;
+
+        foreach (var tag in tags)
+        {
+            var requestTag = request.Tags
+                .SingleOrDefault(t => t.Id == tag.Id);
+
+            if (requestTag is not null)
+            {
+                tag.Name = requestTag.Name!;
+            }
+        }
 
         var entityTags = new List<Tag>();
         entityTags.AddRange(tags);
         entityTags.AddRange(newTags);
-        recipe.Tags = entityTags.AsQueryable();
+        recipe.Tags = entityTags;
 
         var entityDirections = new List<Direction>();
         entityDirections.AddRange(request.Directions.Select(d => new Direction
@@ -108,7 +130,7 @@ internal sealed class UpdateRecipeContractHandler(IAppDbContext db) : IRequestHa
             Description = d.Description,
             Order = d.Order
         }));
-        recipe.Directions = entityDirections.AsQueryable();
+        recipe.Directions = entityDirections;
 
         var changes = await db.SaveChangesAsync(cancellationToken);
 

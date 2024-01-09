@@ -20,6 +20,7 @@ internal sealed class GetPlansQueryHandler(IAppDbContext db) : IRequestHandler<G
     public async Task<Result<IList<DayPlan>>> Handle(GetPlansQuery request, CancellationToken cancellationToken)
     {
         var meals = await db.Meals
+            .AsNoTracking()
             .Include(m => m.Recipe)
             .Where(m => m.Recipe.UserId == request.UserId)
             .Where(m => DateOnly.FromDateTime(m.Date) >= request.StartDate &&

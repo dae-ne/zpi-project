@@ -191,7 +191,7 @@ namespace Dietly.Infrastructure.Data.Migrations
                     description = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
                     difficulty_level = table.Column<int>(type: "integer", nullable: false),
                     image_url = table.Column<string>(type: "text", nullable: true),
-                    time = table.Column<TimeSpan>(type: "interval", nullable: false),
+                    time = table.Column<int>(type: "integer", nullable: false),
                     calories = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>

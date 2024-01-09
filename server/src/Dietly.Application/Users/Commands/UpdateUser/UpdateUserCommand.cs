@@ -1,3 +1,4 @@
+using Dietly.Application.Common.Exceptions;
 using Dietly.Application.Common.Interfaces;
 using Dietly.Application.Common.Result;
 
@@ -18,7 +19,15 @@ internal sealed class UpdateUserCommandHandler(IUserService userService) : IRequ
     public async Task<Result<object?>> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
     {
         var user = request.ToDomain();
-        await userService.UpdateUserAsync(user, cancellationToken);
-        return Results.Ok();
+
+        try
+        {
+            await userService.UpdateUserAsync(user, cancellationToken);
+            return Results.Ok();
+        }
+        catch (NotFoundException ex)
+        {
+            return Results.NotFound(ex.Message);
+        }
     }
 }

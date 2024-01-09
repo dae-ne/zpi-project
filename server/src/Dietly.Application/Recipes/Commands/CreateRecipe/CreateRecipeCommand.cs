@@ -17,7 +17,7 @@ public sealed class CreateRecipeCommand : IRequest<Result<int>>
 
     public string? ImageUrl { get; init; }
 
-    public TimeSpan Time { get; init; }
+    public int Time { get; init; }
 
     public int Calories { get; init; }
 

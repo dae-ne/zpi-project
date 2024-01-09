@@ -11,7 +11,7 @@ internal static class CreateRecipeMapper
         Description = request.Description,
         DifficultyLevel = request.DifficultyLevel,
         ImageUrl = request.ImageUrl,
-        Time = TimeSpan.FromMinutes(request.Time),
+        Time = request.Time,
         Calories = request.Calories,
         Ingredients = request.Ingredients.Select(i => new CreateRecipeCommand.Ingredient(i.Id, i.Name)),
         Directions = request.Directions.Select(d => new CreateRecipeCommand.Direction(d.Description, d.Order)),

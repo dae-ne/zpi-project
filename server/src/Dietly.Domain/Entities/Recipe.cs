@@ -15,13 +15,13 @@ public class Recipe : BaseCloneableEntity
 
     public string? ImageUrl { get; set; }
 
-    public TimeSpan Time { get; set; }
+    public int Time { get; set; }
 
     public int Calories { get; set; }
 
-    public IQueryable<Ingredient> Ingredients { get; set; } = Enumerable.Empty<Ingredient>().AsQueryable();
+    public List<Ingredient> Ingredients { get; set; } = [];
 
-    public IQueryable<Direction> Directions { get; set; } = Enumerable.Empty<Direction>().AsQueryable();
+    public List<Direction> Directions { get; set; } = [];
 
-    public IQueryable<Tag> Tags { get; set; } = Enumerable.Empty<Tag>().AsQueryable();
+    public List<Tag> Tags { get; set; } = [];
 }

@@ -19,7 +19,10 @@ internal sealed class GetMealsQueryHandler(IAppDbContext db) : IRequestHandler<G
     public async Task<Result<IList<Meal>>> Handle(GetMealsQuery request, CancellationToken cancellationToken)
     {
         var meals = await db.Meals
-            .Include(m => m.Recipe)
+            .AsNoTracking()
+            .Include(m => m.Recipe).ThenInclude(r => r.Ingredients)
+            .Include(m => m.Recipe).ThenInclude(r => r.Directions)
+            .Include(m => m.Recipe).ThenInclude(r => r.Tags)
             .Where(m => m.Recipe!.UserId == request.UserId)
             .Where(m => DateOnly.FromDateTime(m.Date) >= request.StartDate &&
                         DateOnly.FromDateTime(m.Date) <= request.EndDate)

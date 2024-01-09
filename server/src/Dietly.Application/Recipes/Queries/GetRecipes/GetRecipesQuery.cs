@@ -12,6 +12,7 @@ internal sealed class GetRecipesQueryHandler(IAppDbContext db) : IRequestHandler
     public async Task<Result<IList<Recipe>>> Handle(GetRecipesQuery request, CancellationToken cancellationToken)
     {
         var recipes = await db.Recipes
+            .AsNoTracking()
             .Include(r => r.Ingredients)
             .Include(r => r.Directions)
             .Include(r => r.Tags)

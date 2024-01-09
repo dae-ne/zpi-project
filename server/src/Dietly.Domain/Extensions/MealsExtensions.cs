@@ -12,8 +12,7 @@ public static class MealsExtensions
     public static IEnumerable<DayPlan> ToDayPlans(this IEnumerable<Meal> meals, DateOnly from, DateOnly to, int userId)
     {
         var mealList = meals
-            .Where(m => m.Recipe is not null)
-            .Where(m => m.Recipe!.UserId == userId)
+            .Where(m => m.Recipe.UserId == userId)
             .Where(m => m.Date.Date >= from.ToDateTime(TimeOnly.MinValue) &&
                         m.Date.Date <= to.ToDateTime(TimeOnly.MaxValue))
             .ToList();
@@ -40,7 +39,7 @@ public static class MealsExtensions
 
         return new DayPlan
         {
-            Meals = group,
+            Meals = group.ToList(),
             Date = group.Key,
             TotalCalories = totalCalories,
             ConsumedCalories = consumedCalories

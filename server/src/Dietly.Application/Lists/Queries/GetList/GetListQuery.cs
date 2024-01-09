@@ -12,6 +12,7 @@ internal sealed class GetListQueryHandler(IAppDbContext db) : IRequestHandler<Ge
     public async Task<Result<List<Ingredient>>> Handle(GetListQuery request, CancellationToken cancellationToken)
     {
         var meals = await db.Meals
+            .AsNoTracking()
             .Include(m => m.Recipe)
             .ThenInclude(r => r.Ingredients)
             .Where(m => m.Recipe!.UserId == request.UserId)

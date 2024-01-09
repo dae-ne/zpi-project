@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Dietly.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240106172324_InitialCreate")]
+    [Migration("20240109205004_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -142,8 +142,8 @@ namespace Dietly.Infrastructure.Data.Migrations
                         .HasColumnType("text")
                         .HasColumnName("image_url");
 
-                    b.Property<TimeSpan>("Time")
-                        .HasColumnType("interval")
+                    b.Property<int>("Time")
+                        .HasColumnType("integer")
                         .HasColumnName("time");
 
                     b.Property<string>("Title")

@@ -12,7 +12,7 @@ internal static class UpdateRecipeMapper
         Description = request.Description,
         DifficultyLevel = request.DifficultyLevel,
         ImageUrl = request.ImageUrl,
-        Time = TimeSpan.FromMinutes(request.Time),
+        Time = request.Time,
         Calories = request.Calories,
         Ingredients = request.Ingredients.Select(i => new UpdateRecipeCommand.Ingredient(i.Id, i.Name)),
         Directions = request.Directions.Select(d => new UpdateRecipeCommand.Direction(d.Id ?? 0, d.Description, d.Order)),

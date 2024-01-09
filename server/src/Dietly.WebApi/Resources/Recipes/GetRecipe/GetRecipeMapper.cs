@@ -14,7 +14,7 @@ internal static class GetRecipeMapper
             Description = recipe.Description,
             DifficultyLevel = recipe.DifficultyLevel,
             ImageUrl = recipe.ImageUrl,
-            Time = recipe.Time.Minutes,
+            Time = recipe.Time,
             Calories = recipe.Calories
         };
 
