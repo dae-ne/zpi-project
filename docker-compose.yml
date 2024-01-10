@@ -7,7 +7,7 @@ services:
       context: .
       dockerfile: infra/local/azurite/Dockerfile
     volumes:
-      - azurite:/data
+      - azurite:/workspace
     ports:
       - 10000:10000
 
@@ -34,7 +34,7 @@ services:
     volumes:
       - node:/app
     ports:
-      - 3000:3000
+      - 3000:80
     depends_on:
       - dotnet
 

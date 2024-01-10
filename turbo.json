@@ -4,7 +4,10 @@
     "start": {
       "cache": false
     },
-    "build": {},
+    "build": {
+      "cache": false,
+      "dependsOn": ["^build"]
+    },
     "sync": {
       "cache": false
     },
