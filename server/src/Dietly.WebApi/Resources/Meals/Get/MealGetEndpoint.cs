@@ -1,6 +1,5 @@
 using Dietly.Application.Meals.Queries.GetMeal;
 using Dietly.WebApi.Resources.Meals.Get.Models;
-using MealsGetMapper = Dietly.WebApi.Resources.Meals.Get.Models.MealsGetMapper;
 
 namespace Dietly.WebApi.Resources.Meals.Get;
 
@@ -18,6 +17,6 @@ public sealed class MealGetEndpoint(IMediator mediator, CurrentUser currentUser)
         var userId = currentUser.GetId();
         var query = new GetMealQuery(mealId, userId);
         var result = await mediator.Send(query);
-        return result.ToHttpResult(MealsGetMapper.ToDto);
+        return result.ToHttpResult(Mapper.ToDto);
     }
 }

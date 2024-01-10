@@ -2,7 +2,7 @@
 
 namespace Dietly.WebApi.Resources.Lists.Post.Models;
 
-public static class SendEmailWithListMapper
+internal static class Mapper
 {
     public static SendEmailWithListCommand ToCommand(this SendEmailWithListRequest request) => new()
     {

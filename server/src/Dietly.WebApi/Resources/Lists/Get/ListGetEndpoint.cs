@@ -16,6 +16,6 @@ public sealed class ListGetEndpoint(IMediator mediator, CurrentUser currentUser)
         var userId = currentUser.GetId();
         var query = queryString.ToQuery(userId);
         var result = await mediator.Send(query);
-        return result.ToHttpResult(ListsGetMapper.ToDto);
+        return result.ToHttpResult(Mapper.ToDto);
     }
 }

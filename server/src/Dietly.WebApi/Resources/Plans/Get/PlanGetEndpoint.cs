@@ -17,6 +17,6 @@ public sealed class PlanGetEndpoint(IMediator mediator, CurrentUser currentUser)
         var userId = currentUser.GetId();
         var query = new GetPlanQuery(DateOnly.Parse(day), userId);
         var result = await mediator.Send(query);
-        return result.ToHttpResult(PlansGetMapper.ToDto);
+        return result.ToHttpResult(Mapper.ToDto);
     }
 }

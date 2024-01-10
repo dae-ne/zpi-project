@@ -3,7 +3,7 @@ using Dietly.Domain.Entities;
 
 namespace Dietly.WebApi.Resources.Recipes.Get.Models;
 
-internal static class RecipesGetMapper
+internal static class Mapper
 {
     public static RecipeGetResponse ToDto(this Recipe recipe)
     {

@@ -5,7 +5,7 @@ using Dietly.WebApi.Resources.Meals.Get.Models;
 
 namespace Dietly.WebApi.Resources.Plans.Get.Models;
 
-internal static class PlansGetMapper
+internal static class Mapper
 {
     public static PlanGetResponse ToDto(this DayPlan plan) => new()
     {

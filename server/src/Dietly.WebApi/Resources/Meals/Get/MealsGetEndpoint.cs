@@ -16,6 +16,6 @@ public sealed class MealsGetEndpoint(IMediator mediator, CurrentUser currentUser
         var userId = currentUser.GetId();
         var query = queryParams.ToQuery(userId);
         var result = await mediator.Send(query);
-        return result.ToHttpResult(MealsGetMapper.ToDto);
+        return result.ToHttpResult(Mapper.ToDto);
     }
 }

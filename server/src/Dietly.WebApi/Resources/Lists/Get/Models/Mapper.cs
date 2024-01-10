@@ -4,7 +4,7 @@ using Dietly.Domain.Entities;
 
 namespace Dietly.WebApi.Resources.Lists.Get.Models;
 
-internal static class ListsGetMapper
+internal static class Mapper
 {
     public static GetListQuery ToQuery(this ListGetQueryString queryString, int userId)
     {

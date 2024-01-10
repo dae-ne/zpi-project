@@ -2,7 +2,7 @@ using Dietly.Application.Meals.Commands.UpdateMeal;
 
 namespace Dietly.WebApi.Resources.Meals.Put.Models;
 
-internal static class MealPutMapper
+internal static class Mapper
 {
     public static UpdateMealCommand ToCommand(this MealPutRequest request, int mealId, int userId) => new()
     {

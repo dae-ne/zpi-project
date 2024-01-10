@@ -24,6 +24,6 @@ public sealed class UserGetEndpoint(IMediator mediator, CurrentUser currentUser)
 
         var query = new GetUserQuery(userId);
         var result = await mediator.Send(query);
-        return result.ToHttpResult(UserGetMapper.ToDto);
+        return result.ToHttpResult(Mapper.ToDto);
     }
 }
