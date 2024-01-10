@@ -229,23 +229,35 @@
         }
       }
     },
-    "/images/food/{fileName}": {
-      "delete": {
+    "/images/food": {
+      "post": {
         "tags": [
           "Images"
         ],
-        "operationId": "removeFoodImage",
-        "parameters": [
-          {
-            "name": "fileName",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "schema": {
-              "type": "string"
+        "operationId": "addFoodImage",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "required": [
+                  "file"
+                ],
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              },
+              "encoding": {
+                "file": {
+                  "style": "form"
+                }
+              }
             }
           }
-        ],
+        },
         "responses": {
           "400": {
             "description": "Bad Request",
@@ -287,11 +299,22 @@
               }
             }
           },
-          "200": {
-            "description": "Success"
+          "201": {
+            "description": "Created",
+            "headers": {
+              "location": {
+                "description": "The URL of the newly created resource",
+                "schema": {
+                  "type": "string",
+                  "format": "uri"
+                }
+              }
+            }
           }
         }
-      },
+      }
+    },
+    "/images/food/{fileName}": {
       "get": {
         "tags": [
           "Images"
@@ -379,14 +402,12 @@
             }
           }
         }
-      }
-    },
-    "/images/avatar/{fileName}": {
+      },
       "delete": {
         "tags": [
           "Images"
         ],
-        "operationId": "removeAvatar",
+        "operationId": "removeFoodImage",
         "parameters": [
           {
             "name": "fileName",
@@ -443,7 +464,94 @@
             "description": "Success"
           }
         }
-      },
+      }
+    },
+    "/images/avatar": {
+      "post": {
+        "tags": [
+          "Images"
+        ],
+        "operationId": "addAvatar",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "required": [
+                  "file"
+                ],
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              },
+              "encoding": {
+                "file": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created",
+            "headers": {
+              "location": {
+                "description": "The URL of the newly created resource",
+                "schema": {
+                  "type": "string",
+                  "format": "uri"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/images/avatar/{fileName}": {
       "get": {
         "tags": [
           "Images"
@@ -531,37 +639,23 @@
             }
           }
         }
-      }
-    },
-    "/images/food": {
-      "post": {
+      },
+      "delete": {
         "tags": [
           "Images"
         ],
-        "operationId": "addFoodImage",
-        "requestBody": {
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "required": [
-                  "file"
-                ],
-                "type": "object",
-                "properties": {
-                  "file": {
-                    "type": "string",
-                    "format": "binary"
-                  }
-                }
-              },
-              "encoding": {
-                "file": {
-                  "style": "form"
-                }
-              }
+        "operationId": "removeAvatar",
+        "parameters": [
+          {
+            "name": "fileName",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "string"
             }
           }
-        },
+        ],
         "responses": {
           "400": {
             "description": "Bad Request",
@@ -603,102 +697,8 @@
               }
             }
           },
-          "201": {
-            "description": "Created",
-            "headers": {
-              "location": {
-                "description": "The URL of the newly created resource",
-                "schema": {
-                  "type": "string",
-                  "format": "uri"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/images/avatar": {
-      "post": {
-        "tags": [
-          "Images"
-        ],
-        "operationId": "addAvatar",
-        "requestBody": {
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "required": [
-                  "file"
-                ],
-                "type": "object",
-                "properties": {
-                  "file": {
-                    "type": "string",
-                    "format": "binary"
-                  }
-                }
-              },
-              "encoding": {
-                "file": {
-                  "style": "form"
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "201": {
-            "description": "Created",
-            "headers": {
-              "location": {
-                "description": "The URL of the newly created resource",
-                "schema": {
-                  "type": "string",
-                  "format": "uri"
-                }
-              }
-            }
+          "200": {
+            "description": "Success"
           }
         }
       }
@@ -836,7 +836,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/GetListResponse"
+                  "$ref": "#/components/schemas/ListGetResponse"
                 }
               }
             }
@@ -866,75 +866,12 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/UpdateMealRequest"
+                "$ref": "#/components/schemas/MealPutRequest"
               }
             }
           },
           "required": true
         },
-        "responses": {
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "200": {
-            "description": "Success"
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "Meals"
-        ],
-        "operationId": "removeMeal",
-        "parameters": [
-          {
-            "name": "mealId",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
         "responses": {
           "400": {
             "description": "Bad Request",
@@ -1044,15 +981,148 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/GetMealResponse"
+                  "$ref": "#/components/schemas/MealGetResponse"
                 }
               }
             }
           }
         }
+      },
+      "delete": {
+        "tags": [
+          "Meals"
+        ],
+        "operationId": "removeMeal",
+        "parameters": [
+          {
+            "name": "mealId",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Success"
+          }
+        }
       }
     },
     "/api/meals": {
+      "post": {
+        "tags": [
+          "Meals"
+        ],
+        "operationId": "addMeal",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MealPostRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created",
+            "headers": {
+              "location": {
+                "description": "The URL of the newly created resource",
+                "schema": {
+                  "type": "string",
+                  "format": "uri"
+                }
+              }
+            }
+          }
+        }
+      },
       "get": {
         "tags": [
           "Meals"
@@ -1122,77 +1192,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/GetMealsResponse"
-                }
-              }
-            }
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "Meals"
-        ],
-        "operationId": "addMeal",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AddMealRequest"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "201": {
-            "description": "Created",
-            "headers": {
-              "location": {
-                "description": "The URL of the newly created resource",
-                "schema": {
-                  "type": "string",
-                  "format": "uri"
+                  "$ref": "#/components/schemas/MealsGetResponse"
                 }
               }
             }
@@ -1263,7 +1263,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/GetPlanResponse"
+                  "$ref": "#/components/schemas/PlanGetResponse"
                 }
               }
             }
@@ -1341,7 +1341,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/GetPlansResponse"
+                  "$ref": "#/components/schemas/PlansGetResponse"
                 }
               }
             }
@@ -1371,75 +1371,12 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/UpdateRecipeRequest"
+                "$ref": "#/components/schemas/RecipePutRequest"
               }
             }
           },
           "required": true
         },
-        "responses": {
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "200": {
-            "description": "Success"
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "Recipes"
-        ],
-        "operationId": "removeRecipe",
-        "parameters": [
-          {
-            "name": "recipeId",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
         "responses": {
           "400": {
             "description": "Bad Request",
@@ -1549,20 +1486,30 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/GetRecipeResponse"
+                  "$ref": "#/components/schemas/RecipeGetResponse"
                 }
               }
             }
           }
         }
-      }
-    },
-    "/api/recipes": {
-      "get": {
+      },
+      "delete": {
         "tags": [
           "Recipes"
         ],
-        "operationId": "getRecipes",
+        "operationId": "removeRecipe",
+        "parameters": [
+          {
+            "name": "recipeId",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
         "responses": {
           "400": {
             "description": "Bad Request",
@@ -1605,17 +1552,12 @@
             }
           },
           "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/GetRecipesResponse"
-                }
-              }
-            }
+            "description": "Success"
           }
         }
-      },
+      }
+    },
+    "/api/recipes": {
       "post": {
         "tags": [
           "Recipes"
@@ -1625,7 +1567,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CreateRecipeRequest"
+                "$ref": "#/components/schemas/RecipePostRequest"
               }
             }
           },
@@ -1685,6 +1627,64 @@
             }
           }
         }
+      },
+      "get": {
+        "tags": [
+          "Recipes"
+        ],
+        "operationId": "getRecipes",
+        "responses": {
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RecipesGetResponse"
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/api/users/{userId}": {
@@ -1709,7 +1709,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/UpdateUserRequest"
+                "$ref": "#/components/schemas/UserPutRequest"
               }
             }
           },
@@ -1880,7 +1880,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/GetUserResponse"
+                  "$ref": "#/components/schemas/UserGetResponse"
                 }
               }
             }
@@ -1940,7 +1940,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/GetUserResponse"
+                  "$ref": "#/components/schemas/UserGetResponse"
                 }
               }
             }
@@ -1974,114 +1974,6 @@
         },
         "additionalProperties": false
       },
-      "AddMealRequest": {
-        "type": "object",
-        "properties": {
-          "recipeId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "date": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "CreateRecipeDirectionDto": {
-        "type": "object",
-        "properties": {
-          "description": {
-            "type": "string",
-            "nullable": true
-          },
-          "order": {
-            "type": "integer",
-            "format": "int32"
-          }
-        },
-        "additionalProperties": false
-      },
-      "CreateRecipeIngredientDto": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "name": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "CreateRecipeRequest": {
-        "type": "object",
-        "properties": {
-          "title": {
-            "type": "string",
-            "nullable": true
-          },
-          "description": {
-            "type": "string",
-            "nullable": true
-          },
-          "difficultyLevel": {
-            "$ref": "#/components/schemas/DifficultyLevel"
-          },
-          "imageUrl": {
-            "type": "string",
-            "nullable": true
-          },
-          "time": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "calories": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "ingredients": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/CreateRecipeIngredientDto"
-            },
-            "nullable": true
-          },
-          "directions": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/CreateRecipeDirectionDto"
-            },
-            "nullable": true
-          },
-          "tags": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/CreateRecipeTagDto"
-            },
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "CreateRecipeTagDto": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "name": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
       "DifficultyLevel": {
         "enum": [
           0,
@@ -2090,249 +1982,6 @@
         ],
         "type": "integer",
         "format": "int32"
-      },
-      "GetListResponse": {
-        "type": "object",
-        "properties": {
-          "count": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "ingredients": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "GetMealResponse": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "recipeId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "date": {
-            "type": "string",
-            "nullable": true
-          },
-          "completed": {
-            "type": "boolean"
-          },
-          "recipe": {
-            "$ref": "#/components/schemas/GetRecipeResponse"
-          }
-        },
-        "additionalProperties": false
-      },
-      "GetMealsResponse": {
-        "type": "object",
-        "properties": {
-          "count": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "data": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/GetMealResponse"
-            },
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "GetPlanResponse": {
-        "type": "object",
-        "properties": {
-          "meals": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/GetMealResponse"
-            },
-            "nullable": true
-          },
-          "date": {
-            "type": "string",
-            "nullable": true
-          },
-          "totalCalories": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "consumedCalories": {
-            "type": "integer",
-            "format": "int32"
-          }
-        },
-        "additionalProperties": false
-      },
-      "GetPlansResponse": {
-        "type": "object",
-        "properties": {
-          "count": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "data": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/GetPlanResponse"
-            },
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "GetRecipeDirectionResponse": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "description": {
-            "type": "string",
-            "nullable": true
-          },
-          "order": {
-            "type": "integer",
-            "format": "int32"
-          }
-        },
-        "additionalProperties": false
-      },
-      "GetRecipeIngredientResponse": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "name": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "GetRecipeResponse": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "userId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "title": {
-            "type": "string",
-            "nullable": true
-          },
-          "description": {
-            "type": "string",
-            "nullable": true
-          },
-          "difficultyLevel": {
-            "$ref": "#/components/schemas/DifficultyLevel"
-          },
-          "imageUrl": {
-            "type": "string",
-            "nullable": true
-          },
-          "time": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "calories": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "ingredients": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/GetRecipeIngredientResponse"
-            },
-            "nullable": true
-          },
-          "directions": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/GetRecipeDirectionResponse"
-            },
-            "nullable": true
-          },
-          "tags": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/GetRecipeTagResponse"
-            },
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "GetRecipeTagResponse": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "name": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "GetRecipesResponse": {
-        "type": "object",
-        "properties": {
-          "count": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "data": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/GetRecipeResponse"
-            },
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "GetUserResponse": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "userName": {
-            "type": "string",
-            "nullable": true
-          },
-          "email": {
-            "type": "string",
-            "nullable": true
-          },
-          "avatarUrl": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
       },
       "HttpValidationProblemDetails": {
         "type": "object",
@@ -2402,6 +2051,23 @@
         },
         "additionalProperties": false
       },
+      "ListGetResponse": {
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "ingredients": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "LoginRequest": {
         "type": "object",
         "properties": {
@@ -2411,6 +2077,124 @@
           },
           "password": {
             "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "MealGetResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "recipeId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "date": {
+            "type": "string",
+            "nullable": true
+          },
+          "completed": {
+            "type": "boolean"
+          },
+          "recipe": {
+            "$ref": "#/components/schemas/RecipeGetResponse"
+          }
+        },
+        "additionalProperties": false
+      },
+      "MealPostRequest": {
+        "type": "object",
+        "properties": {
+          "recipeId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "date": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "MealPutRequest": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "recipeId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "date": {
+            "type": "string",
+            "nullable": true
+          },
+          "completed": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "MealsGetResponse": {
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MealGetResponse"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "PlanGetResponse": {
+        "type": "object",
+        "properties": {
+          "meals": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MealGetResponse"
+            },
+            "nullable": true
+          },
+          "date": {
+            "type": "string",
+            "nullable": true
+          },
+          "totalCalories": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "consumedCalories": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "PlansGetResponse": {
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PlanGetResponse"
+            },
             "nullable": true
           }
         },
@@ -2442,6 +2226,324 @@
           }
         },
         "additionalProperties": { }
+      },
+      "RecipeGetDirectionDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "order": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "RecipeGetIngredientDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "RecipeGetResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "userId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "difficultyLevel": {
+            "$ref": "#/components/schemas/DifficultyLevel"
+          },
+          "imageUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "time": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "calories": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "ingredients": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RecipeGetIngredientDto"
+            },
+            "nullable": true
+          },
+          "directions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RecipeGetDirectionDto"
+            },
+            "nullable": true
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RecipeGetTagDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "RecipeGetTagDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "RecipePostDirectionDto": {
+        "type": "object",
+        "properties": {
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "order": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "RecipePostIngredientDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "RecipePostRequest": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "difficultyLevel": {
+            "$ref": "#/components/schemas/DifficultyLevel"
+          },
+          "imageUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "time": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "calories": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "ingredients": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RecipePostIngredientDto"
+            },
+            "nullable": true
+          },
+          "directions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RecipePostDirectionDto"
+            },
+            "nullable": true
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RecipePostTagDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "RecipePostTagDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "RecipePutDirectionDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "order": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "RecipePutIngredientDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "RecipePutRequest": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "difficultyLevel": {
+            "$ref": "#/components/schemas/DifficultyLevel"
+          },
+          "imageUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "time": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "calories": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "ingredients": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RecipePutIngredientDto"
+            },
+            "nullable": true
+          },
+          "directions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RecipePutDirectionDto"
+            },
+            "nullable": true
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RecipePutTagDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "RecipePutTagDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "RecipesGetResponse": {
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RecipeGetResponse"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
       },
       "RefreshRequest": {
         "type": "object",
@@ -2495,131 +2597,29 @@
         },
         "additionalProperties": false
       },
-      "UpdateMealRequest": {
+      "UserGetResponse": {
         "type": "object",
         "properties": {
           "id": {
             "type": "integer",
             "format": "int32"
           },
-          "recipeId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "date": {
+          "userName": {
             "type": "string",
             "nullable": true
           },
-          "completed": {
-            "type": "boolean"
-          }
-        },
-        "additionalProperties": false
-      },
-      "UpdateRecipeDirectionDto": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "description": {
+          "email": {
             "type": "string",
             "nullable": true
           },
-          "order": {
-            "type": "integer",
-            "format": "int32"
-          }
-        },
-        "additionalProperties": false
-      },
-      "UpdateRecipeIngredientDto": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "name": {
+          "avatarUrl": {
             "type": "string",
             "nullable": true
           }
         },
         "additionalProperties": false
       },
-      "UpdateRecipeRequest": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "title": {
-            "type": "string",
-            "nullable": true
-          },
-          "description": {
-            "type": "string",
-            "nullable": true
-          },
-          "difficultyLevel": {
-            "$ref": "#/components/schemas/DifficultyLevel"
-          },
-          "imageUrl": {
-            "type": "string",
-            "nullable": true
-          },
-          "time": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "calories": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "ingredients": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/UpdateRecipeIngredientDto"
-            },
-            "nullable": true
-          },
-          "directions": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/UpdateRecipeDirectionDto"
-            },
-            "nullable": true
-          },
-          "tags": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/UpdateRecipeTagDto"
-            },
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "UpdateRecipeTagDto": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "name": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "UpdateUserRequest": {
+      "UserPutRequest": {
         "type": "object",
         "properties": {
           "id": {
