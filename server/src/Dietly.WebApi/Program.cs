@@ -31,6 +31,9 @@ builder.Services
 
 var app = builder.Build();
 
+// We want to use the swagger UI in production.
+// Uncomment the following lines to enable only in development or docker environments.
+
 // if (app.Environment.IsDevelopment() ||
 //     app.Environment.IsEnvironment("Docker"))
 // {

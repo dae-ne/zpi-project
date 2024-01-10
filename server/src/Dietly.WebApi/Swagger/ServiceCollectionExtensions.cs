@@ -23,9 +23,9 @@ internal static class ServiceCollectionExtensions
             });
             options.DocInclusionPredicate(SwaggerEndpointsConfigHelper.IsEndpointValid);
             options.CustomOperationIds(SwaggerEndpointsConfigHelper.GetOperationId);
-            // options.OperationFilter<ExcludeTwoFactorAuthPropertiesFilter>();
+            options.OperationFilter<LoginOperationFilter>();
             options.OperationFilter<LocationHeaderOperationFilter>();
-            // options.SchemaFilter<EnumSchemaFilter>();
+            options.SchemaFilter<LoginRequestSchemaFilter>();
             options.AddSecurityRequirement(new OpenApiSecurityRequirement
             {
                 {
