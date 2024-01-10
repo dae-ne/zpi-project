@@ -1,7 +1,5 @@
 using System.Reflection;
 using Dietly.Infrastructure.Identity;
-using Dietly.WebApi.Infrastructure.Attributes;
-using Dietly.WebApi.Infrastructure.Interfaces;
 using Microsoft.AspNetCore.Routing;
 
 namespace Dietly.WebApi.Infrastructure.Extensions;

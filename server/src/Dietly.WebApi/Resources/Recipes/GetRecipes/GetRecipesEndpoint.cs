@@ -1,6 +1,4 @@
 using Dietly.Application.Recipes.Queries.GetRecipes;
-using Dietly.WebApi.Infrastructure.Attributes;
-using Dietly.WebApi.Infrastructure.Interfaces;
 
 namespace Dietly.WebApi.Resources.Recipes.GetRecipes;
 

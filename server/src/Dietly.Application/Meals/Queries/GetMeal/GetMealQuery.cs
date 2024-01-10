@@ -1,7 +1,3 @@
-using Dietly.Application.Common.Interfaces;
-using Dietly.Application.Common.Result;
-using Microsoft.EntityFrameworkCore;
-
 namespace Dietly.Application.Meals.Queries.GetMeal;
 
 public sealed record GetMealQuery(int MealId, int UserId) : IRequest<Result<Meal>>;

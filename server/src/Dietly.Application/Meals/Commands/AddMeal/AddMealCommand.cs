@@ -1,5 +1,3 @@
-using Dietly.Application.Common.Interfaces;
-using Dietly.Application.Common.Result;
 using Dietly.Domain.Events.Meal;
 
 namespace Dietly.Application.Meals.Commands.AddMeal;

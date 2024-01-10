@@ -1,1 +1,3 @@
-﻿global using Microsoft.EntityFrameworkCore;
+﻿global using Dietly.Application.Common.Interfaces;
+global using Microsoft.EntityFrameworkCore;
+

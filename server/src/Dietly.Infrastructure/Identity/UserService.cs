@@ -1,5 +1,4 @@
 using Dietly.Application.Common.Exceptions;
-using Dietly.Application.Common.Interfaces;
 using Dietly.Domain.Entities;
 using Dietly.Domain.Events.User;
 using Dietly.Infrastructure.Data;

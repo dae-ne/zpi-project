@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-
-namespace Dietly.Application.Common.Interfaces;
+﻿namespace Dietly.Application.Common.Interfaces;
 
 public interface IAppDbContext
 {

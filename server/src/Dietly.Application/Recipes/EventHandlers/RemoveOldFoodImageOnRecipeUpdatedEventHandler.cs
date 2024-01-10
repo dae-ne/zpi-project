@@ -1,4 +1,3 @@
-using Dietly.Application.Common.Interfaces;
 using Dietly.Domain.Events.Recipe;
 using Microsoft.Extensions.Logging;
 

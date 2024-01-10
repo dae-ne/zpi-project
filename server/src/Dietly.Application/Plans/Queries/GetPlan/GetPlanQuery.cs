@@ -1,7 +1,4 @@
-using Dietly.Application.Common.Interfaces;
-using Dietly.Application.Common.Result;
 using Dietly.Domain.Extensions;
-using Microsoft.EntityFrameworkCore;
 
 namespace Dietly.Application.Plans.Queries.GetPlan;
 

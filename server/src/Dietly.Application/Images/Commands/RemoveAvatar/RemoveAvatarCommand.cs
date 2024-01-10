@@ -1,6 +1,3 @@
-using Dietly.Application.Common.Interfaces;
-using Dietly.Application.Common.Result;
-
 namespace Dietly.Application.Images.Commands.RemoveAvatar;
 
 public sealed record RemoveAvatarCommand(string FileName) : IRequest<Result<object?>>;

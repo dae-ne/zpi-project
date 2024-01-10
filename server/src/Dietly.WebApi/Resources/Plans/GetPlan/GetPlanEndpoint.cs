@@ -1,6 +1,4 @@
 using Dietly.Application.Plans.Queries.GetPlan;
-using Dietly.WebApi.Infrastructure.Attributes;
-using Dietly.WebApi.Infrastructure.Interfaces;
 
 namespace Dietly.WebApi.Resources.Plans.GetPlan;
 

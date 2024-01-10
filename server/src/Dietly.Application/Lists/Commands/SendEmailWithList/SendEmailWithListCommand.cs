@@ -1,7 +1,4 @@
-﻿using Dietly.Application.Common.Interfaces;
-using Dietly.Application.Common.Result;
-
-namespace Dietly.Application.Lists.Commands.SendEmailWithList;
+﻿namespace Dietly.Application.Lists.Commands.SendEmailWithList;
 
 public sealed class SendEmailWithListCommand : IRequest<Result<object?>>
 {

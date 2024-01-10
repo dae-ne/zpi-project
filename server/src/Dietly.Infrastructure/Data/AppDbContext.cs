@@ -1,5 +1,4 @@
-﻿using Dietly.Application.Common.Interfaces;
-using Dietly.Domain.Entities;
+﻿using Dietly.Domain.Entities;
 using Dietly.Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;

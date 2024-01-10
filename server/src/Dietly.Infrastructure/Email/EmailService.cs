@@ -1,4 +1,3 @@
-using Dietly.Application.Common.Interfaces;
 using MailKit.Net.Smtp;
 using MailKit.Security;
 using Microsoft.Extensions.Options;

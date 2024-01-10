@@ -1,5 +1,4 @@
-﻿using Dietly.Application.Common.Interfaces;
-using Dietly.Infrastructure.Blob;
+﻿using Dietly.Infrastructure.Blob;
 using Dietly.Infrastructure.Data;
 using Dietly.Infrastructure.Data.Interceptors;
 using Dietly.Infrastructure.Email;

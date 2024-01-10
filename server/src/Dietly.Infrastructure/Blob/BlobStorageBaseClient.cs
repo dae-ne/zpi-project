@@ -1,5 +1,4 @@
 using Azure.Storage.Blobs;
-using Dietly.Application.Common.Interfaces;
 
 namespace Dietly.Infrastructure.Blob;
 

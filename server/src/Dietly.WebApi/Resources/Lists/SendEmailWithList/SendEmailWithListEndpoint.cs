@@ -1,7 +1,4 @@
-﻿using Dietly.WebApi.Infrastructure.Attributes;
-using Dietly.WebApi.Infrastructure.Interfaces;
-
-namespace Dietly.WebApi.Resources.Lists.SendEmailWithList;
+﻿namespace Dietly.WebApi.Resources.Lists.SendEmailWithList;
 
 [ApiEndpointPost("/api/lists/sendEmail")]
 public class SendEmailWithListEndpoint(IMediator mediator, CurrentUser currentUser) : IApiEndpoint

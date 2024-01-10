@@ -1,8 +1,4 @@
-﻿using Dietly.Application.Common.Interfaces;
-using Dietly.Application.Common.Result;
-using Microsoft.EntityFrameworkCore;
-
-namespace Dietly.Application.Lists.Queries.GetList;
+﻿namespace Dietly.Application.Lists.Queries.GetList;
 
 public sealed record GetListQuery(int UserId, DateTime From, DateTime To) : IRequest<Result<List<Ingredient>>>;
 

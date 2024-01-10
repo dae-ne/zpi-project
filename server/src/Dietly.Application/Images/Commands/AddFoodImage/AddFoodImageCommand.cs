@@ -1,6 +1,3 @@
-using Dietly.Application.Common.Interfaces;
-using Dietly.Application.Common.Result;
-
 namespace Dietly.Application.Images.Commands.AddFoodImage;
 
 public sealed record AddFoodImageCommand(byte[] File, string FileName) : IRequest<Result<string>>;

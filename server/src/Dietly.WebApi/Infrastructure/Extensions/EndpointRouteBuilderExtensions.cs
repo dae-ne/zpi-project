@@ -1,6 +1,5 @@
 using System.Linq.Expressions;
 using System.Reflection;
-using Dietly.WebApi.Infrastructure.Attributes;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
 

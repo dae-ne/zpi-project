@@ -1,6 +1,3 @@
-using Dietly.Application.Common.Interfaces;
-using Dietly.Application.Common.Result;
-
 namespace Dietly.Application.Images.Queries.GetFoodImage;
 
 public sealed record GetFoodImageQuery(string FileName) : IRequest<Result<byte[]>>;

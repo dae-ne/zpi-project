@@ -1,8 +1,5 @@
-using Dietly.Application.Common.Interfaces;
-using Dietly.Application.Common.Result;
 using Dietly.Domain.Enums;
 using Dietly.Domain.Events.Recipe;
-using Microsoft.EntityFrameworkCore;
 
 namespace Dietly.Application.Recipes.Commands.UpdateRecipe;
 

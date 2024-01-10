@@ -1,5 +1,4 @@
 ﻿using Dietly.Application.Common.Result;
-using Dietly.WebApi.Resources;
 using Results = Microsoft.AspNetCore.Http.Results;
 
 namespace Dietly.WebApi.Extensions;

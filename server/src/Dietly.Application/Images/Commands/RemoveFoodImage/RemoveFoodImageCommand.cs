@@ -1,6 +1,3 @@
-using Dietly.Application.Common.Interfaces;
-using Dietly.Application.Common.Result;
-
 namespace Dietly.Application.Images.Commands.RemoveFoodImage;
 
 public sealed record RemoveFoodImageCommand(string FileName) : IRequest<Result<object?>>;

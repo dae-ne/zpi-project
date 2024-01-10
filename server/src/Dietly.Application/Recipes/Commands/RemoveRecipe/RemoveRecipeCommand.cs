@@ -1,7 +1,4 @@
-using Dietly.Application.Common.Interfaces;
-using Dietly.Application.Common.Result;
 using Dietly.Domain.Events.Recipe;
-using Microsoft.EntityFrameworkCore;
 
 namespace Dietly.Application.Recipes.Commands.RemoveRecipe;
 

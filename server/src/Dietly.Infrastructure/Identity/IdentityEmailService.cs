@@ -1,4 +1,3 @@
-using Dietly.Application.Common.Interfaces;
 using Microsoft.AspNetCore.Identity;
 
 namespace Dietly.Infrastructure.Identity;
