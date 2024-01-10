@@ -7,7 +7,8 @@ public sealed class RemoveAvatarEndpoint(IMediator mediator) : IApiEndpoint
 {
     public void Configure(RouteHandlerBuilder builder) => builder
         .WithTags("Images")
-        .WithName("removeAvatar");
+        .WithName("removeAvatar")
+        .Produces(200);
 
     [ApiEndpointHandler]
     public async Task<IResult> HandleAsync(string fileName)

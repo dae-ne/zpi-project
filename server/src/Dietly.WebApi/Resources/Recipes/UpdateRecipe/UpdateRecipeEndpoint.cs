@@ -5,7 +5,8 @@ public sealed class UpdateRecipeEndpoint(IMediator mediator, CurrentUser current
 {
     public void Configure(RouteHandlerBuilder builder) => builder
         .WithTags("Recipes")
-        .WithName("updateRecipe");
+        .WithName("updateRecipe")
+        .Produces(200);
 
     [ApiEndpointHandler]
     public async Task<IResult> HandleAsync(int recipeId, UpdateRecipeRequest request, HttpContext httpContext)

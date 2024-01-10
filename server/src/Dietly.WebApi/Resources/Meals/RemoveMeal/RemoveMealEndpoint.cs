@@ -7,7 +7,8 @@ public sealed class RemoveMealEndpoint(IMediator mediator, CurrentUser currentUs
 {
     public void Configure(RouteHandlerBuilder builder) => builder
         .WithTags("Meals")
-        .WithName("removeMeal");
+        .WithName("removeMeal")
+        .Produces(200);
 
     [ApiEndpointHandler]
     public async Task<IResult> HandleAsync(int mealId)

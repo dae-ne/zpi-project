@@ -8,8 +8,7 @@ public sealed class RemoveUserEndpoint(IMediator mediator, CurrentUser currentUs
     public void Configure(RouteHandlerBuilder builder) => builder
         .WithTags("Users")
         .WithName("removeUser")
-        .Produces(200)
-        .Produces(403);
+        .Produces(200);
 
     [ApiEndpointHandler]
     public async Task<IResult> HandleAsync(int userId)

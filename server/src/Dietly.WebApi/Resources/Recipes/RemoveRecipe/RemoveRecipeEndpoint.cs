@@ -7,7 +7,8 @@ public class RemoveRecipeEndpoint(IMediator mediator, CurrentUser currentUser) :
 {
     public void Configure(RouteHandlerBuilder builder) => builder
         .WithTags("Recipes")
-        .WithName("removeRecipe");
+        .WithName("removeRecipe")
+        .Produces(200);
 
     [ApiEndpointHandler]
     public async Task<IResult> HandleAsync(int recipeId)

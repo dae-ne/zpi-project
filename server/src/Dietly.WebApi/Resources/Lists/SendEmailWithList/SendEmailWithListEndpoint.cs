@@ -5,7 +5,8 @@ public class SendEmailWithListEndpoint(IMediator mediator, CurrentUser currentUs
 {
     public void Configure(RouteHandlerBuilder builder) => builder
         .WithTags("Lists")
-        .WithName("sendEmailWithList");
+        .WithName("sendEmailWithList")
+        .Produces(200);
 
     [ApiEndpointHandler]
     public async Task<IResult> HandleAsync(SendEmailWithListRequest request)

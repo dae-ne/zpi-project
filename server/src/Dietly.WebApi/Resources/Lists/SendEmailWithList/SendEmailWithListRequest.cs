@@ -6,5 +6,5 @@ public sealed class SendEmailWithListRequest
 {
     public int UserId { get; init; }
 
-    public IEnumerable<string> Ingredients { get; init; } = Enumerable.Empty<string>();
+    public IEnumerable<int> IngredientIds { get; init; } = Enumerable.Empty<int>();
 }

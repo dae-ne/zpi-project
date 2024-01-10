@@ -7,6 +7,6 @@ public static class SendEmailWithListMapper
     public static SendEmailWithListCommand ToCommand(this SendEmailWithListRequest request) => new()
     {
         UserId = request.UserId,
-        Ingredients = request.Ingredients
+        IngredientIds = request.IngredientIds
     };
 }

@@ -7,7 +7,8 @@ public sealed class RemoveFoodImageEndpoint(IMediator mediator) : IApiEndpoint
 {
     public void Configure(RouteHandlerBuilder builder) => builder
         .WithTags("Images")
-        .WithName("removeFoodImage");
+        .WithName("removeFoodImage")
+        .Produces(200);
 
     [ApiEndpointHandler]
     public async Task<IResult> HandleAsync(string fileName)

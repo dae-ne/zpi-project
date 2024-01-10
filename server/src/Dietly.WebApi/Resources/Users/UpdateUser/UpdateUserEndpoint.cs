@@ -6,8 +6,7 @@ public sealed class UpdateUserEndpoint(IMediator mediator, CurrentUser currentUs
     public void Configure(RouteHandlerBuilder builder) => builder
         .WithTags("Users")
         .WithName("updateUser")
-        .Produces(200)
-        .Produces(403);
+        .Produces(200);
 
     [ApiEndpointHandler]
     public async Task<IResult> HandleAsync(int userId, UpdateUserRequest request)
