@@ -17,7 +17,7 @@ public class SendEmailWithListEndpoint(IMediator mediator, CurrentUser currentUs
 
         if (userId != request.UserId)
         {
-            return Results.Forbid();
+            return Results.Problem(statusCode: 400, detail: "The user ID provided in the URL does not match the one provided in the request body");
         }
 
         var command = request.ToCommand();

@@ -17,7 +17,7 @@ public sealed class UpdateRecipeEndpoint(IMediator mediator, CurrentUser current
 
         if (request.Id != recipeId)
         {
-            return Results.BadRequest(new ErrorDto(400, ["Wrong recipe id"]));
+            return Results.Problem(statusCode: 400, detail: "The recipe ID provided in the URL does not match the one provided in the request body");
         }
 
         var command = request.ToCommand(userId);

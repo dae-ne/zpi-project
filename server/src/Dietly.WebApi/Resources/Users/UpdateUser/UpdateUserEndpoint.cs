@@ -20,7 +20,7 @@ public sealed class UpdateUserEndpoint(IMediator mediator, CurrentUser currentUs
         if (currentUserId != userId ||
             currentUserId != request.Id)
         {
-            return Results.Forbid();
+            return Results.Problem(statusCode: 403);
         }
 
         var command = request.ToCommand(userId);

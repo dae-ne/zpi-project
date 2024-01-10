@@ -25,11 +25,10 @@ internal static class ResultExtensions
             ResultType.Ok when result.Data is null => Results.Ok(),
             ResultType.Ok => Results.Ok(dto),
             ResultType.Created when dto?.GetType() == typeof(string) => Results.Created(dto as string, null),
-            ResultType.Invalid => Results.BadRequest(new ErrorDto(400, result.Errors)),
-            ResultType.NotFound => Results.NotFound(new ErrorDto(404, result.Errors)),
-            ResultType.Forbidden => Results.Forbid(),
-            // ResultType.UnknownError => Results.StatusCode(StatusCodes.Status500InternalServerError),
-            _ => Results.StatusCode(StatusCodes.Status500InternalServerError)
+            ResultType.Invalid => Results.Problem(statusCode: 400, detail: result.Errors.FirstOrDefault()),
+            ResultType.NotFound => Results.Problem(statusCode: 404, detail: result.Errors.FirstOrDefault()),
+            ResultType.Forbidden => Results.Problem(statusCode: 403, detail: result.Errors.FirstOrDefault()),
+            _ => Results.Problem(statusCode: 500, detail: result.Errors.FirstOrDefault())
         };
     }
 

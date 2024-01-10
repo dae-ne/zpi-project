@@ -10,6 +10,10 @@ internal static class WebApplicationExtensions
 {
     public static void UseEndpoints(this WebApplication app)
     {
+        app.UseExceptionHandler(builder =>
+            builder.Run(async context =>
+                await Results.Problem(statusCode: 400, detail: "abcd").ExecuteAsync(context)));
+
         app.RegisterEndpoints(app.Services);
 
         app.MapGroup("api/account")

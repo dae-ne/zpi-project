@@ -20,7 +20,7 @@ public sealed class RemoveUserEndpoint(IMediator mediator, CurrentUser currentUs
 
         if (currentUserId != userId)
         {
-            return Results.Forbid();
+            return Results.Problem(statusCode: 403);
         }
 
         var command = new RemoveUserCommand(userId);
