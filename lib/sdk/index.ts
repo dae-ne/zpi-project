@@ -29,6 +29,7 @@ export type { HttpValidationProblemDetails } from './models/HttpValidationProble
 export type { InfoRequest } from './models/InfoRequest';
 export type { InfoResponse } from './models/InfoResponse';
 export type { LoginRequest } from './models/LoginRequest';
+export type { ProblemDetails } from './models/ProblemDetails';
 export type { RefreshRequest } from './models/RefreshRequest';
 export type { RegisterRequest } from './models/RegisterRequest';
 export type { ResendConfirmationEmailRequest } from './models/ResendConfirmationEmailRequest';
@@ -46,5 +47,4 @@ export { ListsService } from './services/ListsService';
 export { MealsService } from './services/MealsService';
 export { PlansService } from './services/PlansService';
 export { RecipesService } from './services/RecipesService';
-export { TestService } from './services/TestService';
 export { UsersService } from './services/UsersService';

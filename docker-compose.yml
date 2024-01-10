@@ -19,7 +19,7 @@ services:
       args:
         ENVIRONMENT: $DOTNET_ENVIRONMENT
     volumes:
-      - dotnet:/app
+      - dotnet:/usr/share/nginx/html
     ports:
       - 8080:8080
     depends_on:

@@ -40,10 +40,6 @@ const RecipeEditStats = (props: RecipeEditStatsInterface) => {
     const handleDifficultyChange = (value: string) => {
         setDifficultyLevelName(value)
         onDifficultyLevelChange(getDifficultyId(value))
-        if (!Object.values(DifficultyLevel).includes(value as DifficultyLevel)) {
-            return;
-        }
-        onDifficultyLevelChange(value as DifficultyLevel)
     }
 
     const handleAddTag = () => {

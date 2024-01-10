@@ -24,6 +24,12 @@ requestBody: SendEmailWithListRequest,
       url: '/api/lists/sendEmail',
       body: requestBody,
       mediaType: 'application/json',
+      errors: {
+        400: `Bad Request`,
+        403: `Forbidden`,
+        404: `Not Found`,
+        500: `Server Error`,
+      },
     });
   }
 
@@ -34,8 +40,8 @@ requestBody: SendEmailWithListRequest,
    * @throws ApiError
    */
   public static getList(
-from: string,
-to: string,
+from?: string,
+to?: string,
 ): CancelablePromise<GetListResponse> {
     return __request(OpenAPI, {
       method: 'GET',
@@ -43,6 +49,12 @@ to: string,
       query: {
         'From': from,
         'To': to,
+      },
+      errors: {
+        400: `Bad Request`,
+        403: `Forbidden`,
+        404: `Not Found`,
+        500: `Server Error`,
       },
     });
   }

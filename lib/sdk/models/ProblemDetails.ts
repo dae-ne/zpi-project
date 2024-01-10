@@ -3,7 +3,4 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type SendEmailWithListRequest = {
-  userId?: number;
-  ingredientIds?: Array<number> | null;
-};
+export type ProblemDetails = Record<string, any>;

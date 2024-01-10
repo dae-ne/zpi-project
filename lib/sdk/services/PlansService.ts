@@ -25,6 +25,12 @@ day: string,
       path: {
         'day': day,
       },
+      errors: {
+        400: `Bad Request`,
+        403: `Forbidden`,
+        404: `Not Found`,
+        500: `Server Error`,
+      },
     });
   }
 
@@ -44,6 +50,12 @@ to?: string,
       query: {
         'from': from,
         'to': to,
+      },
+      errors: {
+        400: `Bad Request`,
+        403: `Forbidden`,
+        404: `Not Found`,
+        500: `Server Error`,
       },
     });
   }

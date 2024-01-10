@@ -22,6 +22,12 @@ fileName: string,
       path: {
         'fileName': fileName,
       },
+      errors: {
+        400: `Bad Request`,
+        403: `Forbidden`,
+        404: `Not Found`,
+        500: `Server Error`,
+      },
     });
   }
 
@@ -38,6 +44,12 @@ fileName: string,
       url: '/images/food/{fileName}',
       path: {
         'fileName': fileName,
+      },
+      errors: {
+        400: `Bad Request`,
+        403: `Forbidden`,
+        404: `Not Found`,
+        500: `Server Error`,
       },
     });
   }
@@ -56,6 +68,12 @@ fileName: string,
       path: {
         'fileName': fileName,
       },
+      errors: {
+        400: `Bad Request`,
+        403: `Forbidden`,
+        404: `Not Found`,
+        500: `Server Error`,
+      },
     });
   }
 
@@ -72,6 +90,12 @@ fileName: string,
       url: '/images/avatar/{fileName}',
       path: {
         'fileName': fileName,
+      },
+      errors: {
+        400: `Bad Request`,
+        403: `Forbidden`,
+        404: `Not Found`,
+        500: `Server Error`,
       },
     });
   }
@@ -92,6 +116,12 @@ file: Blob;
       formData: formData,
       mediaType: 'multipart/form-data',
       responseHeader: 'location',
+      errors: {
+        400: `Bad Request`,
+        403: `Forbidden`,
+        404: `Not Found`,
+        500: `Server Error`,
+      },
     });
   }
 
@@ -111,6 +141,12 @@ file: Blob;
       formData: formData,
       mediaType: 'multipart/form-data',
       responseHeader: 'location',
+      errors: {
+        400: `Bad Request`,
+        403: `Forbidden`,
+        404: `Not Found`,
+        500: `Server Error`,
+      },
     });
   }
 
