@@ -1,31 +1,29 @@
 using System.Reflection;
-using Dietly.Infrastructure.Identity;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 
 namespace Dietly.WebApi.Infrastructure.Extensions;
 
 internal static class WebApplicationExtensions
 {
-    public static void UseEndpoints(this WebApplication app)
+    public static void UseApiEndpoints(this WebApplication app, Action<RouteHandlerBuilder> configure)
     {
         app.UseExceptionHandler(builder =>
             builder.Run(async context =>
                 await Results.Problem(statusCode: 500).ExecuteAsync(context)));
 
-        app.RegisterEndpoints(app.Services, config =>
-        {
-            config.RequireAuthorization();
-            config.RequireCors();
-            config.Produces<ProblemDetails>(400);
-            config.Produces<ProblemDetails>(404);
-            config.Produces<ProblemDetails>(403);
-            config.Produces<ProblemDetails>(500);
-        });
+        app.RegisterEndpoints(app.Services, configure);
+    }
 
-        app.MapGroup("api/account")
-            .MapIdentityApi<AppUser>()
-            .WithTags("Account");
+    public static void UseIdentityApi<TUser>(
+        this WebApplication app,
+        string prefix,
+        Action<IEndpointConventionBuilder> configure)
+        where TUser : class, new()
+    {
+        var builder = app.MapGroup(prefix)
+            .MapIdentityApi<TUser>();
+
+        configure(builder);
     }
 
     private static void RegisterEndpoints(

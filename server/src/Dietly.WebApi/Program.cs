@@ -1,9 +1,10 @@
 using Dietly.Application;
 using Dietly.Infrastructure;
+using Dietly.Infrastructure.Identity;
 using Dietly.WebApi.Infrastructure.Extensions;
 using Dietly.WebApi.Swagger;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,18 +31,34 @@ builder.Services
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment() ||
-    app.Environment.IsEnvironment("Docker"))
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+// if (app.Environment.IsDevelopment() ||
+//     app.Environment.IsEnvironment("Docker"))
+// {
+//     app.UseSwagger();
+//     app.UseSwaggerUI();
+// }
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseHttpLogging();
 app.UseHttpsRedirection();
 app.UseCors();
 app.UseAuthentication();
 app.UseAuthorization();
-app.UseEndpoints();
+
+app.UseIdentityApi<AppUser>("/api/account", config =>
+{
+    config.WithTags("Account");
+});
+
+app.UseApiEndpoints(config =>
+{
+    config.RequireAuthorization();
+    config.RequireCors();
+    config.Produces<ProblemDetails>(400);
+    config.Produces<ProblemDetails>(403);
+    config.Produces<ProblemDetails>(404);
+    config.Produces<ProblemDetails>(500);
+});
 
 app.Run();

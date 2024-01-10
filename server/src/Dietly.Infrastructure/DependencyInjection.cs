@@ -38,7 +38,9 @@ public static class DependencyInjection
         services.AddDbContext<AppDbContext>((sp, options) =>
         {
             options.AddInterceptors(sp.GetService<ISaveChangesInterceptor>()!);
-            var dbBuilder = options.UseNpgsql(configuration.GetConnectionString("DefaultDB"))
+
+            var dbBuilder = options
+                .UseNpgsql(configuration.GetConnectionString("DefaultDB"))
                 .UseSnakeCaseNamingConvention();
 
             if (!logSensitiveData)
@@ -46,10 +48,12 @@ public static class DependencyInjection
                 return;
             }
 
-            dbBuilder.UseLoggerFactory(LoggerFactory.Create(builder => builder.AddConsole()
-                    .AddFilter((category, level) =>
-                        category == DbLoggerCategory.Database.Command.Name &&
-                        level >= LogLevel.Information)));
+            dbBuilder.UseLoggerFactory(LoggerFactory.Create(builder => builder
+                .AddConsole()
+                .AddFilter((category, level) =>
+                    category == DbLoggerCategory.Database.Command.Name &&
+                    level >= LogLevel.Information)));
+
             dbBuilder.EnableSensitiveDataLogging();
         });
 
