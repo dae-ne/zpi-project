@@ -1,6 +1,7 @@
 using Dietly.Application.Common.Interfaces;
 using Dietly.Application.Common.Result;
 using Dietly.Domain.Enums;
+using Dietly.Domain.Events.Recipe;
 using Microsoft.EntityFrameworkCore;
 
 namespace Dietly.Application.Recipes.Commands.UpdateRecipe;
@@ -84,6 +85,8 @@ internal sealed class UpdateRecipeContractHandler(IAppDbContext db) : IRequestHa
             return Results.NotFound("Recipe not found");
         }
 
+        var oldRecipe = (Recipe)recipe.Clone();
+
         recipe.Title = request.Title;
         recipe.Description = request.Description;
         recipe.DifficultyLevel = request.DifficultyLevel;
@@ -131,6 +134,8 @@ internal sealed class UpdateRecipeContractHandler(IAppDbContext db) : IRequestHa
             Order = d.Order
         }));
         recipe.Directions = entityDirections;
+
+        recipe.AddDomainEvent(new RecipeUpdatedEvent(oldRecipe, recipe));
 
         var changes = await db.SaveChangesAsync(cancellationToken);
 

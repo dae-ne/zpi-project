@@ -4,7 +4,7 @@ namespace Dietly.Domain.Common;
 
 public abstract class BaseEntity : BaseEntity<int>;
 
-public abstract class BaseEntity<TKey>
+public abstract class BaseEntity<TKey> : IDomainEntity
     where TKey : IEquatable<TKey>
 {
     private readonly List<BaseEvent> _domainEvents = [];

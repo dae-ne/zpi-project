@@ -1,6 +1,7 @@
 using Dietly.Application.Common.Exceptions;
 using Dietly.Application.Common.Interfaces;
 using Dietly.Domain.Entities;
+using Dietly.Domain.Events.User;
 using Dietly.Infrastructure.Data;
 
 namespace Dietly.Infrastructure.Identity;
@@ -17,15 +18,22 @@ internal sealed class UserService(AppDbContext db) : IUserService
 
     public async Task UpdateUserAsync(User user, CancellationToken cancellationToken)
     {
-        var entity = await db.Users.FindAsync([user.Id], cancellationToken: cancellationToken);
+        var appUser = await db.Users.FindAsync([user.Id], cancellationToken: cancellationToken);
 
-        if (entity is null)
+        if (appUser is null)
         {
             throw new NotFoundException("User not found");
         }
 
-        entity.UserName = user.UserName;
-        entity.AvatarUrl = user.AvatarUrl;
+        var oldAppUser = (AppUser)appUser.Clone();
+
+        appUser.UserName = user.UserName;
+        appUser.AvatarUrl = user.AvatarUrl;
+
+        appUser.AddDomainEvent(new UserUpdatedEvent(
+            oldAppUser.ToDomain(),
+            appUser.ToDomain()));
+
         await db.SaveChangesAsync(cancellationToken);
     }
 
@@ -37,6 +45,8 @@ internal sealed class UserService(AppDbContext db) : IUserService
         {
             throw new NotFoundException("User not found");
         }
+
+        user.AddDomainEvent(new UserRemovedEvent(user.ToDomain()));
 
         db.Users.Remove(user);
         await db.SaveChangesAsync(cancellationToken);

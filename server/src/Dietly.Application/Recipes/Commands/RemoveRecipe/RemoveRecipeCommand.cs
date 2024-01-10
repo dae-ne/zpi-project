@@ -1,5 +1,6 @@
 using Dietly.Application.Common.Interfaces;
 using Dietly.Application.Common.Result;
+using Dietly.Domain.Events.Recipe;
 using Microsoft.EntityFrameworkCore;
 
 namespace Dietly.Application.Recipes.Commands.RemoveRecipe;
@@ -22,6 +23,8 @@ internal sealed class RemoveRecipeCommandHandler(IAppDbContext db) : IRequestHan
         {
             return Results.NotFound("Recipe not found");
         }
+
+        recipe.AddDomainEvent(new RecipeRemovedEvent(recipe));
 
         db.Recipes.Remove(recipe);
         var changes = await db.SaveChangesAsync(cancellationToken);

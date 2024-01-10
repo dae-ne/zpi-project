@@ -1,6 +1,7 @@
 using Dietly.Application.Common.Interfaces;
 using Dietly.Application.Common.Result;
 using Dietly.Domain.Enums;
+using Dietly.Domain.Events.Recipe;
 using Microsoft.EntityFrameworkCore;
 
 namespace Dietly.Application.Recipes.Commands.CreateRecipe;
@@ -82,6 +83,8 @@ internal sealed class CreateRecipeContractHandler(IAppDbContext db) : IRequestHa
             }).ToList();
 
         var recipe = request.ToDomain(ingredients, directions, tags);
+
+        recipe.AddDomainEvent(new RecipeAddedEvent(recipe));
 
         db.Recipes.Add(recipe);
 
