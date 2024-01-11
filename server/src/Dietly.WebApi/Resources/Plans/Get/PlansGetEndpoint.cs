@@ -1,16 +1,17 @@
+using Dietly.WebApi.Infrastructure.ApiEndpoints;
+using Dietly.WebApi.Infrastructure.Extensions;
 using Dietly.WebApi.Resources.Plans.Get.Models;
 
 namespace Dietly.WebApi.Resources.Plans.Get;
 
-[ApiEndpointGet("/api/plans")]
-public sealed class PlansGetEndpoint(IMediator mediator, CurrentUser currentUser) : IApiEndpoint
+public sealed class PlansGetEndpoint(IMediator mediator, CurrentUser currentUser) : ApiEndpointBase
 {
-    public void Configure(RouteHandlerBuilder builder) => builder
+    public override void Configure(IApiEndpointBuilder builder) => builder
+        .Get("/api/plans")
         .WithTags("Plans")
         .WithName("getPlans")
-        .Produces<PlansGetResponse>(200, "application/json");
+        .Produces<PlansGetResponse>();
 
-    [ApiEndpointHandler]
     public async Task<IResult> HandleAsync([AsParameters] PlansGetQueryParams queryParams)
     {
         var userId = currentUser.GetId();

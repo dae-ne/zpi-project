@@ -1,23 +1,26 @@
+using Dietly.WebApi.Infrastructure.ApiEndpoints;
+using Dietly.WebApi.Infrastructure.Extensions;
 using Dietly.WebApi.Resources.Recipes.Put.Models;
 
 namespace Dietly.WebApi.Resources.Recipes.Put;
 
-[ApiEndpointPut("/api/recipes/{recipeId}")]
-public sealed class RecipePutEndpoint(IMediator mediator, CurrentUser currentUser) : IApiEndpoint
+public sealed class RecipePutEndpoint(IMediator mediator, CurrentUser currentUser) : ApiEndpointBase
 {
-    public void Configure(RouteHandlerBuilder builder) => builder
+    public override void Configure(IApiEndpointBuilder builder) => builder
+        .Put("/api/recipes/{recipeId}")
         .WithTags("Recipes")
         .WithName("updateRecipe")
         .Produces(200);
 
-    [ApiEndpointHandler]
     public async Task<IResult> HandleAsync(int recipeId, RecipePutRequest request, HttpContext httpContext)
     {
         var userId = currentUser.GetId();
 
         if (request.Id != recipeId)
         {
-            return Results.Problem(statusCode: 400, detail: "The recipe ID provided in the URL does not match the one provided in the request body");
+            return Results.Problem(
+                statusCode: 400,
+                detail: "The recipe ID provided in the URL does not match the one provided in the request body");
         }
 
         var command = request.ToCommand(userId);

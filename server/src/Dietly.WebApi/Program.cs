@@ -1,9 +1,10 @@
 using Dietly.Application;
 using Dietly.Infrastructure;
 using Dietly.Infrastructure.Identity;
+using Dietly.WebApi.Infrastructure.ApiEndpoints;
 using Dietly.WebApi.Infrastructure.Extensions;
 using Dietly.WebApi.Swagger;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -31,8 +32,9 @@ builder.Services
 
 var app = builder.Build();
 
-// We want to use the swagger UI in production.
-// Uncomment the following lines to enable only in development or docker environments.
+app.UseExceptionHandler(appBuilder =>
+    appBuilder.Run(async context =>
+        await Results.Problem(statusCode: 500).ExecuteAsync(context)));
 
 // if (app.Environment.IsDevelopment() ||
 //     app.Environment.IsEnvironment("Docker"))
@@ -49,19 +51,18 @@ app.UseCors();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.UseIdentityApi<AppUser>("/api/account", config =>
-{
-    config.WithTags("Account");
-});
-
 app.UseApiEndpoints(config =>
 {
     config.RequireAuthorization();
     config.RequireCors();
-    config.Produces<ProblemDetails>(400);
-    config.Produces<ProblemDetails>(403);
-    config.Produces<ProblemDetails>(404);
-    config.Produces<ProblemDetails>(500);
+    config.ProducesProblem(400);
+    config.ProducesProblem(403);
+    config.ProducesProblem(404);
+    config.ProducesProblem(500);
 });
+
+app.MapGroup("/api/account")
+    .MapIdentityApi<AppUser>()
+    .WithTags("Account");
 
 app.Run();

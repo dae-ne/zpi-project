@@ -1,16 +1,17 @@
 using Dietly.Application.Users.Commands.RemoveUser;
+using Dietly.WebApi.Infrastructure.ApiEndpoints;
+using Dietly.WebApi.Infrastructure.Extensions;
 
-namespace Dietly.WebApi.Resources.Users.RemoveUser;
+namespace Dietly.WebApi.Resources.Users.Delete;
 
-[ApiEndpointDelete("/api/users/{userId}")]
-public sealed class UserDeleteEndpoint(IMediator mediator, CurrentUser currentUser) : IApiEndpoint
+public sealed class UserDeleteEndpoint(IMediator mediator, CurrentUser currentUser) : ApiEndpointBase
 {
-    public void Configure(RouteHandlerBuilder builder) => builder
+    public override void Configure(IApiEndpointBuilder builder) => builder
+        .Delete("/api/users/{userId}")
         .WithTags("Users")
         .WithName("removeUser")
         .Produces(200);
 
-    [ApiEndpointHandler]
     public async Task<IResult> HandleAsync(int userId)
     {
         var currentUserId = currentUser.GetId();

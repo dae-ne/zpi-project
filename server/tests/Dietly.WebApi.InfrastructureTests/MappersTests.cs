@@ -1,6 +1,4 @@
-﻿using Dietly.WebApi.Infrastructure.Attributes;
-
-namespace Dietly.WebApi.InfrastructureTests;
+﻿namespace Dietly.WebApi.InfrastructureTests;
 
 public class MappersTests
 {

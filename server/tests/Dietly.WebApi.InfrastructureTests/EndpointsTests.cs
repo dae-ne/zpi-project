@@ -1,5 +1,3 @@
-using Dietly.WebApi.Infrastructure.Attributes;
-using Dietly.WebApi.Infrastructure.Interfaces;
 using Microsoft.AspNetCore.Http;
 
 namespace Dietly.WebApi.InfrastructureTests;

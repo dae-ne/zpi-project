@@ -1,18 +1,21 @@
 using Dietly.Application.Users.Queries.GetUser;
+using Dietly.WebApi.Infrastructure.ApiEndpoints;
+using Dietly.WebApi.Infrastructure.Extensions;
 using Dietly.WebApi.Resources.Users.Get.Models;
 
 namespace Dietly.WebApi.Resources.Users.Get;
 
-[ApiEndpointGet("/api/users/{userId}")]
-public sealed class UserGetEndpoint(IMediator mediator, CurrentUser currentUser) : IApiEndpoint
+public sealed class UserGetEndpoint(IMediator mediator, CurrentUser currentUser) : ApiEndpointBase
 {
-    public void Configure(RouteHandlerBuilder builder) => builder
+    public override void Configure(IApiEndpointBuilder builder) => builder
+        .Get("/api/users/{userId}")
         .WithTags("Users")
         .WithName("getUser")
-        .Produces<UserGetResponse>(200, "application/json")
-        .Produces(403);
+        .DisableAntiforgery()
+        .Produces<UserGetResponse>()
+        .ProducesProblem(403)
+        .ProducesValidationProblem();
 
-    [ApiEndpointHandler]
     public async Task<IResult> HandleAsync(int userId)
     {
         var currentUserId = currentUser.GetId();

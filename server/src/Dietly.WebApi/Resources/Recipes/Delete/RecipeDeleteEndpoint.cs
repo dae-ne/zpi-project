@@ -1,16 +1,17 @@
 using Dietly.Application.Recipes.Commands.RemoveRecipe;
+using Dietly.WebApi.Infrastructure.ApiEndpoints;
+using Dietly.WebApi.Infrastructure.Extensions;
 
 namespace Dietly.WebApi.Resources.Recipes.Delete;
 
-[ApiEndpointDelete("/api/recipes/{recipeId}")]
-public class RecipeDeleteEndpoint(IMediator mediator, CurrentUser currentUser) : IApiEndpoint
+public class RecipeDeleteEndpoint(IMediator mediator, CurrentUser currentUser) : ApiEndpointBase
 {
-    public void Configure(RouteHandlerBuilder builder) => builder
+    public override void Configure(IApiEndpointBuilder builder) => builder
+        .Delete("/api/recipes/{recipeId}")
         .WithTags("Recipes")
         .WithName("removeRecipe")
         .Produces(200);
 
-    [ApiEndpointHandler]
     public async Task<IResult> HandleAsync(int recipeId)
     {
         var userId = currentUser.GetId();

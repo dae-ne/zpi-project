@@ -1,6 +1,6 @@
 using Dietly.Application.Users.Commands.UpdateUser;
 
-namespace Dietly.WebApi.Resources.Users.UpdateUser.Models;
+namespace Dietly.WebApi.Resources.Users.Put.Models;
 
 internal static class Mapper
 {

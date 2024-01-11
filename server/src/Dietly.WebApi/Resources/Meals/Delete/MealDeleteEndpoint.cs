@@ -1,16 +1,17 @@
 using Dietly.Application.Meals.Commands.RemoveMeal;
+using Dietly.WebApi.Infrastructure.ApiEndpoints;
+using Dietly.WebApi.Infrastructure.Extensions;
 
 namespace Dietly.WebApi.Resources.Meals.Delete;
 
-[ApiEndpointDelete("/api/meals/{mealId}")]
-public sealed class MealDeleteEndpoint(IMediator mediator, CurrentUser currentUser) : IApiEndpoint
+public sealed class MealDeleteEndpoint(IMediator mediator, CurrentUser currentUser) : ApiEndpointBase
 {
-    public void Configure(RouteHandlerBuilder builder) => builder
+    public override void Configure(IApiEndpointBuilder builder) => builder
+        .Delete("/api/meals/{mealId}")
         .WithTags("Meals")
         .WithName("removeMeal")
         .Produces(200);
 
-    [ApiEndpointHandler]
     public async Task<IResult> HandleAsync(int mealId)
     {
         var userId = currentUser.GetId();

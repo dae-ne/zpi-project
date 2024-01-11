@@ -1,17 +1,18 @@
 using Dietly.Application.Meals.Queries.GetMeal;
+using Dietly.WebApi.Infrastructure.ApiEndpoints;
+using Dietly.WebApi.Infrastructure.Extensions;
 using Dietly.WebApi.Resources.Meals.Get.Models;
 
 namespace Dietly.WebApi.Resources.Meals.Get;
 
-[ApiEndpointGet("/api/meals/{mealId}")]
-public sealed class MealGetEndpoint(IMediator mediator, CurrentUser currentUser) : IApiEndpoint
+public sealed class MealGetEndpoint(IMediator mediator, CurrentUser currentUser) : ApiEndpointBase
 {
-    public void Configure(RouteHandlerBuilder builder) => builder
+    public override void Configure(IApiEndpointBuilder builder) => builder
+        .Get("/api/meals/{mealId}")
         .WithTags("Meals")
         .WithName("getMeal")
-        .Produces<MealGetResponse>(200, "application/json");
+        .Produces<MealGetResponse>();
 
-    [ApiEndpointHandler]
     public async Task<IResult> HandleAsync(int mealId)
     {
         var userId = currentUser.GetId();

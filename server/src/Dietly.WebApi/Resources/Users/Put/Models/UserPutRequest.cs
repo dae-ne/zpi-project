@@ -1,4 +1,4 @@
-namespace Dietly.WebApi.Resources.Users.UpdateUser.Models;
+namespace Dietly.WebApi.Resources.Users.Put.Models;
 
 public sealed class UserPutRequest
 {

@@ -1,16 +1,17 @@
-using Dietly.WebApi.Resources.Users.UpdateUser.Models;
+using Dietly.WebApi.Infrastructure.ApiEndpoints;
+using Dietly.WebApi.Infrastructure.Extensions;
+using Dietly.WebApi.Resources.Users.Put.Models;
 
-namespace Dietly.WebApi.Resources.Users.UpdateUser;
+namespace Dietly.WebApi.Resources.Users.Put;
 
-[ApiEndpointPut("/api/users/{userId}")]
-public sealed class UserPutEndpoint(IMediator mediator, CurrentUser currentUser) : IApiEndpoint
+public sealed class UserPutEndpoint(IMediator mediator, CurrentUser currentUser) : ApiEndpointBase
 {
-    public void Configure(RouteHandlerBuilder builder) => builder
+    public override void Configure(IApiEndpointBuilder builder) => builder
+        .Put("/api/users/{userId}")
         .WithTags("Users")
         .WithName("updateUser")
         .Produces(200);
 
-    [ApiEndpointHandler]
     public async Task<IResult> HandleAsync(int userId, UserPutRequest request)
     {
         var currentUserId = currentUser.GetId();

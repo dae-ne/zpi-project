@@ -1,7 +1,7 @@
 ﻿using Dietly.Application.Common.Result;
 using Results = Microsoft.AspNetCore.Http.Results;
 
-namespace Dietly.WebApi.Extensions;
+namespace Dietly.WebApi.Infrastructure.Extensions;
 
 internal static class ResultExtensions
 {

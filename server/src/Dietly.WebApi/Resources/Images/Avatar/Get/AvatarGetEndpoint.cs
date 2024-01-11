@@ -1,17 +1,18 @@
 using Dietly.Application.Images.Queries.GetAvatar;
+using Dietly.WebApi.Infrastructure.ApiEndpoints;
+using Dietly.WebApi.Infrastructure.Extensions;
 
 namespace Dietly.WebApi.Resources.Images.Avatar.Get;
 
-[ApiEndpointGet("/images/avatar/{fileName}")]
-public sealed class AvatarGetEndpoint(IMediator mediator) : IApiEndpoint
+public sealed class AvatarGetEndpoint(IMediator mediator) : ApiEndpointBase
 {
-    public void Configure(RouteHandlerBuilder builder) => builder
+    public override void Configure(IApiEndpointBuilder builder) => builder
+        .Get("/images/avatar/{fileName}")
         .WithTags("Images")
         .WithName("getAvatar")
         .AllowAnonymous()
         .Produces<byte[]>(200, "image/png", "image/jpeg", "image/gif", "application/octet-stream");
 
-    [ApiEndpointHandler]
     public async Task<IResult> HandleAsync(string fileName)
     {
         var query = new GetAvatarQuery(fileName);

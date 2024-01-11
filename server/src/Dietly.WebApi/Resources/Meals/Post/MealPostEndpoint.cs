@@ -1,16 +1,17 @@
+using Dietly.WebApi.Infrastructure.ApiEndpoints;
+using Dietly.WebApi.Infrastructure.Extensions;
 using Dietly.WebApi.Resources.Meals.Post.Models;
 
 namespace Dietly.WebApi.Resources.Meals.Post;
 
-[ApiEndpointPost("/api/meals")]
-public sealed class MealPostEndpoint(IMediator mediator, CurrentUser currentUser) : IApiEndpoint
+public sealed class MealPostEndpoint(IMediator mediator, CurrentUser currentUser) : ApiEndpointBase
 {
-    public void Configure(RouteHandlerBuilder builder) => builder
+    public override void Configure(IApiEndpointBuilder builder) => builder
+        .Post("/api/meals")
         .WithTags("Meals")
         .WithName("addMeal")
         .Produces(201);
 
-    [ApiEndpointHandler]
     public async Task<IResult> HandleAsync(MealPostRequest request, HttpContext httpContext) // TODO: HttpRequest?
     {
         var userId = currentUser.GetId();

@@ -1,16 +1,17 @@
 using Dietly.Application.Images.Commands.RemoveFoodImage;
+using Dietly.WebApi.Infrastructure.ApiEndpoints;
+using Dietly.WebApi.Infrastructure.Extensions;
 
 namespace Dietly.WebApi.Resources.Images.Food.Delete;
 
-[ApiEndpointDelete("/images/food/{fileName}")]
-public sealed class FoodImageDeleteEndpoint(IMediator mediator) : IApiEndpoint
+public sealed class FoodImageDeleteEndpoint(IMediator mediator) : ApiEndpointBase
 {
-    public void Configure(RouteHandlerBuilder builder) => builder
+    public override void Configure(IApiEndpointBuilder builder) => builder
+        .Delete("/images/food/{fileName}")
         .WithTags("Images")
         .WithName("removeFoodImage")
         .Produces(200);
 
-    [ApiEndpointHandler]
     public async Task<IResult> HandleAsync(string fileName)
     {
         var command = new RemoveFoodImageCommand(fileName);

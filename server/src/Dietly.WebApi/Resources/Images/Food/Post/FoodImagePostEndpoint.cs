@@ -1,17 +1,18 @@
 using Dietly.Application.Images.Commands.AddFoodImage;
+using Dietly.WebApi.Infrastructure.ApiEndpoints;
+using Dietly.WebApi.Infrastructure.Extensions;
 
 namespace Dietly.WebApi.Resources.Images.Food.Post;
 
-[ApiEndpointPost("/images/food")]
-public sealed class FoodImagePostEndpoint(IMediator mediator) : IApiEndpoint
+public sealed class FoodImagePostEndpoint(IMediator mediator) : ApiEndpointBase
 {
-    public void Configure(RouteHandlerBuilder builder) => builder
+    public override void Configure(IApiEndpointBuilder builder) => builder
+        .Post("/images/food")
         .WithTags("Images")
         .WithName("addFoodImage")
         .DisableAntiforgery()
         .Produces(201);
 
-    [ApiEndpointHandler]
     public async Task<IResult> HandleAsync(IFormFile file, HttpContext httpContext)
     {
         var command = new AddFoodImageCommand(file.ToByteArray(), file.FileName);

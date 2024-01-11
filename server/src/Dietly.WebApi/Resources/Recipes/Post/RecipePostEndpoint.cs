@@ -1,16 +1,17 @@
+using Dietly.WebApi.Infrastructure.ApiEndpoints;
+using Dietly.WebApi.Infrastructure.Extensions;
 using Dietly.WebApi.Resources.Recipes.Post.Models;
 
 namespace Dietly.WebApi.Resources.Recipes.Post;
 
-[ApiEndpointPost("/api/recipes")]
-public sealed class RecipePostEndpoint(IMediator mediator, CurrentUser currentUser) : IApiEndpoint
+public sealed class RecipePostEndpoint(IMediator mediator, CurrentUser currentUser) : ApiEndpointBase
 {
-    public void Configure(RouteHandlerBuilder builder) => builder
+    public override void Configure(IApiEndpointBuilder builder) => builder
+        .Post("/api/recipes")
         .WithTags("Recipes")
         .WithName("createRecipe")
         .Produces(201);
 
-    [ApiEndpointHandler]
     public async Task<IResult> HandleAsync(RecipePostRequest request, HttpContext httpContext) // TODO: get just the request
     {
         var userId = currentUser.GetId();
