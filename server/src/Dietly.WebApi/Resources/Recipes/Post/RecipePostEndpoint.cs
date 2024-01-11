@@ -1,5 +1,4 @@
 using Dietly.WebApi.Infrastructure.ApiEndpoints;
-using Dietly.WebApi.Infrastructure.Extensions;
 using Dietly.WebApi.Resources.Recipes.Post.Models;
 
 namespace Dietly.WebApi.Resources.Recipes.Post;
@@ -17,6 +16,9 @@ public sealed class RecipePostEndpoint(IMediator mediator, CurrentUser currentUs
         var userId = currentUser.GetId();
         var command = request.ToCommand(userId);
         var result = await mediator.Send(command);
-        return result.ToHttpResult(httpContext.Request.GenerateUrlForCreatedItem);
+
+        return result.Match(
+            id => Results.Created(httpContext.Request.GenerateUrlForCreatedItem(id), null),
+            HandleError);
     }
 }

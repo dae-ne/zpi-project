@@ -1,6 +1,5 @@
 using Dietly.Application.Images.Commands.RemoveFoodImage;
 using Dietly.WebApi.Infrastructure.ApiEndpoints;
-using Dietly.WebApi.Infrastructure.Extensions;
 
 namespace Dietly.WebApi.Resources.Images.Food.Delete;
 
@@ -16,6 +15,6 @@ public sealed class FoodImageDeleteEndpoint(IMediator mediator) : ApiEndpointBas
     {
         var command = new RemoveFoodImageCommand(fileName);
         var result = await mediator.Send(command);
-        return result.ToHttpResult();
+        return result.Match(Results.Ok, HandleError);
     }
 }

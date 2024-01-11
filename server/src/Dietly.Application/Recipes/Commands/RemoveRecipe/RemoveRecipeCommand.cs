@@ -1,13 +1,14 @@
+using Dietly.Application.Common.Results;
 using Dietly.Domain.Events.Recipe;
 
 namespace Dietly.Application.Recipes.Commands.RemoveRecipe;
 
-public sealed record RemoveRecipeCommand(int RecipeId, int UserId) : IRequest<Result<object?>>;
+public sealed record RemoveRecipeCommand(int RecipeId, int UserId) : IRequest<Result<Unit>>;
 
 [UsedImplicitly]
-internal sealed class RemoveRecipeCommandHandler(IAppDbContext db) : IRequestHandler<RemoveRecipeCommand, Result<object?>>
+internal sealed class RemoveRecipeCommandHandler(IAppDbContext db) : IRequestHandler<RemoveRecipeCommand, Result<Unit>>
 {
-    public async Task<Result<object?>> Handle(RemoveRecipeCommand request, CancellationToken cancellationToken)
+    public async Task<Result<Unit>> Handle(RemoveRecipeCommand request, CancellationToken cancellationToken)
     {
         var recipe = await db.Recipes
             .Include(r => r.Ingredients)
@@ -18,7 +19,7 @@ internal sealed class RemoveRecipeCommandHandler(IAppDbContext db) : IRequestHan
 
         if (recipe is null)
         {
-            return Results.NotFound("Recipe not found");
+            return Errors.NotFound("Recipe not found");
         }
 
         recipe.AddDomainEvent(new RecipeRemovedEvent(recipe));
@@ -27,7 +28,7 @@ internal sealed class RemoveRecipeCommandHandler(IAppDbContext db) : IRequestHan
         var changes = await db.SaveChangesAsync(cancellationToken);
 
         return changes > 0
-            ? Results.Ok()
-            : Results.UnknownError();
+            ? Unit.Value
+            : Errors.Unknown();
     }
 }

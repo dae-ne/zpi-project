@@ -1,5 +1,4 @@
 using Dietly.WebApi.Infrastructure.ApiEndpoints;
-using Dietly.WebApi.Infrastructure.Extensions;
 using Dietly.WebApi.Resources.Meals.Put.Models;
 
 namespace Dietly.WebApi.Resources.Meals.Put;
@@ -17,6 +16,6 @@ public sealed class MealPutEndpoint(IMediator mediator, CurrentUser currentUser)
         var userId = currentUser.GetId();
         var command = request.ToCommand(mealId, userId);
         var result = await mediator.Send(command);
-        return result.ToHttpResult();
+        return result.Match(Results.Ok, HandleError);
     }
 }

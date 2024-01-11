@@ -1,5 +1,4 @@
 ﻿using Dietly.WebApi.Infrastructure.ApiEndpoints;
-using Dietly.WebApi.Infrastructure.Extensions;
 using Dietly.WebApi.Resources.Lists.Post.Models;
 
 namespace Dietly.WebApi.Resources.Lists.Post;
@@ -25,6 +24,6 @@ public class SendEmailWithListEndpoint(IMediator mediator, CurrentUser currentUs
 
         var command = request.ToCommand();
         var result = await mediator.Send(command);
-        return result.ToHttpResult();
+        return result.Match(Results.Ok, HandleError);
     }
 }

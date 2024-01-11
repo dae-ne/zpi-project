@@ -1,6 +1,6 @@
 using Dietly.Application.Images.Queries.GetFoodImage;
+using Dietly.WebApi.Helpers;
 using Dietly.WebApi.Infrastructure.ApiEndpoints;
-using Dietly.WebApi.Infrastructure.Extensions;
 
 namespace Dietly.WebApi.Resources.Images.Food.Get;
 
@@ -17,6 +17,6 @@ public sealed class FoodImageGetEndpoint(IMediator mediator) : ApiEndpointBase
     {
         var query = new GetFoodImageQuery(fileName);
         var result = await mediator.Send(query);
-        return result.ToHttpResult();
+        return result.Match(file => ImageHelper.CreateHttpGetResult(file, fileName), HandleError);
     }
 }

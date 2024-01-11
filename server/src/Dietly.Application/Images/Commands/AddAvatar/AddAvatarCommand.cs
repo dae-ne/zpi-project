@@ -1,3 +1,5 @@
+using Dietly.Application.Common.Results;
+
 namespace Dietly.Application.Images.Commands.AddAvatar;
 
 public sealed record AddAvatarCommand(byte[] File, string FileName) : IRequest<Result<string>>;
@@ -15,6 +17,6 @@ internal sealed class AddAvatarCommandHandler(IAvatarStorage storage) : IRequest
             : $"{Guid.NewGuid()}.{fileExtension}";
 
         await storage.UploadAsync(newFileName, file, cancellationToken);
-        return Results.Created(newFileName);
+        return newFileName;
     }
 }

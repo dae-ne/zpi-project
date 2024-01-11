@@ -1,6 +1,5 @@
 using Dietly.Application.Users.Queries.GetUser;
 using Dietly.WebApi.Infrastructure.ApiEndpoints;
-using Dietly.WebApi.Infrastructure.Extensions;
 using Dietly.WebApi.Resources.Users.Get.Models;
 
 namespace Dietly.WebApi.Resources.Users.Get;
@@ -20,6 +19,6 @@ public sealed class CurrentUserGetEndpoint(IMediator mediator, CurrentUser curre
         var userId = currentUser.GetId();
         var query = new GetUserQuery(userId);
         var result = await mediator.Send(query);
-        return result.ToHttpResult(Mapper.ToDto);
+        return result.Match(user => Results.Ok(user.ToDto()), HandleError);
     }
 }

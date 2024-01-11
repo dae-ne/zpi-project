@@ -1,6 +1,6 @@
 using Dietly.Application.Images.Queries.GetAvatar;
+using Dietly.WebApi.Helpers;
 using Dietly.WebApi.Infrastructure.ApiEndpoints;
-using Dietly.WebApi.Infrastructure.Extensions;
 
 namespace Dietly.WebApi.Resources.Images.Avatar.Get;
 
@@ -17,6 +17,6 @@ public sealed class AvatarGetEndpoint(IMediator mediator) : ApiEndpointBase
     {
         var query = new GetAvatarQuery(fileName);
         var result = await mediator.Send(query);
-        return result.ToHttpResult();
+        return result.Match(file => ImageHelper.CreateHttpGetResult(file, fileName), HandleError);
     }
 }

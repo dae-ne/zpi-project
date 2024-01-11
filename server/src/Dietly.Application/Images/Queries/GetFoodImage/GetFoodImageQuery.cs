@@ -1,3 +1,5 @@
+using Dietly.Application.Common.Results;
+
 namespace Dietly.Application.Images.Queries.GetFoodImage;
 
 public sealed record GetFoodImageQuery(string FileName) : IRequest<Result<byte[]>>;
@@ -8,6 +10,6 @@ internal sealed class GetFoodImageQueryHandler(IImageStorage storage) : IRequest
     public async Task<Result<byte[]>> Handle(GetFoodImageQuery request, CancellationToken cancellationToken)
     {
         var file = await storage.GetAsync(request.FileName, cancellationToken);
-        return Results.File(file);
+        return file;
     }
 }

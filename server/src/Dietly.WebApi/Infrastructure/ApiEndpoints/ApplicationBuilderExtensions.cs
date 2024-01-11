@@ -1,5 +1,4 @@
-﻿using Dietly.WebApi.Infrastructure.Extensions;
-using Microsoft.AspNetCore.Routing;
+﻿using Microsoft.AspNetCore.Routing;
 
 namespace Dietly.WebApi.Infrastructure.ApiEndpoints;
 

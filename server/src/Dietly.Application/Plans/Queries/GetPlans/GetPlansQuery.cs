@@ -1,3 +1,4 @@
+using Dietly.Application.Common.Results;
 using Dietly.Domain.Extensions;
 
 namespace Dietly.Application.Plans.Queries.GetPlans;
@@ -26,13 +27,13 @@ internal sealed class GetPlansQueryHandler(IAppDbContext db) : IRequestHandler<G
 
         if (meals.Count == 0)
         {
-            return Results.NotFound<IList<DayPlan>>("Plans not found");
+            return Errors.NotFound("Plans not found");
         }
 
         var plans = meals
             .ToDayPlans(request.StartDate, request.EndDate, request.UserId)
             .ToList();
 
-        return Results.Ok<IList<DayPlan>>(plans);
+        return plans;
     }
 }

@@ -1,5 +1,4 @@
 ﻿using Dietly.Application.Common.Behaviors;
-using Dietly.Application.Common.Result;
 using Dietly.Application.Users.Queries.GetUser;
 using Dietly.Domain.Entities;
 using MediatR;

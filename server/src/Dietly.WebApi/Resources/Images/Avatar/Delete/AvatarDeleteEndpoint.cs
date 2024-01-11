@@ -1,6 +1,5 @@
 using Dietly.Application.Images.Commands.RemoveAvatar;
 using Dietly.WebApi.Infrastructure.ApiEndpoints;
-using Dietly.WebApi.Infrastructure.Extensions;
 
 namespace Dietly.WebApi.Resources.Images.Avatar.Delete;
 
@@ -16,6 +15,6 @@ public sealed class AvatarDeleteEndpoint(IMediator mediator) : ApiEndpointBase
     {
         var command = new RemoveAvatarCommand(fileName);
         var result = await mediator.Send(command);
-        return result.ToHttpResult();
+        return result.Match(Results.Ok, HandleError);
     }
 }

@@ -1,6 +1,5 @@
 using Dietly.Application.Users.Commands.RemoveUser;
 using Dietly.WebApi.Infrastructure.ApiEndpoints;
-using Dietly.WebApi.Infrastructure.Extensions;
 
 namespace Dietly.WebApi.Resources.Users.Delete;
 
@@ -23,6 +22,6 @@ public sealed class UserDeleteEndpoint(IMediator mediator, CurrentUser currentUs
 
         var command = new RemoveUserCommand(userId);
         var result = await mediator.Send(command);
-        return result.ToHttpResult();
+        return result.Match(Results.Ok, HandleError);
     }
 }

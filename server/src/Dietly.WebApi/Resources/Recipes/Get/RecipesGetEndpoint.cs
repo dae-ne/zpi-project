@@ -1,6 +1,5 @@
 using Dietly.Application.Recipes.Queries.GetRecipes;
 using Dietly.WebApi.Infrastructure.ApiEndpoints;
-using Dietly.WebApi.Infrastructure.Extensions;
 using Dietly.WebApi.Resources.Recipes.Get.Models;
 
 namespace Dietly.WebApi.Resources.Recipes.Get;
@@ -18,6 +17,6 @@ public sealed class RecipesGetEndpoint(IMediator mediator, CurrentUser currentUs
         var userId = currentUser.GetId();
         var query = new GetRecipesQuery(userId);
         var result = await mediator.Send(query);
-        return result.ToHttpResult(Mapper.ToDto);
+        return result.Match(recipes => Results.Ok(recipes.ToDto()), HandleError);
     }
 }

@@ -1,3 +1,5 @@
+using Dietly.Application.Common.Results;
+
 namespace Dietly.Application.Images.Queries.GetAvatar;
 
 public sealed record GetAvatarQuery(string FileName) : IRequest<Result<byte[]>>;
@@ -8,6 +10,6 @@ internal sealed class GetAvatarQueryHandler(IAvatarStorage storage) : IRequestHa
     public async Task<Result<byte[]>> Handle(GetAvatarQuery request, CancellationToken cancellationToken)
     {
         var file = await storage.GetAsync(request.FileName, cancellationToken);
-        return Results.File(file);
+        return file;
     }
 }

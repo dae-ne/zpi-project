@@ -1,6 +1,5 @@
 using Dietly.Application.Recipes.Commands.RemoveRecipe;
 using Dietly.WebApi.Infrastructure.ApiEndpoints;
-using Dietly.WebApi.Infrastructure.Extensions;
 
 namespace Dietly.WebApi.Resources.Recipes.Delete;
 
@@ -17,6 +16,6 @@ public class RecipeDeleteEndpoint(IMediator mediator, CurrentUser currentUser) :
         var userId = currentUser.GetId();
         var command = new RemoveRecipeCommand(RecipeId: recipeId, UserId: userId);
         var result = await mediator.Send(command);
-        return result.ToHttpResult();
+        return result.Match(Results.Ok, HandleError);
     }
 }

@@ -1,5 +1,4 @@
 using Dietly.WebApi.Infrastructure.ApiEndpoints;
-using Microsoft.AspNetCore.Http;
 
 namespace Dietly.WebApi.InfrastructureTests;
 

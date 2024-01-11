@@ -1,3 +1,5 @@
+using Dietly.Application.Common.Results;
+
 namespace Dietly.Application.Recipes.Queries.GetRecipe;
 
 public sealed record GetRecipeQuery(int RecipeId, int UserId) : IRequest<Result<Recipe>>;
@@ -16,7 +18,7 @@ internal sealed class GetRecipeQueryHandler(IAppDbContext db) : IRequestHandler<
             .SingleOrDefaultAsync(r => r.Id == request.RecipeId, cancellationToken);
 
         return recipe is not null
-            ? Results.Ok(recipe)
-            : Results.NotFound<Recipe>("Recipe not found");
+            ? recipe
+            : Errors.NotFound("Recipe not found");
     }
 }

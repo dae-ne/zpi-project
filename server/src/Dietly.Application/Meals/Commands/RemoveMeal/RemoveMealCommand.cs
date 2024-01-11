@@ -1,13 +1,14 @@
+using Dietly.Application.Common.Results;
 using Dietly.Domain.Events.Meal;
 
 namespace Dietly.Application.Meals.Commands.RemoveMeal;
 
-public sealed record RemoveMealCommand(int MealId, int UserId) : IRequest<Result<object?>>;
+public sealed record RemoveMealCommand(int MealId, int UserId) : IRequest<Result<Unit>>;
 
 [UsedImplicitly]
-internal sealed class RemoveMealCommandHandler(IAppDbContext db) : IRequestHandler<RemoveMealCommand, Result<object?>>
+internal sealed class RemoveMealCommandHandler(IAppDbContext db) : IRequestHandler<RemoveMealCommand, Result<Unit>>
 {
-    public async Task<Result<object?>> Handle(RemoveMealCommand request, CancellationToken cancellationToken)
+    public async Task<Result<Unit>> Handle(RemoveMealCommand request, CancellationToken cancellationToken)
     {
         var meals = await db.Meals
             .Include(m => m.Recipe)
@@ -16,14 +17,14 @@ internal sealed class RemoveMealCommandHandler(IAppDbContext db) : IRequestHandl
 
         if (meals.Count == 0)
         {
-            return Results.NotFound("Meal not found");
+            return Errors.NotFound("Meal not found");
         }
 
         var meal = meals.First();
 
         if (meal.Recipe.UserId != request.UserId)
         {
-            return Results.Forbidden("Meal does not belong to user");
+            return Errors.Forbidden("Meal does not belong to user");
         }
 
         meal.AddDomainEvent(new MealRemovedEvent(meal));
@@ -32,7 +33,7 @@ internal sealed class RemoveMealCommandHandler(IAppDbContext db) : IRequestHandl
         var changes = await db.SaveChangesAsync(cancellationToken);
 
         return changes > 0
-            ? Results.Ok()
-            : Results.UnknownError();
+            ? Unit.Value
+            : Errors.Unknown();
     }
 }

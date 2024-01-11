@@ -1,8 +1,9 @@
+using Dietly.Application.Common.Results;
 using Dietly.Domain.Events.Meal;
 
 namespace Dietly.Application.Meals.Commands.UpdateMeal;
 
-public sealed class UpdateMealCommand : IRequest<Result<object?>>
+public sealed class UpdateMealCommand : IRequest<Result<Unit>>
 {
     public int MealId { get; init; }
 
@@ -14,9 +15,9 @@ public sealed class UpdateMealCommand : IRequest<Result<object?>>
 }
 
 [UsedImplicitly]
-internal sealed class UpdateMealCommandHandler(IAppDbContext db) : IRequestHandler<UpdateMealCommand, Result<object?>>
+internal sealed class UpdateMealCommandHandler(IAppDbContext db) : IRequestHandler<UpdateMealCommand, Result<Unit>>
 {
-    public async Task<Result<object?>> Handle(UpdateMealCommand request, CancellationToken cancellationToken)
+    public async Task<Result<Unit>> Handle(UpdateMealCommand request, CancellationToken cancellationToken)
     {
         var meal = await db.Meals
             .Include(m => m.Recipe)
@@ -25,12 +26,12 @@ internal sealed class UpdateMealCommandHandler(IAppDbContext db) : IRequestHandl
 
         if (meal is null)
         {
-            return Results.NotFound("Meal not found");
+            return Errors.NotFound("Meal not found");
         }
 
         if (meal.Recipe.UserId != request.UserId)
         {
-            return Results.Forbidden("Meal does not belong to user");
+            return Errors.Forbidden("Meal does not belong to user");
         }
 
         var oldMeal = (Meal)meal.Clone();
@@ -43,7 +44,7 @@ internal sealed class UpdateMealCommandHandler(IAppDbContext db) : IRequestHandl
         var changes = await db.SaveChangesAsync(cancellationToken);
 
         return changes > 0
-            ? Results.Ok()
-            : Results.UnknownError();
+            ? Unit.Value
+            : Errors.Unknown();
     }
 }

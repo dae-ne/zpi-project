@@ -1,3 +1,4 @@
+using Dietly.Application.Common.Results;
 using Dietly.Domain.Events.Meal;
 
 namespace Dietly.Application.Meals.Commands.AddMeal;
@@ -20,12 +21,12 @@ internal sealed class AddMealCommandHandler(IAppDbContext db) : IRequestHandler<
 
         if (recipe is null)
         {
-            return Results.NotFound<int>("Recipe not found");
+            return Errors.NotFound("Recipe not found");
         }
 
         if (recipe.UserId != request.UserId)
         {
-            return Results.Forbidden<int>("Recipe does not belong to user");
+            return Errors.Forbidden("Recipe does not belong to user");
         }
 
         var meal = new Meal
@@ -41,7 +42,7 @@ internal sealed class AddMealCommandHandler(IAppDbContext db) : IRequestHandler<
         var changes = await db.SaveChangesAsync(cancellationToken);
 
         return changes > 0
-            ? Results.Created(meal.Id)
-            : Results.UnknownError<int>();
+            ? meal.Id
+            : Errors.Unknown();
     }
 }

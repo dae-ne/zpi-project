@@ -1,8 +1,9 @@
 using Dietly.Application.Common.Exceptions;
+using Dietly.Application.Common.Results;
 
 namespace Dietly.Application.Users.Commands.UpdateUser;
 
-public sealed class UpdateUserCommand : IRequest<Result<object?>>
+public sealed class UpdateUserCommand : IRequest<Result<Unit>>
 {
     public int UserId { get; init; }
 
@@ -12,20 +13,20 @@ public sealed class UpdateUserCommand : IRequest<Result<object?>>
 }
 
 [UsedImplicitly]
-internal sealed class UpdateUserCommandHandler(IUserService userService) : IRequestHandler<UpdateUserCommand, Result<object?>>
+internal sealed class UpdateUserCommandHandler(IUserService userService) : IRequestHandler<UpdateUserCommand, Result<Unit>>
 {
-    public async Task<Result<object?>> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
+    public async Task<Result<Unit>> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
     {
         var user = request.ToDomain();
 
         try
         {
             await userService.UpdateUserAsync(user, cancellationToken);
-            return Results.Ok();
+            return Unit.Value;
         }
         catch (NotFoundException ex)
         {
-            return Results.NotFound(ex.Message);
+            return Errors.NotFound(ex.Message);
         }
     }
 }

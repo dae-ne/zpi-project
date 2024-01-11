@@ -1,5 +1,4 @@
 using Dietly.WebApi.Infrastructure.ApiEndpoints;
-using Dietly.WebApi.Infrastructure.Extensions;
 using Dietly.WebApi.Resources.Plans.Get.Models;
 
 namespace Dietly.WebApi.Resources.Plans.Get;
@@ -17,6 +16,6 @@ public sealed class PlansGetEndpoint(IMediator mediator, CurrentUser currentUser
         var userId = currentUser.GetId();
         var query = queryParams.ToQuery(userId);
         var result = await mediator.Send(query);
-        return result.ToHttpResult(Mapper.ToDto);
+        return result.Match(plans => Results.Ok(plans.ToDto()), HandleError);
     }
 }

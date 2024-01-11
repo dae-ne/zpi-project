@@ -1,4 +1,3 @@
-using System.Reflection;
 using Microsoft.Extensions.Logging;
 
 namespace Dietly.Application.Common.Behaviors;
@@ -16,12 +15,8 @@ public sealed class UnhandledExceptionBehavior<TRequest, TResponse>(ILogger<TReq
         catch (Exception ex)
         {
             var requestName = typeof(TRequest).Name;
-
             logger.LogError(ex, "Request: Unhandled Exception for Request {RequestName} {@Request}", requestName, request);
-
-            var unknownErrorResultMethod = typeof(TResponse).GetMethod("UnknownError", BindingFlags.Public | BindingFlags.Static);
-            var result = unknownErrorResultMethod?.Invoke(null, null);
-            return (TResponse)result!; // Tricky, but we have tests for this
+            throw;
         }
     }
 }

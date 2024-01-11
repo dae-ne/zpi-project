@@ -1,3 +1,4 @@
+using Dietly.Application.Common.Results;
 using Dietly.Domain.Enums;
 using Dietly.Domain.Events.Recipe;
 
@@ -88,7 +89,7 @@ internal sealed class CreateRecipeContractHandler(IAppDbContext db) : IRequestHa
         var changes = await db.SaveChangesAsync(cancellationToken);
 
         return changes > 0
-            ? Results.Ok(recipe.Id)
-            : Results.UnknownError<int>();
+            ? recipe.Id
+            : Errors.Unknown();
     }
 }

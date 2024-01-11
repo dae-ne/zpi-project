@@ -1,6 +1,5 @@
 using Dietly.Application.Images.Commands.AddAvatar;
 using Dietly.WebApi.Infrastructure.ApiEndpoints;
-using Dietly.WebApi.Infrastructure.Extensions;
 
 namespace Dietly.WebApi.Resources.Images.Avatar.Post;
 
@@ -17,6 +16,9 @@ public sealed class AvatarPostEndpoint(IMediator mediator) : ApiEndpointBase
     {
         var command = new AddAvatarCommand(file.ToByteArray(), file.FileName);
         var result = await mediator.Send(command);
-        return result.ToHttpResult(httpContext.Request.GenerateAvatarUrl);
+
+        return result.Match(
+            fileName => Results.Created(httpContext.Request.GenerateAvatarUrl(fileName), null),
+            HandleError);
     }
 }

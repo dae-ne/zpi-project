@@ -1,3 +1,5 @@
+using Dietly.Application.Common.Results;
+
 namespace Dietly.Application.Meals.Queries.GetMeals;
 
 public sealed class GetMealsQuery : IRequest<Result<IList<Meal>>>
@@ -25,7 +27,7 @@ internal sealed class GetMealsQueryHandler(IAppDbContext db) : IRequestHandler<G
             .ToListAsync(cancellationToken);
 
         return meals.Count > 0
-            ? Results.Ok<IList<Meal>>(meals)
-            : Results.NotFound<IList<Meal>>("Meals not found");
+            ? meals
+            : Errors.NotFound("Meals not found");
     }
 }

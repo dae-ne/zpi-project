@@ -1,4 +1,6 @@
-﻿namespace Dietly.Application.Lists.Queries.GetList;
+﻿using Dietly.Application.Common.Results;
+
+namespace Dietly.Application.Lists.Queries.GetList;
 
 public sealed record GetListQuery(int UserId, DateTime From, DateTime To) : IRequest<Result<List<Ingredient>>>;
 
@@ -21,6 +23,6 @@ internal sealed class GetListQueryHandler(IAppDbContext db) : IRequestHandler<Ge
             .Select(g => g.First())
             .ToList();
 
-        return Results.Ok(ingredients);
+        return ingredients;
     }
 }
