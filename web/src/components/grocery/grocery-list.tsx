@@ -1,59 +1,56 @@
 import "./grocery.scss"
-
 import React, { useEffect, useState } from "react"
+import { DefaultDateTimeFormat } from "../../constants/time"
+import moment, { Moment } from "moment"
+import { ListGetIngredientDto, ListGetResponse, ListsService, SendEmailWithListRequest } from "@dietly/sdk"
 import Grid from "@mui/material/Grid"
-import { DateTimePicker, TimePicker } from "@mui/x-date-pickers"
+import { DateTimePicker } from "@mui/x-date-pickers"
 import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment"
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider"
-import { Moment } from "moment"
-import moment from "moment"
-import { PlansGetResponse, PlansService } from "@dietly/sdk"
 
 const GroceryList = () => {
     const [dateFrom, setDateFrom] = useState<Moment | null>(moment(new Date()).startOf('day'))
     const [dateTo, setDateTo] = useState<Moment | null>(moment(new Date()).endOf('day'))
+    const [ingredients, setIngredients] = useState<Array<ListGetIngredientDto>>([])
 
     const handleSendList = () => {
-        //  console.log(dateFrom?.toDate())
-        // console.log(dateTo?.toDate())
-        //TODO wysyłkaa
-        console.log("wysyłkaa maila")
+        const list: SendEmailWithListRequest = {
+            ingredientIds: ingredients.map(ingr => ingr.id || 0)
+        }
+        ListsService.sendEmailWithList(list)
+            .then(() => {
+                alert("pomyślnie wsyłano listę na adres mailowy")
+            })
+            .catch(() => {
+                alert("bląd z pobraniem")
+            })
     }
 
-    const updateRecipeList = () => {
-        console.log("update")
-        //todo dorobic do godzin....
+    const updateGroceryList = () => {
         if (!dateFrom || !dateTo) return;
-        PlansService.getPlans(dateFrom.format("DD.MM.YYYY"), dateTo.format("DD.MM.YYYY"))
-            .then((response: PlansGetResponse) => {
-                console.log(response)
-
+        ListsService.getList(dateFrom.format(DefaultDateTimeFormat), dateTo.format(DefaultDateTimeFormat))
+            .then((response: ListGetResponse) => {
+                setIngredients(response.ingredients || [])
             })
-            .catch((err) => {
-                console.log(err)
-            })
+            .catch(() => { })
     }
 
     useEffect(() => {
-        updateRecipeList()
+        updateGroceryList()
     }, [dateFrom, dateTo])
 
     return (
         <Grid container sx={{ my: 4 }}>
 
-            <Grid item xs={7.5} className="grocery-list-ingredients">
-                <div className="grocery-list-ingredients-header">Grocery list</div>
+            <Grid item xs={7.5} >
+                <div className="grocery-list-ingredients">
+                    <div className="grocery-list-ingredients-header">Grocery list</div>
 
-                <ul className="recipe-ingridients-list">
-                    {/* {ingredients?.map((ingredient: CreateRecipeIngredientDto, index: number) => */}
-                    <li className="recipe-ingridient">element 1</li>
-                    <li className="recipe-ingridient">element 1</li>
-                    <li className="recipe-ingridient">element 1</li>
-                    <li className="recipe-ingridient">element 1</li>
-                    <li className="recipe-ingridient">element 1</li>
-
-                </ul>
-
+                    <ul className="recipe-ingridients-list">
+                        {ingredients?.map((ingred: ListGetIngredientDto) =>
+                            <li key={"igr" + ingred.id} className="recipe-ingridient">{ingred.name}</li>)}
+                    </ul>
+                </div>
             </Grid>
 
             <Grid item xs={4.5}>
@@ -92,7 +89,7 @@ const GroceryList = () => {
                 </div>
             </Grid>
 
-        </Grid>
+        </Grid >
     )
 }
 

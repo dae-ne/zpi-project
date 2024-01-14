@@ -16,7 +16,7 @@ import { clearCookies, getSecurityCookies, setLoginCookies } from "./tools/secur
 import {
   SECURITY_LOGIN, SECURITY_REGISTER, EMPTY, SECURITY_ROOT,
   SECURITY_DEFAULT, ROOT, RECIPE_LIST, RECIPE_NEW, RECIPE_EDIT,
-  RECIPE_PREVIEW, PLAN_LIST, GROCERY_LIST, ROOT_DEFAULT
+  RECIPE_PREVIEW, PLAN_LIST, GROCERY_LIST, ROOT_DEFAULT, SERVICE_URL
 } from "./constants/app-route";
 
 const App = () => {
@@ -29,6 +29,8 @@ const App = () => {
   }
 
   useEffect(() => {
+    OpenAPI.BASE = SERVICE_URL
+
     let { accessToken, refreshToken } = getSecurityCookies()
     if (!refreshToken) return;
 
