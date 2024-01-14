@@ -2,10 +2,10 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { CreateRecipeRequest } from '../models/CreateRecipeRequest';
-import type { GetRecipeResponse } from '../models/GetRecipeResponse';
-import type { GetRecipesResponse } from '../models/GetRecipesResponse';
-import type { UpdateRecipeRequest } from '../models/UpdateRecipeRequest';
+import type { RecipeGetResponse } from '../models/RecipeGetResponse';
+import type { RecipePostRequest } from '../models/RecipePostRequest';
+import type { RecipePutRequest } from '../models/RecipePutRequest';
+import type { RecipesGetResponse } from '../models/RecipesGetResponse';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
@@ -21,7 +21,7 @@ export class RecipesService {
    */
   public static updateRecipe(
 recipeId: number,
-requestBody: UpdateRecipeRequest,
+requestBody: RecipePutRequest,
 ): CancelablePromise<any> {
     return __request(OpenAPI, {
       method: 'PUT',
@@ -31,6 +31,29 @@ requestBody: UpdateRecipeRequest,
       },
       body: requestBody,
       mediaType: 'application/json',
+      errors: {
+        400: `Bad Request`,
+        403: `Forbidden`,
+        404: `Not Found`,
+        500: `Server Error`,
+      },
+    });
+  }
+
+  /**
+   * @param recipeId 
+   * @returns RecipeGetResponse Success
+   * @throws ApiError
+   */
+  public static getRecipe(
+recipeId: number,
+): CancelablePromise<RecipeGetResponse> {
+    return __request(OpenAPI, {
+      method: 'GET',
+      url: '/api/recipes/{recipeId}',
+      path: {
+        'recipeId': recipeId,
+      },
       errors: {
         400: `Bad Request`,
         403: `Forbidden`,
@@ -64,52 +87,12 @@ recipeId: number,
   }
 
   /**
-   * @param recipeId 
-   * @returns GetRecipeResponse Success
-   * @throws ApiError
-   */
-  public static getRecipe(
-recipeId: number,
-): CancelablePromise<GetRecipeResponse> {
-    return __request(OpenAPI, {
-      method: 'GET',
-      url: '/api/recipes/{recipeId}',
-      path: {
-        'recipeId': recipeId,
-      },
-      errors: {
-        400: `Bad Request`,
-        403: `Forbidden`,
-        404: `Not Found`,
-        500: `Server Error`,
-      },
-    });
-  }
-
-  /**
-   * @returns GetRecipesResponse Success
-   * @throws ApiError
-   */
-  public static getRecipes(): CancelablePromise<GetRecipesResponse> {
-    return __request(OpenAPI, {
-      method: 'GET',
-      url: '/api/recipes',
-      errors: {
-        400: `Bad Request`,
-        403: `Forbidden`,
-        404: `Not Found`,
-        500: `Server Error`,
-      },
-    });
-  }
-
-  /**
    * @param requestBody 
    * @returns string Created
    * @throws ApiError
    */
   public static createRecipe(
-requestBody: CreateRecipeRequest,
+requestBody: RecipePostRequest,
 ): CancelablePromise<string> {
     return __request(OpenAPI, {
       method: 'POST',
@@ -117,6 +100,23 @@ requestBody: CreateRecipeRequest,
       body: requestBody,
       mediaType: 'application/json',
       responseHeader: 'location',
+      errors: {
+        400: `Bad Request`,
+        403: `Forbidden`,
+        404: `Not Found`,
+        500: `Server Error`,
+      },
+    });
+  }
+
+  /**
+   * @returns RecipesGetResponse Success
+   * @throws ApiError
+   */
+  public static getRecipes(): CancelablePromise<RecipesGetResponse> {
+    return __request(OpenAPI, {
+      method: 'GET',
+      url: '/api/recipes',
       errors: {
         400: `Bad Request`,
         403: `Forbidden`,

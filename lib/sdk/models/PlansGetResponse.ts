@@ -3,9 +3,9 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import type { GetMealResponse } from './GetMealResponse';
+import type { PlanGetResponse } from './PlanGetResponse';
 
-export type GetMealsResponse = {
+export type PlansGetResponse = {
   count?: number;
-  data?: Array<GetMealResponse> | null;
+  data?: Array<PlanGetResponse> | null;
 };

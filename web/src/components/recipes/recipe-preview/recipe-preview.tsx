@@ -2,14 +2,11 @@ import "./recipe-preview.scss"
 import React, { useEffect, useState } from "react"
 import RecipePreviewStats from "./recipe-preview-stats"
 import RecipePreviewContent from "./recipe-preview-content"
-import {
-    RecipesService, GetRecipeResponse, CreateRecipeDirectionDto,
-    CreateRecipeIngredientDto, CreateRecipeTagDto, DifficultyLevel
-} from "@dietly/sdk"
 import { useNavigate, useParams } from "react-router-dom"
 import { RECIPE_LIST } from "../../../constants/app-route"
 
 import Grid from "@mui/material/Grid"
+import { DifficultyLevel, RecipeGetResponse, RecipePostDirectionDto, RecipePostIngredientDto, RecipePostTagDto, RecipesService } from "@dietly/sdk"
 
 const RecipePreview = () => {
     const [title, setTitle] = useState<string | null | undefined>("");
@@ -18,9 +15,9 @@ const RecipePreview = () => {
     const [imageUrl, setImageUrl] = useState<string | null | undefined>("");
     const [time, setTime] = useState<number | null | undefined>(60);
     const [calories, setCalories] = useState<number | null | undefined>(0);
-    const [ingredients, setIngredients] = useState<Array<CreateRecipeIngredientDto> | null | undefined>(null);
-    const [directions, setDirections] = useState<Array<CreateRecipeDirectionDto> | null | undefined>(null);
-    const [tags, setTags] = useState<Array<CreateRecipeTagDto> | null | undefined>(null);
+    const [ingredients, setIngredients] = useState<Array<RecipePostIngredientDto> | null | undefined>(null);
+    const [directions, setDirections] = useState<Array<RecipePostDirectionDto> | null | undefined>(null);
+    const [tags, setTags] = useState<Array<RecipePostTagDto> | null | undefined>(null);
 
     const params = useParams()
     const navigate = useNavigate()
@@ -39,7 +36,7 @@ const RecipePreview = () => {
         }
 
         RecipesService.getRecipe(recipeId)
-            .then((response: GetRecipeResponse) => {
+            .then((response: RecipeGetResponse) => {
                 setTitle(response.title);
                 setDescription(response.description);
                 setDifficultyLevel(response.difficultyLevel);

@@ -1,11 +1,11 @@
 import React from "react"
 import { RecipeEditDataInterface } from "./recipe-edit-content";
-import { CreateRecipeDirectionDto } from "@dietly/sdk";
 import DeleteIcon from '@mui/icons-material/Delete';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { RecipePostDirectionDto } from "@dietly/sdk";
 
-const RecipeEditDirections = ({ data, onDataChange }: RecipeEditDataInterface<CreateRecipeDirectionDto>) => {
+const RecipeEditDirections = ({ data, onDataChange }: RecipeEditDataInterface<RecipePostDirectionDto>) => {
 
     const handleDelete = (index: number) => {
         if (!data || data.length - 1 < index) return;
@@ -40,7 +40,7 @@ const RecipeEditDirections = ({ data, onDataChange }: RecipeEditDataInterface<Cr
                 {data && data.length > 0 ?
                     data
                         .sort((a, b) => (a.order || 0) - (b.order || 0))
-                        .map((direction: CreateRecipeDirectionDto, index: number) => {
+                        .map((direction: RecipePostDirectionDto, index: number) => {
                             return (
                                 <div key={"direc" + index}>
                                     <div className="recipe-direction-header recipe-direction-header-edit">

@@ -3,9 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type UpdateMealRequest = {
+export type RecipeGetIngredientDto = {
   id?: number;
-  recipeId?: number;
-  date?: string | null;
-  completed?: boolean;
+  name?: string | null;
 };

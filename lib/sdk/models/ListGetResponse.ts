@@ -3,9 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import type { GetRecipeResponse } from './GetRecipeResponse';
-
-export type GetRecipesResponse = {
+export type ListGetResponse = {
   count?: number;
-  data?: Array<GetRecipeResponse> | null;
+  ingredients?: Array<string> | null;
 };

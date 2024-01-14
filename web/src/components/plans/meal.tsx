@@ -3,12 +3,12 @@ import React, { useState } from "react"
 import DeleteIcon from '@mui/icons-material/Delete';
 import CheckIcon from '@mui/icons-material/Check';
 import RemoveIcon from '@mui/icons-material/Remove';
-import { GetMealResponse, MealsService, UpdateMealRequest } from "@dietly/sdk";
+import { MealGetResponse, MealsService, MealPutRequest } from "@dietly/sdk";
 import moment from "moment";
 
 const MAX_DESCRIPTION_LENGTH: number = 180
 interface MealInterface {
-    data: GetMealResponse,
+    data: MealGetResponse,
     onDelete: () => void
 }
 const Meal = ({ data, onDelete }: MealInterface) => {
@@ -19,7 +19,7 @@ const Meal = ({ data, onDelete }: MealInterface) => {
         if (!data?.id)
             return;
 
-        const commitMealData: UpdateMealRequest = {
+        const commitMealData: MealPutRequest = {
             recipeId: data?.recipeId,
             date: moment(data.date, "YYYY-DD-MM").format("DD.MM.YYYY"),
             completed: true

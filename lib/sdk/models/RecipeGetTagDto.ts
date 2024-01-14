@@ -3,8 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type UpdateUserRequest = {
+export type RecipeGetTagDto = {
   id?: number;
-  userName?: string | null;
-  avatarUrl?: string | null;
+  name?: string | null;
 };

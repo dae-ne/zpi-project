@@ -2,8 +2,8 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { GetPlanResponse } from '../models/GetPlanResponse';
-import type { GetPlansResponse } from '../models/GetPlansResponse';
+import type { PlanGetResponse } from '../models/PlanGetResponse';
+import type { PlansGetResponse } from '../models/PlansGetResponse';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
@@ -13,12 +13,12 @@ export class PlansService {
 
   /**
    * @param day 
-   * @returns GetPlanResponse Success
+   * @returns PlanGetResponse Success
    * @throws ApiError
    */
   public static getPlan(
 day: string,
-): CancelablePromise<GetPlanResponse> {
+): CancelablePromise<PlanGetResponse> {
     return __request(OpenAPI, {
       method: 'GET',
       url: '/api/plans/{day}',
@@ -37,13 +37,13 @@ day: string,
   /**
    * @param from 
    * @param to 
-   * @returns GetPlansResponse Success
+   * @returns PlansGetResponse Success
    * @throws ApiError
    */
   public static getPlans(
 from?: string,
 to?: string,
-): CancelablePromise<GetPlansResponse> {
+): CancelablePromise<PlansGetResponse> {
     return __request(OpenAPI, {
       method: 'GET',
       url: '/api/plans',

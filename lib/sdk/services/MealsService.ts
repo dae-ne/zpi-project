@@ -2,10 +2,10 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { AddMealRequest } from '../models/AddMealRequest';
-import type { GetMealResponse } from '../models/GetMealResponse';
-import type { GetMealsResponse } from '../models/GetMealsResponse';
-import type { UpdateMealRequest } from '../models/UpdateMealRequest';
+import type { MealGetResponse } from '../models/MealGetResponse';
+import type { MealPostRequest } from '../models/MealPostRequest';
+import type { MealPutRequest } from '../models/MealPutRequest';
+import type { MealsGetResponse } from '../models/MealsGetResponse';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
@@ -21,7 +21,7 @@ export class MealsService {
    */
   public static updateMeal(
 mealId: number,
-requestBody: UpdateMealRequest,
+requestBody: MealPutRequest,
 ): CancelablePromise<any> {
     return __request(OpenAPI, {
       method: 'PUT',
@@ -31,6 +31,29 @@ requestBody: UpdateMealRequest,
       },
       body: requestBody,
       mediaType: 'application/json',
+      errors: {
+        400: `Bad Request`,
+        403: `Forbidden`,
+        404: `Not Found`,
+        500: `Server Error`,
+      },
+    });
+  }
+
+  /**
+   * @param mealId 
+   * @returns MealGetResponse Success
+   * @throws ApiError
+   */
+  public static getMeal(
+mealId: number,
+): CancelablePromise<MealGetResponse> {
+    return __request(OpenAPI, {
+      method: 'GET',
+      url: '/api/meals/{mealId}',
+      path: {
+        'mealId': mealId,
+      },
       errors: {
         400: `Bad Request`,
         403: `Forbidden`,
@@ -64,19 +87,19 @@ mealId: number,
   }
 
   /**
-   * @param mealId 
-   * @returns GetMealResponse Success
+   * @param requestBody 
+   * @returns string Created
    * @throws ApiError
    */
-  public static getMeal(
-mealId: number,
-): CancelablePromise<GetMealResponse> {
+  public static addMeal(
+requestBody: MealPostRequest,
+): CancelablePromise<string> {
     return __request(OpenAPI, {
-      method: 'GET',
-      url: '/api/meals/{mealId}',
-      path: {
-        'mealId': mealId,
-      },
+      method: 'POST',
+      url: '/api/meals',
+      body: requestBody,
+      mediaType: 'application/json',
+      responseHeader: 'location',
       errors: {
         400: `Bad Request`,
         403: `Forbidden`,
@@ -89,13 +112,13 @@ mealId: number,
   /**
    * @param from 
    * @param to 
-   * @returns GetMealsResponse Success
+   * @returns MealsGetResponse Success
    * @throws ApiError
    */
   public static getMeals(
 from?: string,
 to?: string,
-): CancelablePromise<GetMealsResponse> {
+): CancelablePromise<MealsGetResponse> {
     return __request(OpenAPI, {
       method: 'GET',
       url: '/api/meals',
@@ -103,29 +126,6 @@ to?: string,
         'from': from,
         'to': to,
       },
-      errors: {
-        400: `Bad Request`,
-        403: `Forbidden`,
-        404: `Not Found`,
-        500: `Server Error`,
-      },
-    });
-  }
-
-  /**
-   * @param requestBody 
-   * @returns string Created
-   * @throws ApiError
-   */
-  public static addMeal(
-requestBody: AddMealRequest,
-): CancelablePromise<string> {
-    return __request(OpenAPI, {
-      method: 'POST',
-      url: '/api/meals',
-      body: requestBody,
-      mediaType: 'application/json',
-      responseHeader: 'location',
       errors: {
         400: `Bad Request`,
         403: `Forbidden`,

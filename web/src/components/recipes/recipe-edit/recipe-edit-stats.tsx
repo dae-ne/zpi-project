@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react"
 import CustomTextField from "../../controls/custom-text-field"
 import CustomSelect from "../../controls/custom-select";
 import NumericTextField from "../../controls/numeric-text-field";
-import { CreateRecipeTagDto, DifficultyLevel } from "@dietly/sdk";
+import { DifficultyLevel, RecipePostTagDto } from "@dietly/sdk";
 import RecipeEditTags from "./recipe-edit-tags";
 import { toBase64 } from "../../../tools/files";
 import AddIcon from '@mui/icons-material/Add';
@@ -13,12 +13,12 @@ interface RecipeEditStatsInterface {
     imageUrl: string,
     time: number,
     calories: number,
-    tags: Array<CreateRecipeTagDto> | null,
+    tags: Array<RecipePostTagDto> | null,
     onDifficultyLevelChange: (value: DifficultyLevel) => void,
     onImageChange: (value: File) => void,
     onTimeChange: (value: number) => void,
     onCaloriesChange: (value: number) => void,
-    onTagsChange: (value: Array<CreateRecipeTagDto>) => void,
+    onTagsChange: (value: Array<RecipePostTagDto>) => void,
 }
 
 const inputStyle = { borderRadius: "5px 0 0 5px", fontSize: "0.9em" }
@@ -45,8 +45,8 @@ const RecipeEditStats = (props: RecipeEditStatsInterface) => {
     const handleAddTag = () => {
         if (!tag) return;
 
-        const tagTmp: Array<CreateRecipeTagDto> = tags ? tags : new Array<CreateRecipeTagDto>();
-        tagTmp.push({ name: tag } as CreateRecipeTagDto);
+        const tagTmp: Array<RecipePostTagDto> = tags ? tags : new Array<RecipePostTagDto>();
+        tagTmp.push({ name: tag } as RecipePostTagDto);
         onTagsChange(tagTmp);
         setTag("")
     }

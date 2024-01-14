@@ -9,19 +9,21 @@ import { request as __request } from '../core/request';
 export class ImagesService {
 
   /**
-   * @param fileName 
-   * @returns any Success
+   * @param formData 
+   * @returns string Created
    * @throws ApiError
    */
-  public static removeFoodImage(
-fileName: string,
-): CancelablePromise<any> {
+  public static addFoodImage(
+formData?: {
+file: Blob;
+},
+): CancelablePromise<string> {
     return __request(OpenAPI, {
-      method: 'DELETE',
-      url: '/images/food/{fileName}',
-      path: {
-        'fileName': fileName,
-      },
+      method: 'POST',
+      url: '/images/food',
+      formData: formData,
+      mediaType: 'multipart/form-data',
+      responseHeader: 'location',
       errors: {
         400: `Bad Request`,
         403: `Forbidden`,
@@ -59,15 +61,40 @@ fileName: string,
    * @returns any Success
    * @throws ApiError
    */
-  public static removeAvatar(
+  public static removeFoodImage(
 fileName: string,
 ): CancelablePromise<any> {
     return __request(OpenAPI, {
       method: 'DELETE',
-      url: '/images/avatar/{fileName}',
+      url: '/images/food/{fileName}',
       path: {
         'fileName': fileName,
       },
+      errors: {
+        400: `Bad Request`,
+        403: `Forbidden`,
+        404: `Not Found`,
+        500: `Server Error`,
+      },
+    });
+  }
+
+  /**
+   * @param formData 
+   * @returns string Created
+   * @throws ApiError
+   */
+  public static addAvatar(
+formData?: {
+file: Blob;
+},
+): CancelablePromise<string> {
+    return __request(OpenAPI, {
+      method: 'POST',
+      url: '/images/avatar',
+      formData: formData,
+      mediaType: 'multipart/form-data',
+      responseHeader: 'location',
       errors: {
         400: `Bad Request`,
         403: `Forbidden`,
@@ -101,46 +128,19 @@ fileName: string,
   }
 
   /**
-   * @param formData 
-   * @returns string Created
+   * @param fileName 
+   * @returns any Success
    * @throws ApiError
    */
-  public static addFoodImage(
-formData?: {
-file: Blob;
-},
-): CancelablePromise<string> {
+  public static removeAvatar(
+fileName: string,
+): CancelablePromise<any> {
     return __request(OpenAPI, {
-      method: 'POST',
-      url: '/images/food',
-      formData: formData,
-      mediaType: 'multipart/form-data',
-      responseHeader: 'location',
-      errors: {
-        400: `Bad Request`,
-        403: `Forbidden`,
-        404: `Not Found`,
-        500: `Server Error`,
+      method: 'DELETE',
+      url: '/images/avatar/{fileName}',
+      path: {
+        'fileName': fileName,
       },
-    });
-  }
-
-  /**
-   * @param formData 
-   * @returns string Created
-   * @throws ApiError
-   */
-  public static addAvatar(
-formData?: {
-file: Blob;
-},
-): CancelablePromise<string> {
-    return __request(OpenAPI, {
-      method: 'POST',
-      url: '/images/avatar',
-      formData: formData,
-      mediaType: 'multipart/form-data',
-      responseHeader: 'location',
       errors: {
         400: `Bad Request`,
         403: `Forbidden`,

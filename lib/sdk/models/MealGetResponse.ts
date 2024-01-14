@@ -3,12 +3,12 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import type { GetRecipeResponse } from './GetRecipeResponse';
+import type { RecipeGetResponse } from './RecipeGetResponse';
 
-export type GetMealResponse = {
+export type MealGetResponse = {
   id?: number;
   recipeId?: number;
   date?: string | null;
   completed?: boolean;
-  recipe?: GetRecipeResponse;
+  recipe?: RecipeGetResponse;
 };

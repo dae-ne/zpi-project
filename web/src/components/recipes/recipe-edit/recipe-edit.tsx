@@ -3,9 +3,9 @@ import "./recipe-edit.scss"
 import RecipeEditContent from "./recipe-edit-content"
 import RecipeEditStats from "./recipe-edit-stats"
 import Grid from "@mui/material/Grid"
-import { CreateRecipeDirectionDto, CreateRecipeIngredientDto, CreateRecipeRequest, CreateRecipeTagDto, DifficultyLevel, GetRecipeResponse, ImagesService, OpenAPI, RecipesService } from "@dietly/sdk"
 import { useLocation, useNavigate, useParams } from "react-router-dom"
 import { RECIPE_LIST, RECIPE_NEW } from "../../../constants/app-route"
+import { DifficultyLevel, ImagesService, RecipeGetResponse, RecipePostDirectionDto, RecipePostIngredientDto, RecipePostRequest, RecipePostTagDto, RecipesService } from "@dietly/sdk"
 
 export enum Mode {
     Edit,
@@ -28,13 +28,13 @@ const RecipeEdit = () => {
     const [imageFile, setImageFile] = useState<File | null>(null);
     const [time, setTime] = useState<number>(0);
     const [calories, setCalories] = useState<number>(0);
-    const [ingredients, setIngredients] = useState<Array<CreateRecipeIngredientDto>>([]);
-    const [directions, setDirections] = useState<Array<CreateRecipeDirectionDto>>([]);
-    const [tags, setTags] = useState<Array<CreateRecipeTagDto>>([]);
+    const [ingredients, setIngredients] = useState<Array<RecipePostIngredientDto>>([]);
+    const [directions, setDirections] = useState<Array<RecipePostDirectionDto>>([]);
+    const [tags, setTags] = useState<Array<RecipePostTagDto>>([]);
 
     const [mode, setMode] = useState<Mode>()
     const submitForm = () => {
-        const recipe: CreateRecipeRequest = {
+        const recipe: RecipePostRequest = {
             title: title,
             description: description,
             difficultyLevel: difficultyLevel,
@@ -48,7 +48,7 @@ const RecipeEdit = () => {
         mode === Mode.New ? addRecipe(recipe) : saveRecipe(recipe)
     }
 
-    const addRecipe = async (addRecipeRequest: CreateRecipeRequest) => {
+    const addRecipe = async (addRecipeRequest: RecipePostRequest) => {
 
         if (!imageFile) {
             alert("No selected image");
@@ -69,7 +69,7 @@ const RecipeEdit = () => {
             })
     }
 
-    const saveRecipe = (recipeData: CreateRecipeRequest) => {
+    const saveRecipe = (recipeData: RecipePostRequest) => {
         //TODO   brak metody do edycji
         // UpdateRecipeRequest = {
         //     id?: number;
@@ -83,7 +83,7 @@ const RecipeEdit = () => {
         //     directions?: Array<UpdateRecipeDirectionDto> | null;
         //     tags?: Array<UpdateRecipeTagDto> | null;
         //   };
-        const recipe: CreateRecipeRequest = {
+        const recipe: RecipePostRequest = {
             title: title,
             description: description,
             //difficultyLevel: difficultyLevel,
@@ -116,7 +116,7 @@ const RecipeEdit = () => {
         }
 
         RecipesService.getRecipe(recipeId)
-            .then((result: GetRecipeResponse) => {
+            .then((result: RecipeGetResponse) => {
                 console.log(result)
                 setTitle(result.title || "")
                 setDescription(result.description || "")

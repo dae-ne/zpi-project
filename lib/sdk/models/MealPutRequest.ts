@@ -3,7 +3,9 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type GetRecipeTagResponse = {
+export type MealPutRequest = {
   id?: number;
-  name?: string | null;
+  recipeId?: number;
+  date?: string | null;
+  completed?: boolean;
 };

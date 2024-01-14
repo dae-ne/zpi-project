@@ -1,21 +1,21 @@
 import React, { useEffect, useState } from "react"
 import RecipeListMenu from "./recipe-list-menu"
 import RecipeListElement from "./recipe-list-element"
-import { DifficultyLevel, GetRecipeResponse, GetRecipesResponse, RecipesService } from "@dietly/sdk"
 import { useNavigate } from 'react-router-dom';
 import { RECIPE_PREVIEW_RAW } from "../../../constants/app-route"
 import { RecipeListMode } from "../../../enums/recipe"
 import { Grid } from "@mui/material"
+import { DifficultyLevel, RecipeGetResponse } from "@dietly/sdk";
 
 interface RecipeListContentInterface {
-    data: Array<GetRecipeResponse> | null,
+    data: Array<RecipeGetResponse> | null,
     tags: Array<string> | null,
     mode: RecipeListMode,
     onTagSelectionChange: (value: string[] | undefined) => void,
     onDifficultyLevelChange: (value: DifficultyLevel[] | undefined) => void,
     onTimeRangeChange: (min: number, max: number) => void,
     onEnergyRangeChange: (min: number, max: number) => void,
-    onRecipeSelect?: (value: GetRecipeResponse) => void
+    onRecipeSelect?: (value: RecipeGetResponse) => void
 }
 
 const RecipeListContent = (props: RecipeListContentInterface) => {
@@ -61,7 +61,7 @@ const RecipeListContent = (props: RecipeListContentInterface) => {
             <Grid item xs={9}>
                 {
                     data?.sort((a, b) => (b.id || 0) - (a.id || 0))
-                        .map((recipe: GetRecipeResponse, index: number) =>
+                        .map((recipe: RecipeGetResponse, index: number) =>
                             <RecipeListElement
                                 key={"recipe" + index}
                                 data={recipe}
