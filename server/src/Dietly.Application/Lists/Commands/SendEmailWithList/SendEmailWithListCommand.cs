@@ -29,7 +29,11 @@ internal sealed class SendEmailWithListCommandHandler(
             .Where(i => request.IngredientIds.Contains(i.Id))
             .ToListAsync(cancellationToken);
 
-        var message = string.Join("\n", ingredients);
+        var listElements = ingredients
+            .Select(i => $"<li>{i.Name}</li>")
+            .ToList();
+
+        var message = string.Join("\n", listElements);
         await emailService.SendAsync(user.Email, "Shopping list", message);
         return Unit.Value;
     }
