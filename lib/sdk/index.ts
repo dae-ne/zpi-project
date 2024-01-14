@@ -12,6 +12,7 @@ export { DifficultyLevel } from './models/DifficultyLevel';
 export type { HttpValidationProblemDetails } from './models/HttpValidationProblemDetails';
 export type { InfoRequest } from './models/InfoRequest';
 export type { InfoResponse } from './models/InfoResponse';
+export type { ListGetIngredientDto } from './models/ListGetIngredientDto';
 export type { ListGetResponse } from './models/ListGetResponse';
 export type { LoginRequest } from './models/LoginRequest';
 export type { MealGetResponse } from './models/MealGetResponse';
