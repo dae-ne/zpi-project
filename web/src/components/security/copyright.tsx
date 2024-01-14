@@ -6,7 +6,7 @@ const Copyright = (props: any) => {
         <Typography variant="body2" color="text.secondary" align="center" {...props}>
             {'Copyright © '}
             <Link color="inherit" href="https://mui.com/">
-                FitApp
+                DietlyPK
             </Link>{' '}
             {new Date().getFullYear()}
             {'.'}

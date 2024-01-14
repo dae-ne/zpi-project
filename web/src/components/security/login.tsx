@@ -59,7 +59,7 @@ const LoginPage = () => {
                     alignItems: 'center',
                 }}>
 
-                <Avatar sx={{ m: 2, width: 70, height: 70 }} src="/static/images/logo.png" />
+                <Avatar sx={{ m: 2, width: 100, height: 100 }} variant="square" src="/static/images/logo.png" />
 
                 <Typography component="h1" variant="h5">
                     Log In
