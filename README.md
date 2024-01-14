@@ -43,7 +43,7 @@ docker-compose up
 - `localhost:10000` - azurite storage emulator (blob storage)
 - `localhost:8080` - ASP.NET Core Web API
 - `localhost:5432` - PostgreSQL database
-- frontend - not yet implemented
+- `localhost:3000` - React app
 
 ### Swagger
 
