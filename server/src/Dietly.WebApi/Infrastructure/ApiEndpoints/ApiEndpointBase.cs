@@ -20,6 +20,7 @@ public abstract class ApiEndpointBase
             { } t when t == typeof(InvalidError) => Results.Problem(statusCode: 400, detail: error.Message),
             { } t when t == typeof(ForbiddenError) => Results.Problem(statusCode: 403, detail: error.Message),
             { } t when t == typeof(NotFoundError) => Results.Problem(statusCode: 404, detail: error.Message),
+            { } t when t == typeof(ValidationError) => Results.ValidationProblem(statusCode: 400, errors: ((ValidationError)error).Errors),
             _ => Results.Problem(statusCode: 500)
         };
     }

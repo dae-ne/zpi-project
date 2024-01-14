@@ -1,7 +1,7 @@
 ﻿namespace Dietly.Application.Common.Results.ErrorDefinitions;
 
-public sealed class ValidationError(IEnumerable<string> errors)
+public sealed class ValidationError(IDictionary<string, string[]> errors)
     : ErrorBase("One or more validation errors occurred.")
 {
-    public IEnumerable<string> Errors { get; } = errors;
+    public IDictionary<string, string[]> Errors { get; } = errors;
 }

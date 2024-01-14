@@ -59,6 +59,7 @@ app.UseApiEndpoints(config =>
     config.ProducesProblem(403);
     config.ProducesProblem(404);
     config.ProducesProblem(500);
+    config.ProducesValidationProblem();
 });
 
 app.MapGroup("/api/account")

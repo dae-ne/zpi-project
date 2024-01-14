@@ -27,9 +27,12 @@ public class ValidationBehavior<TRequest, TResponse>(ILogger<TRequest> logger, I
                 v.ValidateAsync(context, cancellationToken)));
 
         var failures = validationResults
-            .Where(r => r.Errors.Count != 0)
+            .Where(r => r.Errors.Count > 0)
             .SelectMany(r => r.Errors)
-            .ToList();
+            .GroupBy(f => f.PropertyName)
+            .ToDictionary(
+                f => f.Key,
+                f => f.Select(e => e.ErrorMessage).ToArray());
 
         if (failures.Count == 0)
         {
@@ -46,11 +49,11 @@ public class ValidationBehavior<TRequest, TResponse>(ILogger<TRequest> logger, I
                 typeof(Result<>).MakeGenericType(typeof(TResponse).GetGenericArguments()[0]),
                 BindingFlags.Instance | BindingFlags.NonPublic,
                 null,
-                [Validation(failures.Select(f => f.ErrorMessage))],
+                [Validation(failures)],
                 null)!;
         }
 
         logger.LogError("The request {RequestName} does not have a Result<T> response type", typeof(TRequest).Name);
-        throw new Exception($"Invalid command: {typeof(TRequest).Name}. Errors: {string.Join(", ", failures.Select(f => f.ErrorMessage))}");
+        throw new Exception($"Invalid command: {typeof(TRequest).Name}");
     }
 }

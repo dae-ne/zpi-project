@@ -1,6 +1,6 @@
 namespace Dietly.Application.Recipes.Commands.CreateRecipe;
 
-internal static class CreateRecipeMapper
+internal static class CreateRecipeCommandMapper
 {
     public static Recipe ToDomain(
         this CreateRecipeCommand command,
