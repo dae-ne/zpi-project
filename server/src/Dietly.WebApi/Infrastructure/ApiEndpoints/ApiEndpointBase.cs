@@ -1,6 +1,6 @@
 ﻿using System.Net.Http;
 using Dietly.Application.Common.Results;
-using Dietly.Application.Common.Results.ErrorsDefinition;
+using Dietly.Application.Common.Results.ErrorDefinitions;
 
 namespace Dietly.WebApi.Infrastructure.ApiEndpoints;
 
@@ -13,7 +13,7 @@ public abstract class ApiEndpointBase
 
     public abstract void Configure(IApiEndpointBuilder builder);
 
-    public IResult HandleError(ErrorBase error)
+    protected IResult HandleError(ErrorBase error)
     {
         return error.GetType() switch
         {

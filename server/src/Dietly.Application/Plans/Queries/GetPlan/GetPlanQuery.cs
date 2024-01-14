@@ -13,7 +13,7 @@ internal sealed class GetPlanQueryHandler(IAppDbContext db) : IRequestHandler<Ge
         var meals = await db.Meals
             .AsNoTracking()
             .Include(m => m.Recipe)
-            .Where(m => m.Recipe!.UserId == request.UserId)
+            .Where(m => m.Recipe.UserId == request.UserId)
             .Where(m => DateOnly.FromDateTime(m.Date) == request.Day)
             .ToListAsync(cancellationToken);
 
