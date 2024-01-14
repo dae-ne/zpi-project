@@ -8,7 +8,7 @@ internal sealed class DirectionConfiguration : IEntityTypeConfiguration<Directio
     public void Configure(EntityTypeBuilder<Direction> builder)
     {
         builder.Property(direction => direction.Description)
-            .HasMaxLength(300);
+            .HasMaxLength(2000);
 
         builder.HasIndex(direction => new { direction.RecipeId, direction.Order })
             .IsUnique();

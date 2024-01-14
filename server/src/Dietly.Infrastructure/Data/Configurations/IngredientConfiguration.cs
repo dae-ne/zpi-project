@@ -15,6 +15,6 @@ internal sealed class IngredientConfiguration : IEntityTypeConfiguration<Ingredi
             .OnDelete(DeleteBehavior.Cascade);
 
         builder.Property(ingredient => ingredient.Name)
-            .HasMaxLength(100);
+            .HasMaxLength(200);
     }
 }

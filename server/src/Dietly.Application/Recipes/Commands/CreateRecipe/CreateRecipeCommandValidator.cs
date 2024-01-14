@@ -9,14 +9,14 @@ public CreateRecipeCommandValidator()
         RuleFor(x => x.Title)
             .NotEmpty()
             .WithMessage("Recipe title is required.")
-            .MaximumLength(100)
-            .WithMessage("Recipe title must not exceed 100 characters.");
+            .MaximumLength(200)
+            .WithMessage("Recipe title must not exceed 200 characters.");
 
         RuleFor(x => x.Description)
             .NotEmpty()
             .WithMessage("Recipe description is required.")
-            .MaximumLength(500)
-            .WithMessage("Recipe description must not exceed 500 characters.");
+            .MaximumLength(2000)
+            .WithMessage("Recipe description must not exceed 2000 characters.");
 
         RuleFor(x => x.Ingredients)
             .NotEmpty()
@@ -28,8 +28,32 @@ public CreateRecipeCommandValidator()
                 ingredient.RuleFor(x => x.Name)
                     .NotEmpty()
                     .WithMessage("Ingredient name is required.")
-                    .MaximumLength(100)
-                    .WithMessage("Ingredient name must not exceed 100 characters.");
+                    .MaximumLength(200)
+                    .WithMessage("Ingredient name must not exceed 200 characters.");
+            });
+
+        RuleForEach(x => x.Directions)
+            .ChildRules(ingredient =>
+            {
+                ingredient.RuleFor(x => x.Description)
+                    .NotEmpty()
+                    .WithMessage("Direction description is required.")
+                    .MaximumLength(2000)
+                    .WithMessage("Direction description must not exceed 2000 characters.");
+            });
+
+        RuleFor(x => x.Directions)
+            .Must(directions => directions.Select(x => x.Order).Distinct().Count() == directions.Count())
+            .WithMessage("Directions must have unique order numbers.");
+
+        RuleForEach(x => x.Tags)
+            .ChildRules(tag =>
+            {
+                tag.RuleFor(x => x.Name)
+                    .NotEmpty()
+                    .WithMessage("Tag name is required.")
+                    .MaximumLength(200)
+                    .WithMessage("Tag name must not exceed 200 characters.");
             });
     }
 }

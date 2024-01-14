@@ -15,6 +15,6 @@ internal sealed class TagConfiguration : IEntityTypeConfiguration<Tag>
             .OnDelete(DeleteBehavior.Cascade);
 
         builder.Property(tag => tag.Name)
-            .HasMaxLength(100);
+            .HasMaxLength(200);
     }
 }
