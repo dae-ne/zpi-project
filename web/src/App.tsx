@@ -31,7 +31,7 @@ const App = () => {
   useEffect(() => {
     OpenAPI.BASE = SERVICE_URL
 
-    let { accessToken, refreshToken } = getSecurityCookies()
+    const { accessToken, refreshToken } = getSecurityCookies()
     if (!refreshToken) return;
 
     AccountService.refresh({ refreshToken: refreshToken })

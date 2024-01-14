@@ -85,7 +85,7 @@ const RecipeEditStats = (props: RecipeEditStatsInterface) => {
             </div>
 
             <label htmlFor="fileImage" className="button-std recipe-edit-image-select" >Choose File</label>
-            <input hidden accept="image/jpeg" id="fileImage" type="file" onChange={handleCapture} />
+            <input hidden accept="image/jpeg,image/png" id="fileImage" type="file" onChange={handleCapture} />
 
             <div className="recipe-edit-sub-header">Difficulty level</div>
 
