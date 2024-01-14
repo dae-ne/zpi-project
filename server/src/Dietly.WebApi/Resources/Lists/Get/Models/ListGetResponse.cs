@@ -6,5 +6,7 @@ public sealed class ListGetResponse
 {
     public int Count { get; set; }
 
-    public IEnumerable<string> Ingredients { get; set; } = Enumerable.Empty<string>();
+    public IEnumerable<ListGetIngredientDto> Ingredients { get; set; } = Enumerable.Empty<ListGetIngredientDto>();
+
+    public record ListGetIngredientDto(int Id, string Name);
 }

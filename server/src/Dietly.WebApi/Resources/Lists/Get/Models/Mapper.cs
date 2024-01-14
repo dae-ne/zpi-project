@@ -22,7 +22,7 @@ internal static class Mapper
         return new ListGetResponse
         {
             Count = ingredients.Count,
-            Ingredients = ingredients.Select(i => i.Name)
+            Ingredients = ingredients.Select(i => new ListGetResponse.ListGetIngredientDto(i.Id, i.Name))
         };
     }
 }
