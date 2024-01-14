@@ -11,7 +11,7 @@ import NoProtectedRoute from "./route/NoProtectedRoot";
 import appTheme from './components/theme';
 import { ThemeProvider } from '@mui/material/styles';
 import { RecipeListMode } from "./enums/recipe";
-import { AccessTokenResponse, AccountService, OpenAPI } from "./sdk";
+import { AccessTokenResponse, AccountService, OpenAPI } from "@dietly/sdk";
 import { clearCookies, getSecurityCookies, setLoginCookies } from "./tools/security";
 import {
   SECURITY_LOGIN, SECURITY_REGISTER, EMPTY, SECURITY_ROOT,

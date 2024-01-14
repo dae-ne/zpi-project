@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import RecipeListMenu from "./recipe-list-menu"
 import RecipeListElement from "./recipe-list-element"
-import { DifficultyLevel, GetRecipeResponse, GetRecipesResponse, RecipesService } from "../../../sdk"
+import { DifficultyLevel, GetRecipeResponse, GetRecipesResponse, RecipesService } from "@dietly/sdk"
 import { useNavigate } from 'react-router-dom';
 import { RECIPE_PREVIEW_RAW } from "../../../constants/app-route"
 import { RecipeListMode } from "../../../enums/recipe"

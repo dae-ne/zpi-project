@@ -11,19 +11,20 @@ WORKDIR "/src"
 COPY server .
 RUN dotnet tool install --global dotnet-ef
 ENV PATH="$PATH:~/.dotnet/tools"
+RUN dotnet build -c $BUILD_CONFIGURATION
 RUN dotnet ef migrations bundle \
   -o efbundle \
   -c AppDbContext \
-  -p src/Recipes.Infrastructure/Recipes.Infrastructure.csproj \
-  -s src/Recipes.WebApi/Recipes.WebApi.csproj \
-  --configuration $BUILD_CONFIGURATION
-WORKDIR "/src/src/Recipes.WebApi"
-RUN dotnet restore
+  -p src/Dietly.Infrastructure/Dietly.Infrastructure.csproj \
+  -s src/Dietly.WebApi/Dietly.WebApi.csproj \
+  --configuration $BUILD_CONFIGURATION \
+  --no-build
+WORKDIR "/src/src/Dietly.WebApi"
 RUN dotnet build -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-WORKDIR "/src/src/Recipes.WebApi"
+WORKDIR "/src/src/Dietly.WebApi"
 RUN dotnet publish -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 FROM base AS final

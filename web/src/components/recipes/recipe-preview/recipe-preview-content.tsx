@@ -1,5 +1,5 @@
 import React from "react"
-import { CreateRecipeIngredientDto, CreateRecipeDirectionDto, CreateRecipeTagDto } from "../../../sdk"
+import { CreateRecipeIngredientDto, CreateRecipeDirectionDto, CreateRecipeTagDto } from "@dietly/sdk"
 
 interface RecipePreviewContentInterface {
     title: string,

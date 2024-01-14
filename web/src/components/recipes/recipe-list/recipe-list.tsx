@@ -2,7 +2,7 @@ import "./recipe-list.scss"
 import React, { useEffect, useState } from "react"
 import RecipeListHeader from "./recipe-list-header"
 import RecipeListContent from "./recipe-list-content"
-import { RecipesService, GetRecipesResponse, GetRecipeResponse, DifficultyLevel } from "../../../sdk"
+import { RecipesService, GetRecipesResponse, GetRecipeResponse, DifficultyLevel } from "@dietly/sdk"
 import { RecipeListMode } from "../../../enums/recipe"
 
 interface RecipeListInterface {

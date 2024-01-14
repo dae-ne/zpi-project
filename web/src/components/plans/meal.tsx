@@ -3,7 +3,7 @@ import React, { useState } from "react"
 import DeleteIcon from '@mui/icons-material/Delete';
 import CheckIcon from '@mui/icons-material/Check';
 import RemoveIcon from '@mui/icons-material/Remove';
-import { GetMealResponse, MealsService, UpdateMealRequest } from "../../sdk";
+import { GetMealResponse, MealsService, UpdateMealRequest } from "@dietly/sdk";
 import moment from "moment";
 
 const MAX_DESCRIPTION_LENGTH: number = 180

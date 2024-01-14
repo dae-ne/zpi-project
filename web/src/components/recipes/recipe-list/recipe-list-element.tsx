@@ -1,5 +1,5 @@
 import React from "react"
-import { GetRecipeResponse, GetRecipeTagResponse } from "../../../sdk"
+import { GetRecipeResponse, GetRecipeTagResponse } from "@dietly/sdk"
 import { Box } from "@mui/material"
 
 interface RecipeListElementInterface {

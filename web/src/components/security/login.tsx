@@ -1,7 +1,7 @@
 import "./security.scss"
 
 import React, { useState } from 'react';
-import { AccessTokenResponse, AccountService, LoginRequest, OpenAPI } from '../../sdk';
+import { AccessTokenResponse, AccountService, LoginRequest, OpenAPI } from '@dietly/sdk';
 import { useNavigate } from 'react-router-dom';
 import { RECIPE_LIST, SECURITY_REGISTER } from '../../constants/app-route';
 import Copyright from './copyright';

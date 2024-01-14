@@ -3,7 +3,7 @@ import React, { useState } from "react"
 import CustomTextField from "../../controls/custom-text-field"
 import RecipeEditIngredients from "./recipe-edit-ingredients";
 import RecipeEditDirections from "./recipe-edit-directions";
-import { CreateRecipeDirectionDto, CreateRecipeIngredientDto } from "../../../sdk";
+import { CreateRecipeDirectionDto, CreateRecipeIngredientDto } from "@dietly/sdk";
 import AddIcon from '@mui/icons-material/Add';
 
 const inputStyleOne = { borderRadius: "5px", fontSize: "0.9em" }
@@ -134,4 +134,4 @@ const RecipeEditContent = (props: RecipeEditContentInterface) => {
     )
 }
 
-export default RecipeEditContent 
+export default RecipeEditContent

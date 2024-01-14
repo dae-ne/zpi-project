@@ -1,0 +1,9 @@
+﻿global using System;
+global using System.Linq;
+global using System.Threading.Tasks;
+global using Dietly.WebApi.Extensions;
+global using Dietly.WebApi.Services;
+global using JetBrains.Annotations;
+global using MediatR;
+global using Microsoft.AspNetCore.Builder;
+global using Microsoft.AspNetCore.Http;

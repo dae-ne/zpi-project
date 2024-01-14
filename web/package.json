@@ -1,16 +1,20 @@
 {
-  "name": "zpi-frontend",
+  "name": "@dietly/web",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@dietly/sdk": "*",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.14.18",
     "@mui/material": "^5.14.18",
+    "@mui/x-date-pickers": "^6.18.5",
     "@types/node": "^18.15.11",
     "@types/react": "^18.0.31",
     "@types/react-dom": "^18.0.11",
+    "dayjs": "^1.11.10",
     "jwt-decode": "^4.0.0",
+    "moment": "^2.29.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.20.0",
@@ -20,10 +24,10 @@
     "universal-cookie": "^6.1.1"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "start": "craco start",
+    "build": "craco build",
+    "test": "craco test",
+    "eject": "craco eject"
   },
   "eslintConfig": {
     "extends": [
@@ -44,6 +48,7 @@
     ]
   },
   "devDependencies": {
+    "@craco/craco": "^7.1.0",
     "eslint": "^8.54.0",
     "eslint-config-google": "^0.14.0",
     "eslint-plugin-react": "^7.33.2"

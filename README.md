@@ -27,9 +27,9 @@ Example: `[front] Create login page`
 ```bash
 cp .env.template .env
 ```
-2. Update `appsettings.Docker.json` in `server/src/Recipes.WebApi` with credentials:
+2. Update `appsettings.Docker.json` in `server/src/Dietly.WebApi` with credentials:
 ```bash
-cp server/src/Recipes.WebApi/appsettings.Docker.template.json server/src/Recipes.WebApi/appsettings.Docker.json
+cp server/src/Dietly.WebApi/appsettings.Docker.template.json server/src/Dietly.WebApi/appsettings.Docker.json
 ```
 - `Email:Password` - e.g. Gmail app password. See - [generate a Gmail app password](https://support.google.com/accounts/answer/185833),
 - `Email:AppEmail` - your email address.

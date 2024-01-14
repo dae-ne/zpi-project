@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { DifficultyLevel } from "../../../sdk"
+import { DifficultyLevel } from "@dietly/sdk"
 import { FormGroup, FormControlLabel, Checkbox, Box, Slider } from "@mui/material"
 
 interface RecipeListMenuInterface {

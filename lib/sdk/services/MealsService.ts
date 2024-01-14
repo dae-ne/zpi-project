@@ -31,6 +31,12 @@ requestBody: UpdateMealRequest,
       },
       body: requestBody,
       mediaType: 'application/json',
+      errors: {
+        400: `Bad Request`,
+        403: `Forbidden`,
+        404: `Not Found`,
+        500: `Server Error`,
+      },
     });
   }
 
@@ -48,6 +54,12 @@ mealId: number,
       path: {
         'mealId': mealId,
       },
+      errors: {
+        400: `Bad Request`,
+        403: `Forbidden`,
+        404: `Not Found`,
+        500: `Server Error`,
+      },
     });
   }
 
@@ -64,6 +76,12 @@ mealId: number,
       url: '/api/meals/{mealId}',
       path: {
         'mealId': mealId,
+      },
+      errors: {
+        400: `Bad Request`,
+        403: `Forbidden`,
+        404: `Not Found`,
+        500: `Server Error`,
       },
     });
   }
@@ -85,6 +103,12 @@ to?: string,
         'from': from,
         'to': to,
       },
+      errors: {
+        400: `Bad Request`,
+        403: `Forbidden`,
+        404: `Not Found`,
+        500: `Server Error`,
+      },
     });
   }
 
@@ -102,6 +126,12 @@ requestBody: AddMealRequest,
       body: requestBody,
       mediaType: 'application/json',
       responseHeader: 'location',
+      errors: {
+        400: `Bad Request`,
+        403: `Forbidden`,
+        404: `Not Found`,
+        500: `Server Error`,
+      },
     });
   }
 

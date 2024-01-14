@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Cookies from "universal-cookie";
 import { ACCESS_TOKEN_NAME } from "../constants/cookies";
 import { SECURITY_LOGIN } from "../constants/app-route";
-import { OpenAPI } from "../sdk";
+import { OpenAPI } from "@dietly/sdk";
 
 const ProtectedRoute = ({ children }: any) => {
     const cookies = new Cookies()

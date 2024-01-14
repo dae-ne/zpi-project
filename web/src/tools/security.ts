@@ -1,7 +1,7 @@
 import Cookies from "universal-cookie";
 import { ROOT } from "../constants/app-route";
 import { ACCESS_TOKEN_NAME, REFRESH_TOKEN_MAX_AGE, REFRESH_TOKEN_NAME } from "../constants/cookies";
-import { AccessTokenResponse } from "../sdk";
+import { AccessTokenResponse } from "@dietly/sdk";
 
 const cookies = new Cookies()
 

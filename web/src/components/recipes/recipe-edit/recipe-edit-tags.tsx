@@ -1,5 +1,5 @@
 import React from "react"
-import { CreateRecipeTagDto } from "../../../sdk";
+import { CreateRecipeTagDto } from "@dietly/sdk";
 import { RecipeEditDataInterface } from "./recipe-edit-content";
 import DeleteIcon from '@mui/icons-material/Delete';
 

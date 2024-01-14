@@ -3,7 +3,7 @@ import "./recipe-edit.scss"
 import RecipeEditContent from "./recipe-edit-content"
 import RecipeEditStats from "./recipe-edit-stats"
 import Grid from "@mui/material/Grid"
-import { CreateRecipeDirectionDto, CreateRecipeIngredientDto, CreateRecipeRequest, CreateRecipeTagDto, DifficultyLevel, GetRecipeResponse, ImagesService, OpenAPI, RecipesService } from "../../../sdk"
+import { CreateRecipeDirectionDto, CreateRecipeIngredientDto, CreateRecipeRequest, CreateRecipeTagDto, DifficultyLevel, GetRecipeResponse, ImagesService, OpenAPI, RecipesService } from "@dietly/sdk"
 import { useLocation, useNavigate, useParams } from "react-router-dom"
 import { RECIPE_LIST, RECIPE_NEW } from "../../../constants/app-route"
 

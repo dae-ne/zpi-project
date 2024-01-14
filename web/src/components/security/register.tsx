@@ -1,6 +1,6 @@
 import "./security.scss"
 import React, { useState } from 'react';
-import { AccountService, ApiError, RegisterRequest } from '../../sdk';
+import { AccountService, ApiError, RegisterRequest } from '@dietly/sdk';
 import { useNavigate } from 'react-router-dom';
 import { SECURITY_LOGIN } from '../../constants/app-route';
 import Copyright from './copyright';

@@ -31,6 +31,12 @@ requestBody: UpdateRecipeRequest,
       },
       body: requestBody,
       mediaType: 'application/json',
+      errors: {
+        400: `Bad Request`,
+        403: `Forbidden`,
+        404: `Not Found`,
+        500: `Server Error`,
+      },
     });
   }
 
@@ -47,6 +53,12 @@ recipeId: number,
       url: '/api/recipes/{recipeId}',
       path: {
         'recipeId': recipeId,
+      },
+      errors: {
+        400: `Bad Request`,
+        403: `Forbidden`,
+        404: `Not Found`,
+        500: `Server Error`,
       },
     });
   }
@@ -65,6 +77,12 @@ recipeId: number,
       path: {
         'recipeId': recipeId,
       },
+      errors: {
+        400: `Bad Request`,
+        403: `Forbidden`,
+        404: `Not Found`,
+        500: `Server Error`,
+      },
     });
   }
 
@@ -76,6 +94,12 @@ recipeId: number,
     return __request(OpenAPI, {
       method: 'GET',
       url: '/api/recipes',
+      errors: {
+        400: `Bad Request`,
+        403: `Forbidden`,
+        404: `Not Found`,
+        500: `Server Error`,
+      },
     });
   }
 
@@ -93,6 +117,12 @@ requestBody: CreateRecipeRequest,
       body: requestBody,
       mediaType: 'application/json',
       responseHeader: 'location',
+      errors: {
+        400: `Bad Request`,
+        403: `Forbidden`,
+        404: `Not Found`,
+        500: `Server Error`,
+      },
     });
   }
 
