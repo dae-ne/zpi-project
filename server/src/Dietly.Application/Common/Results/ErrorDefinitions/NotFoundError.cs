@@ -1,3 +1,3 @@
-﻿namespace Dietly.Application.Common.Results.ErrorsDefinition;
+﻿namespace Dietly.Application.Common.Results.ErrorDefinitions;
 
 public sealed class NotFoundError(string message) : ErrorBase(message);

@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Dietly.Application.Common.Results;
+using MediatR;
 
 namespace Dietly.Application.InfrastructureTests;
 

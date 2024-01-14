@@ -1,6 +1,6 @@
 namespace Dietly.Application.Users.Commands.UpdateUser;
 
-internal static class UpdateUserMapper
+internal static class UpdateUserCommandMapper
 {
     public static User ToDomain(this UpdateUserCommand command) => new()
     {
