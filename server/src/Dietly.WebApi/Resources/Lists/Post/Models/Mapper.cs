@@ -4,9 +4,9 @@ namespace Dietly.WebApi.Resources.Lists.Post.Models;
 
 internal static class Mapper
 {
-    public static SendEmailWithListCommand ToCommand(this SendEmailWithListRequest request) => new()
+    public static SendEmailWithListCommand ToCommand(this SendEmailWithListRequest request, int userId) => new()
     {
-        UserId = request.UserId,
+        UserId = userId,
         IngredientIds = request.IngredientIds
     };
 }

@@ -2058,6 +2058,20 @@
         },
         "additionalProperties": false
       },
+      "ListGetIngredientDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "ListGetResponse": {
         "type": "object",
         "properties": {
@@ -2068,7 +2082,7 @@
           "ingredients": {
             "type": "array",
             "items": {
-              "type": "string"
+              "$ref": "#/components/schemas/ListGetIngredientDto"
             },
             "nullable": true
           }
@@ -2589,10 +2603,6 @@
       "SendEmailWithListRequest": {
         "type": "object",
         "properties": {
-          "userId": {
-            "type": "integer",
-            "format": "int32"
-          },
           "ingredientIds": {
             "type": "array",
             "items": {
