@@ -3,7 +3,8 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type CreateRecipeDirectionDto = {
+export type RecipePutDirectionDto = {
+  id?: number | null;
   description?: string | null;
   order?: number;
 };

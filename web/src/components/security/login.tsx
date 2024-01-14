@@ -31,7 +31,7 @@ const LoginPage = () => {
             password: password,
         }
 
-        AccountService.login(false, false, loginRequest).then((response: AccessTokenResponse) => {
+        AccountService.login(loginRequest).then((response: AccessTokenResponse) => {
             setErrorMessage("")
             handleLoginSuccess(response)
         }).catch(() => {

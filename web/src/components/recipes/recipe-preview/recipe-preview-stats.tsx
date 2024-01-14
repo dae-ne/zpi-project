@@ -1,15 +1,15 @@
 import React from "react"
-import { CreateRecipeTagDto, DifficultyLevel } from "@dietly/sdk"
 import { useNavigate, useParams } from "react-router-dom";
 import { RECIPE_EDIT_RAW } from "../../../constants/app-route";
 import EditIcon from '@mui/icons-material/Edit';
 import { getDifficultyName } from "../../../tools/enums";
+import { DifficultyLevel, RecipePostTagDto } from "@dietly/sdk";
 
 interface RecipePreviewStatsInterface {
     difficultyLevel: DifficultyLevel,
     time: number,
     calories: number,
-    tags: Array<CreateRecipeTagDto> | null | undefined
+    tags: Array<RecipePostTagDto> | null | undefined
 }
 const RecipePreviewStats = ({ difficultyLevel, time, calories, tags }: RecipePreviewStatsInterface) => {
     const navigate = useNavigate();
@@ -44,7 +44,7 @@ const RecipePreviewStats = ({ difficultyLevel, time, calories, tags }: RecipePre
         </div>
         <div className="recipie-preview-info-tags">
             {
-                tags?.map((tag: CreateRecipeTagDto, index: number) => {
+                tags?.map((tag: RecipePostTagDto, index: number) => {
                     return (<div key={"tag" + index} className="recipe-preview-item-tag">{tag.name}</div>)
                 })
             }

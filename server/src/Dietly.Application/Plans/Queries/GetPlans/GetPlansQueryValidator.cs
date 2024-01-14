@@ -12,6 +12,6 @@ internal sealed class GetPlansQueryValidator : AbstractValidator<GetPlansQuery>
 
         RuleFor(x => x.StartDate)
             .LessThanOrEqualTo(x => x.EndDate)
-            .WithMessage("From date must not be later than end dat.");
+            .WithMessage("From date must not be later than end date.");
     }
 }

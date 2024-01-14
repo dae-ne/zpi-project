@@ -3,8 +3,9 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type UpdateRecipeDirectionDto = {
-  id?: number | null;
-  description?: string | null;
-  order?: number;
+export type UserGetResponse = {
+  id?: number;
+  userName?: string | null;
+  email?: string | null;
+  avatarUrl?: string | null;
 };

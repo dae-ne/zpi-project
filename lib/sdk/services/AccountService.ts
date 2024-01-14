@@ -36,24 +36,16 @@ requestBody?: RegisterRequest,
   }
 
   /**
-   * @param useCookies 
-   * @param useSessionCookies 
    * @param requestBody 
    * @returns AccessTokenResponse Success
    * @throws ApiError
    */
   public static login(
-useCookies?: boolean,
-useSessionCookies?: boolean,
 requestBody?: LoginRequest,
 ): CancelablePromise<AccessTokenResponse> {
     return __request(OpenAPI, {
       method: 'POST',
       url: '/api/account/login',
-      query: {
-        'useCookies': useCookies,
-        'useSessionCookies': useSessionCookies,
-      },
       body: requestBody,
       mediaType: 'application/json',
     });

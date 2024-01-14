@@ -1,13 +1,13 @@
+import { RecipePostDirectionDto, RecipePostIngredientDto, RecipePostTagDto } from "@dietly/sdk"
 import React from "react"
-import { CreateRecipeIngredientDto, CreateRecipeDirectionDto, CreateRecipeTagDto } from "@dietly/sdk"
 
 interface RecipePreviewContentInterface {
     title: string,
     description: string,
     imageUrl: string,
-    ingredients: Array<CreateRecipeIngredientDto> | null | undefined
-    directions: Array<CreateRecipeDirectionDto> | null | undefined,
-    tags: Array<CreateRecipeTagDto> | null | undefined
+    ingredients: Array<RecipePostIngredientDto> | null | undefined
+    directions: Array<RecipePostDirectionDto> | null | undefined,
+    tags: Array<RecipePostTagDto> | null | undefined
 }
 const RecipePreviewContent = ({ title, description, imageUrl, ingredients, directions, tags }: RecipePreviewContentInterface) => {
 
@@ -29,7 +29,7 @@ const RecipePreviewContent = ({ title, description, imageUrl, ingredients, direc
             <div className="recipe-header recipe-preview-header">Ingredients</div>
 
             <ul className="recipe-ingridients-list">
-                {ingredients?.map((ingredient: CreateRecipeIngredientDto, index: number) =>
+                {ingredients?.map((ingredient: RecipePostIngredientDto, index: number) =>
                     (<li key={"ingr" + index} className="recipe-ingridient">{ingredient.name}</li>)
                 )}
             </ul>
@@ -40,7 +40,7 @@ const RecipePreviewContent = ({ title, description, imageUrl, ingredients, direc
 
             <div className="recipe-directions">
                 {directions?.sort((a, b) => (a.order || 0) - (b.order || 0))
-                    .map((direction: CreateRecipeDirectionDto, index: number) => {
+                    .map((direction: RecipePostDirectionDto, index: number) => {
                         return (
                             <div key={"direct" + index}>
                                 <div className="recipe-direction-header">

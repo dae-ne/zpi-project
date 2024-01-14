@@ -1,9 +1,9 @@
 import React from "react"
-import { CreateRecipeTagDto } from "@dietly/sdk";
 import { RecipeEditDataInterface } from "./recipe-edit-content";
 import DeleteIcon from '@mui/icons-material/Delete';
+import { RecipePostTagDto } from "@dietly/sdk";
 
-const RecipeEditTags = ({ data, onDataChange }: RecipeEditDataInterface<CreateRecipeTagDto>) => {
+const RecipeEditTags = ({ data, onDataChange }: RecipeEditDataInterface<RecipePostTagDto>) => {
     const handleDelete = (index: number) => {
         if (!data || data.length - 1 < index) return;
 
@@ -17,7 +17,7 @@ const RecipeEditTags = ({ data, onDataChange }: RecipeEditDataInterface<CreateRe
             {data && data.length > 0 ?
                 <ul className="recipe-ingridients-list recipe-ingridients-edit-list">
 
-                    {data.map((tag: CreateRecipeTagDto, index: number) => {
+                    {data.map((tag: RecipePostTagDto, index: number) => {
                         return (
                             <li className="recipe-ingridient recipe-ingridient-edit" key={"ingr" + index}>
                                 <div className="recipe-ingridient-label">{tag.name}

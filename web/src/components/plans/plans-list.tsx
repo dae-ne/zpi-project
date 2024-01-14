@@ -11,9 +11,9 @@ import appTheme from "../theme";
 import moment from "moment";
 import CloseIcon from '@mui/icons-material/Close';
 import { RecipeListMode } from "../../enums/recipe";
-import { AddMealRequest, GetMealResponse, GetPlanResponse, GetRecipeResponse, MealsService, PlansService } from "@dietly/sdk";
 import Meal from "./meal";
 import RecipeList from "../recipes/recipe-list/recipe-list";
+import { MealGetResponse, MealPostRequest, MealsService, PlanGetResponse, PlansService, RecipeGetResponse } from "@dietly/sdk";
 
 const DAYS: Array<string> = [
     "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"
@@ -31,7 +31,7 @@ const PlansList = () => {
 
     const [consumedCalories, setConsumedCalories] = useState<number | undefined>(0)
     const [totalCalories, setTotalCalories] = useState<number | undefined>(0)
-    const [meals, setMeals] = useState<Array<GetMealResponse> | undefined | null>(null)
+    const [meals, setMeals] = useState<Array<MealGetResponse> | undefined | null>(null)
     const [selectedDay, setSelectedDay] = useState<Date>(new Date)
 
     const [dayOfWeek, setDayOfWeek] = useState<number>((new Date).getDay() - 1)
@@ -63,11 +63,11 @@ const PlansList = () => {
         }
     }
 
-    const addNewMeal = (hour: Date, recipe: GetRecipeResponse) => {
+    const addNewMeal = (hour: Date, recipe: RecipeGetResponse) => {
         console.log(hour, recipe)
         //todo dorobić godzinę
         setRecipePanelVisible(false)
-        const mealData: AddMealRequest = {
+        const mealData: MealPostRequest = {
             recipeId: recipe.id,
             date: moment(selectedDay).format("DD.MM.YYYY")
         }
@@ -80,7 +80,7 @@ const PlansList = () => {
 
     const getPlanForDay = (day: Date) => {
         PlansService.getPlan(moment(day).format("DD.MM.YYYY"))
-            .then((response: GetPlanResponse) => {
+            .then((response: PlanGetResponse) => {
                 console.log(response)
                 setConsumedCalories(response.consumedCalories)
                 setTotalCalories(response.totalCalories)
@@ -145,7 +145,7 @@ const PlansList = () => {
                 </div>
             </Box>
             <Box sx={{ pt: 3 }}>
-                {meals?.map((meal: GetMealResponse, index: number) => {
+                {meals?.map((meal: MealGetResponse, index: number) => {
                     return <Meal onDelete={handleRefreshAfterDelete} data={meal} key={"meal" + index} />
                 })}
 

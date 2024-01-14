@@ -2,18 +2,18 @@ import "./recipe-list.scss"
 import React, { useEffect, useState } from "react"
 import RecipeListHeader from "./recipe-list-header"
 import RecipeListContent from "./recipe-list-content"
-import { RecipesService, GetRecipesResponse, GetRecipeResponse, DifficultyLevel } from "@dietly/sdk"
 import { RecipeListMode } from "../../../enums/recipe"
+import { DifficultyLevel, RecipeGetResponse, RecipesGetResponse, RecipesService } from "@dietly/sdk"
 
 interface RecipeListInterface {
     mode: RecipeListMode,
-    onAccept?: (value: Date, recipe: GetRecipeResponse) => void
+    onAccept?: (value: Date, recipe: RecipeGetResponse) => void
 }
 const RecipeList = ({ mode, onAccept }: RecipeListInterface) => {
-    const [recipes, setRecipes] = useState<Array<GetRecipeResponse> | null>(null)
-    const [displayRecipes, setDisplayRecipes] = useState<Array<GetRecipeResponse> | null>(null)
+    const [recipes, setRecipes] = useState<Array<RecipeGetResponse> | null>(null)
+    const [displayRecipes, setDisplayRecipes] = useState<Array<RecipeGetResponse> | null>(null)
     const [tags, setTags] = useState<Array<string> | null>(null)
-    const [selectedRecipe, setSelectedRecipe] = useState<GetRecipeResponse | null>(null)
+    const [selectedRecipe, setSelectedRecipe] = useState<RecipeGetResponse | null>(null)
 
     const handleSearchData = (searchValue: string) => {
         setDisplayRecipes(filterByName(searchValue))
@@ -45,44 +45,44 @@ const RecipeList = ({ mode, onAccept }: RecipeListInterface) => {
         onAccept(time, selectedRecipe)
     }
 
-    const filterByDifficultyLevel = (levels: DifficultyLevel[] | undefined): Array<GetRecipeResponse> | null => {
+    const filterByDifficultyLevel = (levels: DifficultyLevel[] | undefined): Array<RecipeGetResponse> | null => {
         if (!recipes || recipes.length == 0 || !levels)
             return recipes;
 
-        return recipes.filter((recipe: GetRecipeResponse) => {
+        return recipes.filter((recipe: RecipeGetResponse) => {
             return recipe.difficultyLevel && levels.indexOf((recipe.difficultyLevel)) >= 0;
         });
     }
 
-    const filterByTime = (min: number, max: number): Array<GetRecipeResponse> | null => {
+    const filterByTime = (min: number, max: number): Array<RecipeGetResponse> | null => {
         if (!recipes || recipes.length == 0)
             return recipes;
 
-        return recipes.filter((recipe: GetRecipeResponse) => recipe.time && recipe.time >= min && recipe.time <= max);
+        return recipes.filter((recipe: RecipeGetResponse) => recipe.time && recipe.time >= min && recipe.time <= max);
     }
 
-    const filterByEnergy = (min: number, max: number): Array<GetRecipeResponse> | null => {
+    const filterByEnergy = (min: number, max: number): Array<RecipeGetResponse> | null => {
         if (!recipes || recipes.length == 0)
             return recipes;
 
-        return recipes.filter((recipe: GetRecipeResponse) => recipe.calories && recipe.calories >= min && recipe.calories <= max);
+        return recipes.filter((recipe: RecipeGetResponse) => recipe.calories && recipe.calories >= min && recipe.calories <= max);
     }
 
-    const filterByName = (searchValue: string): Array<GetRecipeResponse> | null => {
+    const filterByName = (searchValue: string): Array<RecipeGetResponse> | null => {
         if (!recipes || recipes.length == 0 || searchValue == "")
             return recipes;
 
-        return recipes.filter((recipe: GetRecipeResponse) => recipe.title && recipe.title.toLowerCase().includes(searchValue.toLowerCase()));
+        return recipes.filter((recipe: RecipeGetResponse) => recipe.title && recipe.title.toLowerCase().includes(searchValue.toLowerCase()));
     }
 
-    const filterByTag = (tags: string[]): Array<GetRecipeResponse> | null => {
+    const filterByTag = (tags: string[]): Array<RecipeGetResponse> | null => {
         if (!recipes || recipes.length === 0 || tags?.length === 0)
             return recipes;
 
-        return recipes.filter((recipe: GetRecipeResponse) => recipe.tags && recipeHasOneOfTags(recipe, tags))
+        return recipes.filter((recipe: RecipeGetResponse) => recipe.tags && recipeHasOneOfTags(recipe, tags))
     }
 
-    const recipeHasOneOfTags = (recipe: GetRecipeResponse, selectedTagNames: string[]): boolean => {
+    const recipeHasOneOfTags = (recipe: RecipeGetResponse, selectedTagNames: string[]): boolean => {
         if (recipe.tags && recipe.tags.length > 0) {
             const tagNames = recipe.tags.map((t) => t.name);
             return tagNames.some((tag) => tag && selectedTagNames.includes(tag));
@@ -91,11 +91,11 @@ const RecipeList = ({ mode, onAccept }: RecipeListInterface) => {
         return false;
     }
 
-    const loadTags = (recipes: Array<GetRecipeResponse>) => {
+    const loadTags = (recipes: Array<RecipeGetResponse>) => {
         setTags(collectUniqueTags(recipes))
     }
 
-    const collectUniqueTags = (recipes: GetRecipeResponse[]): string[] => {
+    const collectUniqueTags = (recipes: RecipeGetResponse[]): string[] => {
         const allTags: Set<string> = new Set<string>();
 
         recipes.forEach(recipe => {
@@ -120,7 +120,7 @@ const RecipeList = ({ mode, onAccept }: RecipeListInterface) => {
 
 
         RecipesService.getRecipes()
-            .then((result: GetRecipesResponse) => {
+            .then((result: RecipesGetResponse) => {
                 // console.log(result)
                 if (!result?.data)
                     return;

@@ -3,10 +3,10 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import type { GetMealResponse } from './GetMealResponse';
+import type { MealGetResponse } from './MealGetResponse';
 
-export type GetPlanResponse = {
-  meals?: Array<GetMealResponse> | null;
+export type PlanGetResponse = {
+  meals?: Array<MealGetResponse> | null;
   date?: string | null;
   totalCalories?: number;
   consumedCalories?: number;

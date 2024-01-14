@@ -2,7 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { GetListResponse } from '../models/GetListResponse';
+import type { ListGetResponse } from '../models/ListGetResponse';
 import type { SendEmailWithListRequest } from '../models/SendEmailWithListRequest';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
@@ -36,13 +36,13 @@ requestBody: SendEmailWithListRequest,
   /**
    * @param from 
    * @param to 
-   * @returns GetListResponse Success
+   * @returns ListGetResponse Success
    * @throws ApiError
    */
   public static getList(
 from?: string,
 to?: string,
-): CancelablePromise<GetListResponse> {
+): CancelablePromise<ListGetResponse> {
     return __request(OpenAPI, {
       method: 'GET',
       url: '/api/lists',

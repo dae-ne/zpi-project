@@ -3,9 +3,8 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type GetUserResponse = {
+export type UserPutRequest = {
   id?: number;
   userName?: string | null;
-  email?: string | null;
   avatarUrl?: string | null;
 };

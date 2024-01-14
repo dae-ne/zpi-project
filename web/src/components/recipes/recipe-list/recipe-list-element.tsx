@@ -1,9 +1,9 @@
 import React from "react"
-import { GetRecipeResponse, GetRecipeTagResponse } from "@dietly/sdk"
 import { Box } from "@mui/material"
+import { RecipeGetResponse, RecipeGetTagDto } from "@dietly/sdk"
 
 interface RecipeListElementInterface {
-    data: GetRecipeResponse,
+    data: RecipeGetResponse,
     index: number,
     isOutlined?: boolean,
     onTileClick: (index: number) => void
@@ -31,7 +31,7 @@ const RecipeListElement = ({ data, index, onTileClick, isOutlined }: RecipeListE
 
 
                 <div className="recipe-list-item-tags">
-                    {data.tags?.map((tag: GetRecipeTagResponse, index: number) =>
+                    {data.tags?.map((tag: RecipeGetTagDto, index: number) =>
                         (<div key={"tag" + index} className="recipe-list-item-tag">{tag.name}</div>))}
                 </div>
             </Box>

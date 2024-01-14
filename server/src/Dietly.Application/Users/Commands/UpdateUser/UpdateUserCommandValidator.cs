@@ -13,7 +13,7 @@ internal sealed class UpdateUserCommandValidator : AbstractValidator<UpdateUserC
         RuleFor(x => x.UserName)
             .NotEmpty()
             .WithMessage("User name is required.")
-            .MaximumLength(50)
-            .WithMessage("User name must not exceed 50 characters.");
+            .MaximumLength(100)
+            .WithMessage("User name must not exceed 100 characters.");
     }
 }

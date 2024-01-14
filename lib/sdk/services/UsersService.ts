@@ -2,8 +2,8 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { GetUserResponse } from '../models/GetUserResponse';
-import type { UpdateUserRequest } from '../models/UpdateUserRequest';
+import type { UserGetResponse } from '../models/UserGetResponse';
+import type { UserPutRequest } from '../models/UserPutRequest';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
@@ -19,7 +19,7 @@ export class UsersService {
    */
   public static updateUser(
 userId: number,
-requestBody: UpdateUserRequest,
+requestBody: UserPutRequest,
 ): CancelablePromise<any> {
     return __request(OpenAPI, {
       method: 'PUT',
@@ -29,6 +29,29 @@ requestBody: UpdateUserRequest,
       },
       body: requestBody,
       mediaType: 'application/json',
+      errors: {
+        400: `Bad Request`,
+        403: `Forbidden`,
+        404: `Not Found`,
+        500: `Server Error`,
+      },
+    });
+  }
+
+  /**
+   * @param userId 
+   * @returns UserGetResponse Success
+   * @throws ApiError
+   */
+  public static getUser(
+userId: number,
+): CancelablePromise<UserGetResponse> {
+    return __request(OpenAPI, {
+      method: 'GET',
+      url: '/api/users/{userId}',
+      path: {
+        'userId': userId,
+      },
       errors: {
         400: `Bad Request`,
         403: `Forbidden`,
@@ -62,33 +85,10 @@ userId: number,
   }
 
   /**
-   * @param userId 
-   * @returns GetUserResponse Success
+   * @returns UserGetResponse Success
    * @throws ApiError
    */
-  public static getUser(
-userId: number,
-): CancelablePromise<GetUserResponse> {
-    return __request(OpenAPI, {
-      method: 'GET',
-      url: '/api/users/{userId}',
-      path: {
-        'userId': userId,
-      },
-      errors: {
-        400: `Bad Request`,
-        403: `Forbidden`,
-        404: `Not Found`,
-        500: `Server Error`,
-      },
-    });
-  }
-
-  /**
-   * @returns GetUserResponse Success
-   * @throws ApiError
-   */
-  public static getCurrentUser(): CancelablePromise<GetUserResponse> {
+  public static getCurrentUser(): CancelablePromise<UserGetResponse> {
     return __request(OpenAPI, {
       method: 'GET',
       url: '/api/users/me',

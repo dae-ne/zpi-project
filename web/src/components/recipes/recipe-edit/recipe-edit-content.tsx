@@ -3,8 +3,8 @@ import React, { useState } from "react"
 import CustomTextField from "../../controls/custom-text-field"
 import RecipeEditIngredients from "./recipe-edit-ingredients";
 import RecipeEditDirections from "./recipe-edit-directions";
-import { CreateRecipeDirectionDto, CreateRecipeIngredientDto } from "@dietly/sdk";
 import AddIcon from '@mui/icons-material/Add';
+import { RecipePostDirectionDto, RecipePostIngredientDto } from "@dietly/sdk";
 
 const inputStyleOne = { borderRadius: "5px", fontSize: "0.9em" }
 const inputStyleTwo = { borderRadius: "5px 0 0 5px", fontSize: "0.9em" }
@@ -13,12 +13,12 @@ const inputStyleTwo = { borderRadius: "5px 0 0 5px", fontSize: "0.9em" }
 interface RecipeEditContentInterface {
     title: string,
     description: string,
-    ingredients: Array<CreateRecipeIngredientDto> | null,
-    directions: Array<CreateRecipeDirectionDto> | null,
+    ingredients: Array<RecipePostIngredientDto> | null,
+    directions: Array<RecipePostDirectionDto> | null,
     onTitleChange: (value: string) => void,
     onDescriptionChange: (value: string) => void,
-    onIngredientsChange: (value: Array<CreateRecipeIngredientDto>) => void,
-    onDirectionsChange: (value: Array<CreateRecipeDirectionDto>) => void
+    onIngredientsChange: (value: Array<RecipePostIngredientDto>) => void,
+    onDirectionsChange: (value: Array<RecipePostDirectionDto>) => void
     onSubmit: () => void
 }
 
@@ -40,8 +40,8 @@ const RecipeEditContent = (props: RecipeEditContentInterface) => {
     const handleAddIngredient = () => {
         if (!ingredient) return;
 
-        const igredientsTmp: Array<CreateRecipeIngredientDto> = ingredients ? ingredients : new Array<CreateRecipeIngredientDto>();
-        igredientsTmp.push({ name: ingredient } as CreateRecipeIngredientDto);
+        const igredientsTmp: Array<RecipePostIngredientDto> = ingredients ? ingredients : new Array<RecipePostIngredientDto>();
+        igredientsTmp.push({ name: ingredient } as RecipePostIngredientDto);
         onIngredientsChange(igredientsTmp);
         setIngredient("")
     }
@@ -50,8 +50,8 @@ const RecipeEditContent = (props: RecipeEditContentInterface) => {
     const handleAddDirection = () => {
         if (!direction) return;
         console.log(direction)
-        const directionTmp: Array<CreateRecipeDirectionDto> = directions ? directions : new Array<CreateRecipeDirectionDto>();
-        directionTmp.push({ description: direction, order: directionTmp.length } as CreateRecipeDirectionDto);
+        const directionTmp: Array<RecipePostDirectionDto> = directions ? directions : new Array<RecipePostDirectionDto>();
+        directionTmp.push({ description: direction, order: directionTmp.length } as RecipePostDirectionDto);
         onDirectionsChange(directionTmp);
         setDirection("")
     }
