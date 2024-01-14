@@ -60,16 +60,15 @@ const RecipeListContent = (props: RecipeListContentInterface) => {
 
             <Grid item xs={9}>
                 {
-                    data?.sort((a, b) => (b.id || 0) - (a.id || 0))
-                        .map((recipe: RecipeGetResponse, index: number) =>
-                            <RecipeListElement
-                                key={"recipe" + index}
-                                data={recipe}
-                                index={index}
-                                onTileClick={handleListClick}
-                                isOutlined={mode == RecipeListMode.Select && index === selectedRecipeIndex}
-                            />
-                        )
+                    data?.map((recipe: RecipeGetResponse, index: number) =>
+                        <RecipeListElement
+                            key={"recipe" + index}
+                            data={recipe}
+                            index={index}
+                            onTileClick={handleListClick}
+                            isOutlined={mode == RecipeListMode.Select && index === selectedRecipeIndex}
+                        />
+                    )
                 }
             </Grid>
 

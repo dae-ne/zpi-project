@@ -13,7 +13,8 @@ import CloseIcon from '@mui/icons-material/Close';
 import { RecipeListMode } from "../../enums/recipe";
 import Meal from "./meal";
 import RecipeList from "../recipes/recipe-list/recipe-list";
-import { MealGetResponse, MealPostRequest, MealsService, PlanGetResponse, PlansService, RecipeGetResponse } from "@dietly/sdk";
+import { MealGetResponse, MealPostRequest, MealsService, OpenAPI, PlanGetResponse, PlansService, RecipeGetResponse } from "@dietly/sdk";
+import { DefaultDateFormat, DefaultTimeFormat } from "../../constants/time";
 
 const DAYS: Array<string> = [
     "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"
@@ -27,6 +28,9 @@ const DateDiffInDays = (date1: Date, date2: Date): number => {
     return moment(date2).startOf('day').diff(moment(date1).startOf('day'), 'days')
 }
 
+const GetDayOfWeek = (date: Date): number => {
+    return (date.getDay() - 1 + DAYS.length) % DAYS.length
+}
 const PlansList = () => {
 
     const [consumedCalories, setConsumedCalories] = useState<number | undefined>(0)
@@ -34,7 +38,7 @@ const PlansList = () => {
     const [meals, setMeals] = useState<Array<MealGetResponse> | undefined | null>(null)
     const [selectedDay, setSelectedDay] = useState<Date>(new Date)
 
-    const [dayOfWeek, setDayOfWeek] = useState<number>((new Date).getDay() - 1)
+    const [dayOfWeek, setDayOfWeek] = useState<number>()
     const [dayPrefix, setDayPrefix] = useState<string>("")
     const [forceRefreshMeals, setForceRefreshMeals] = useState<boolean>(false)
 
@@ -42,7 +46,7 @@ const PlansList = () => {
 
     const setDates = (operation: number) => {
         const newDay = moment(selectedDay).add(operation, 'days').toDate();
-        const newDayOfWeek = (newDay.getDay() - 1 + DAYS.length) % DAYS.length
+        const newDayOfWeek = GetDayOfWeek(newDay)
 
         setSelectedDay(newDay)
         setDayOfWeek(newDayOfWeek)
@@ -51,7 +55,6 @@ const PlansList = () => {
 
     const calcDayPrefix = (newDay: Date) => {
         const dayFromTodayDiff = DateDiffInDays(new Date, newDay);
-        //    console.log(dayFromTodayDiff)
         if (dayFromTodayDiff === -1) {
             setDayPrefix(YESTERDAY)
         } else if (dayFromTodayDiff === 0) {
@@ -64,46 +67,53 @@ const PlansList = () => {
     }
 
     const addNewMeal = (hour: Date, recipe: RecipeGetResponse) => {
-        console.log(hour, recipe)
-        //todo dorobić godzinę
         setRecipePanelVisible(false)
         const mealData: MealPostRequest = {
             recipeId: recipe.id,
-            date: moment(selectedDay).format("DD.MM.YYYY")
+            date: `${moment(selectedDay).format(DefaultDateFormat)}T${moment(hour).format(DefaultTimeFormat)}`
         }
+
         MealsService.addMeal(mealData)
             .then(() => {
                 getPlanForDay(selectedDay)
             })
-            .catch(() => { })
+            .catch((err) => {
+                console.log(err)
+            })
     }
 
     const getPlanForDay = (day: Date) => {
-        PlansService.getPlan(moment(day).format("DD.MM.YYYY"))
+        if (!OpenAPI.TOKEN)
+            return;
+
+        PlansService.getPlan(moment(day).format(DefaultDateFormat))
             .then((response: PlanGetResponse) => {
-                console.log(response)
                 setConsumedCalories(response.consumedCalories)
                 setTotalCalories(response.totalCalories)
-                setMeals(response.meals)
+                setMeals(response.meals?.sort((a, b) => {
+                    return moment(a.date).diff(moment(b.date))
+                }))
+
             })
-            .catch((err) => {
+            .catch((err: any) => {
                 setConsumedCalories(0)
                 setTotalCalories(0)
                 setMeals(null)
             })
     }
-    const handleRefreshAfterDelete = () => {
+    const handleForceRefresh = () => {
         setForceRefreshMeals(!forceRefreshMeals)
     }
-    useEffect(() => {
-        const today: Date = new Date
-        calcDayPrefix(today)
-        //getPlanForDay(today)
-    }, [])
 
     useEffect(() => {
         getPlanForDay(selectedDay)
     }, [selectedDay, forceRefreshMeals])
+
+    useEffect(() => {
+        const today: Date = new Date
+        calcDayPrefix(today)
+        setDayOfWeek(GetDayOfWeek(today))
+    }, [])
 
     return (
         <>
@@ -146,7 +156,7 @@ const PlansList = () => {
             </Box>
             <Box sx={{ pt: 3 }}>
                 {meals?.map((meal: MealGetResponse, index: number) => {
-                    return <Meal onDelete={handleRefreshAfterDelete} data={meal} key={"meal" + index} />
+                    return <Meal onReload={handleForceRefresh} data={meal} key={"meal" + index} />
                 })}
 
             </Box>

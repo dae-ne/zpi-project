@@ -1,41 +1,39 @@
+import React, { useEffect, useState } from "react"
+import { MealGetResponse, MealsService, MealPutRequest } from "@dietly/sdk";
+import { DefaultDateTimeFormat, DefaultShortTimeFormat } from "../../constants/time";
+import moment from "moment";
 import { Box } from "@mui/material"
-import React, { useState } from "react"
 import DeleteIcon from '@mui/icons-material/Delete';
 import CheckIcon from '@mui/icons-material/Check';
 import RemoveIcon from '@mui/icons-material/Remove';
-import { MealGetResponse, MealsService, MealPutRequest } from "@dietly/sdk";
-import moment from "moment";
 
 const MAX_DESCRIPTION_LENGTH: number = 180
 interface MealInterface {
     data: MealGetResponse,
-    onDelete: () => void
+    onReload: () => void
 }
-const Meal = ({ data, onDelete }: MealInterface) => {
-    //{ data, onTitleClick }: RecipeListElementInterface
+
+const Meal = ({ data, onReload }: MealInterface) => {
     const [mealCompleted, setMealCompleted] = useState<boolean>(data?.completed || false)
 
-    const handleMealComplete = () => {
+    const handleMealUpdate = (completed: boolean) => {
         if (!data?.id)
             return;
 
         const commitMealData: MealPutRequest = {
+            id: data.id,
             recipeId: data?.recipeId,
-            date: moment(data.date, "YYYY-DD-MM").format("DD.MM.YYYY"),
-            completed: true
+            date: moment.utc(data.date).format(DefaultDateTimeFormat),
+            completed: completed
         }
-
         MealsService.updateMeal(data?.id, commitMealData)
-            .then((response: any) => {
-                console.log(response)
+            .then(() => {
+                setMealCompleted(value => !value)
+                onReload()
             })
-            .catch((err) => {
-                console.log(err)
+            .catch(() => {
+                alert("bład")
             })
-    }
-
-    const handleMealRollbackComplete = () => {
-        //todo
     }
 
     const handleMealDelete = () => {
@@ -43,9 +41,13 @@ const Meal = ({ data, onDelete }: MealInterface) => {
 
         MealsService.removeMeal(data.id)
             .then(() => {
-                onDelete()
+                onReload()
             })
     }
+
+    useEffect(() => {
+        setMealCompleted(data?.completed || false)
+    }, [data])
 
     return (
         <Box height={220} className="recipe-list-item-plans recipe-list-item" style={{ cursor: "auto" }}>
@@ -58,8 +60,6 @@ const Meal = ({ data, onDelete }: MealInterface) => {
                 <div className="recipe-list-item-header">
                     {data?.recipe?.title}
                 </div>
-                <div className="recipe-list-item-energy">{data?.recipe?.calories} kcal.</div>
-                <div className="recipe-list-item-energy">{data?.recipe?.time} min.</div>
                 <div className="recipe-list-item-description">
                     {
                         data?.recipe?.description && data?.recipe?.description?.length > MAX_DESCRIPTION_LENGTH
@@ -67,10 +67,20 @@ const Meal = ({ data, onDelete }: MealInterface) => {
                     }
                 </div>
             </Box>
+            <Box className="recipe-list-item-additional">
+                <div className="recipe-list-item-time">
+                    {moment.utc(data?.date).format(DefaultShortTimeFormat)}
+                </div>
+                <div>
+                    <div className="recipe-list-item-energy">{data?.recipe?.calories} kcal.</div>
+                    <div className="recipe-list-item-energy">{data?.recipe?.time} min.</div>
+                </div>
+            </Box>
+
             <Box className="recipe-list-item-managment">
                 {mealCompleted ?
-                    <RemoveIcon fontSize="small" htmlColor="orange" onClick={handleMealRollbackComplete} />
-                    : <CheckIcon fontSize="small" onClick={handleMealComplete} />
+                    <RemoveIcon fontSize="small" htmlColor="orange" onClick={() => handleMealUpdate(false)} />
+                    : <CheckIcon fontSize="small" onClick={() => handleMealUpdate(true)} />
                 }
                 <DeleteIcon fontSize="small" onClick={handleMealDelete} />
             </Box>

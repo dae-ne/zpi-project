@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react"
 import RecipeListHeader from "./recipe-list-header"
 import RecipeListContent from "./recipe-list-content"
 import { RecipeListMode } from "../../../enums/recipe"
-import { DifficultyLevel, RecipeGetResponse, RecipesGetResponse, RecipesService } from "@dietly/sdk"
+import { DifficultyLevel, OpenAPI, RecipeGetResponse, RecipesGetResponse, RecipesService } from "@dietly/sdk"
 
 interface RecipeListInterface {
     mode: RecipeListMode,
@@ -38,7 +38,6 @@ const RecipeList = ({ mode, onAccept }: RecipeListInterface) => {
     }
 
     const handleSelectRecipe = (time: Date) => {
-        console.log(time)
         if (!onAccept || !selectedRecipe)
             return;
 
@@ -110,30 +109,21 @@ const RecipeList = ({ mode, onAccept }: RecipeListInterface) => {
     }
 
     useEffect(() => {
-        // const token = "CfDJ8PZUcAXGx8xNtqXZMUFayepTvBB9l1pa5zv3-gnskvLV8olLnXSGqFL7u2v5Wgim4vLkDspT04p7wcxkWlmLGt8p_DjQSS1cc9p-kdDk1XGdoLtwqT1vr-h5ZXQMv0D1X5S9dT7IUjRBpry1mdNvdSRSDMH2YCb_o91w6eVRAN_JJC1qEm7bub7UF6Jak-S_RSKqOBCfyGQIbjVXPGnPLxR3ipGhtHiBF93AOzAAjW83QRHf7Y7HRc-a9xFT9GCtbp1D_y5qNJatRfFu5LADtQe3RVyYrZcqZiRM6PbxJwxdrlbFzVpGSzP9VmjIEYUPFY7niAKNsybWXhtWNjQIv7xCfP1LdHp2r3PagfV3ux6hdCOkpN8kL85CYNvoz-j9_mFWA1VbM5j6bC9LcXolDwFCKsLvfjMa8FMuH67-pg81Er5IRYzsK4jp0UPuflOh5Zg9NJYsYjQcGnwwOh4_hcSyUIbZ9w5i9Uj6dKasfEu1eEmcf-KXFcy4OALBSSHMfEZaBLY_bLwyaaNhBBEEQQ6Bfl1jbmdr0msCJGKIFs4TKG9ICM2Zc9WOkPgvqyugzVvYHqGtXTOIvk9YMHkcLVDW7m0Z-28T2pyRazjPXbgp389WsAsFv3bM6yCFSuJEiQ"
-
-        // fetch("http://localhost:8080/api/recipes", {
-        //     headers: { Authorization: `Bearer ${token}` }
-        // })
-        //     .then(resp => resp.json())
-        //     .then(json => console.log(json))
-
+        if (!OpenAPI.TOKEN)
+            return;
 
         RecipesService.getRecipes()
             .then((result: RecipesGetResponse) => {
-                // console.log(result)
-                if (!result?.data)
+                if (!result?.data || result?.data.length == 0)
                     return;
 
-                setRecipes(result.data)
-                setDisplayRecipes(result.data)
-                loadTags(result.data)
-
+                const sortedData = result.data.sort((a, b) => (b.id || 0) - (a.id || 0))
+                setRecipes(sortedData)
+                setDisplayRecipes(sortedData)
+                loadTags(sortedData)
+                setSelectedRecipe(sortedData[0])
             })
-            .catch(() => {
-                //  console.log(err)
-            })
-
+            .catch(() => { })
     }, [])
     return (
         <>
