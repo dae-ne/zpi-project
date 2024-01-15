@@ -77,9 +77,7 @@ const PlansList = () => {
             .then(() => {
                 getPlanForDay(selectedDay)
             })
-            .catch((err) => {
-                console.log(err)
-            })
+            .catch(() => { })
     }
 
     const getPlanForDay = (day: Date) => {

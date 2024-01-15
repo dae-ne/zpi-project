@@ -7,6 +7,7 @@ import RecipeEditTags from "./recipe-edit-tags";
 import { toBase64 } from "../../../tools/files";
 import AddIcon from '@mui/icons-material/Add';
 import { getDifficultyId, getDifficultyName } from "../../../tools/enums";
+import { fitAlert } from "../../../tools/fit-alert";
 
 interface RecipeEditStatsInterface {
     difficultyLevel: DifficultyLevel,
@@ -61,7 +62,7 @@ const RecipeEditStats = (props: RecipeEditStatsInterface) => {
                 setImagePreview(result as string)
             })
         } catch (error) {
-            console.error(error);
+            fitAlert("Error", "Error during processing file. Try again or try with other file", "success")
             return;
         }
     };
