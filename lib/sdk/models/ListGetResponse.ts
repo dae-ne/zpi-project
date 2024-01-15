@@ -3,7 +3,9 @@
 /* tslint:disable */
 /* eslint-disable */
 
+import type { ListGetIngredientDto } from './ListGetIngredientDto';
+
 export type ListGetResponse = {
   count?: number;
-  ingredients?: Array<string> | null;
+  ingredients?: Array<ListGetIngredientDto> | null;
 };

@@ -96,10 +96,6 @@ const RecipeListMenu = (props: RecipeListMenuInterface) => {
         }))
     }, [tags])
 
-    useEffect(() => {
-        console.log(DEFAULT_DIFF_LEVELS)
-    }, [])
-
     return (
         <div className="recipe-search-menu">
             <Box sx={{ mb: 1 }} className="recipe-search-menu-header">

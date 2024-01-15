@@ -1,11 +1,17 @@
-import React, { useEffect, useState } from "react"
 import "./recipe-edit.scss"
+import React, { useEffect, useState } from "react"
 import RecipeEditContent from "./recipe-edit-content"
 import RecipeEditStats from "./recipe-edit-stats"
-import Grid from "@mui/material/Grid"
 import { useLocation, useNavigate, useParams } from "react-router-dom"
-import { RECIPE_LIST, RECIPE_NEW } from "../../../constants/app-route"
-import { DifficultyLevel, ImagesService, RecipeGetResponse, RecipePostDirectionDto, RecipePostIngredientDto, RecipePostRequest, RecipePostTagDto, RecipesService } from "@dietly/sdk"
+import { RECIPE_LIST, RECIPE_NEW, RECIPE_PREVIEW_RAW } from "../../../constants/app-route"
+import {
+    DifficultyLevel, ImagesService, RecipeGetResponse, RecipePostDirectionDto,
+    RecipePostIngredientDto, RecipePostRequest, RecipePostTagDto,
+    RecipePutRequest,
+    RecipesService
+} from "@dietly/sdk"
+import Grid from "@mui/material/Grid"
+import { fitAlert } from "../../../tools/fit-alert"
 
 export enum Mode {
     Edit,
@@ -24,6 +30,7 @@ const RecipeEdit = () => {
     const [title, setTitle] = useState<string>("");
     const [description, setDescription] = useState<string>("");
     const [difficultyLevel, setDifficultyLevel] = useState<DifficultyLevel>(DifficultyLevel._0);
+    const [imageChanged, setImageChanged] = useState<boolean>(false);
     const [imageUrl, setImageUrl] = useState<string>("");
     const [imageFile, setImageFile] = useState<File | null>(null);
     const [time, setTime] = useState<number>(0);
@@ -33,8 +40,61 @@ const RecipeEdit = () => {
     const [tags, setTags] = useState<Array<RecipePostTagDto>>([]);
 
     const [mode, setMode] = useState<Mode>()
+
+    const submitImage = (file: File) => {
+        setImageFile(file)
+        setImageChanged(true)
+    }
+
+    const sendImage = async (file: File) => {
+        return await ImagesService.addFoodImage({ file: file })
+            .then((response: string) => response)
+            .catch(() => imageUrl)
+    }
+
     const submitForm = () => {
+        if (mode === Mode.New)
+            addRecipe();
+        else
+            saveRecipe()
+    }
+
+    const addRecipe = async () => {
+        if (!imageFile) {
+            fitAlert("Validation error", "No selected image", "error");
+            return;
+        }
+
         const recipe: RecipePostRequest = {
+            title: title,
+            description: description,
+            difficultyLevel: difficultyLevel,
+            imageUrl: await sendImage(imageFile),
+            time: time,
+            calories: calories,
+            ingredients: ingredients,
+            directions: directions,
+            tags: tags
+        }
+
+        RecipesService.createRecipe(recipe)
+            .then(() => {
+                fitAlert("Success", "Recipe successfully created", "success");
+                setTimeout(() => navigate(RECIPE_LIST), 1000)
+            })
+            .catch(() => {
+                fitAlert("Validation error", "Not all fields was fulfilled", "error");
+            })
+    }
+
+    const saveRecipe = async () => {
+        if (!params.id) return;
+
+        const recipeId = parseInt(params.id)
+        if (!recipeId) return;
+
+        const recipe: RecipePutRequest = {
+            id: recipeId,
             title: title,
             description: description,
             difficultyLevel: difficultyLevel,
@@ -44,62 +104,18 @@ const RecipeEdit = () => {
             ingredients: ingredients,
             directions: directions,
             tags: tags
-        }
-        mode === Mode.New ? addRecipe(recipe) : saveRecipe(recipe)
-    }
+        };
 
-    const addRecipe = async (addRecipeRequest: RecipePostRequest) => {
+        if (imageChanged && imageFile)
+            recipe.imageUrl = await sendImage(imageFile)
 
-        if (!imageFile) {
-            alert("No selected image");
-            return;
-        }
-
-        addRecipeRequest.imageUrl = await ImagesService.addFoodImage({ file: imageFile })
-            .then((response: string) => response)
-            .catch(() => "")
-
-        RecipesService.createRecipe(addRecipeRequest)
+        RecipesService.updateRecipe(recipeId, recipe)
             .then(() => {
-                alert("Recipe has been created.")
-                navigate(RECIPE_LIST)
-            })
-            .catch(() => {
-                alert("Not all fields was fulfilled")
-            })
-    }
-
-    const saveRecipe = (recipeData: RecipePostRequest) => {
-        //TODO   brak metody do edycji
-        // UpdateRecipeRequest = {
-        //     id?: number;
-        //     title?: string | null;
-        //     description?: string | null;
-        //     difficultyLevel?: DifficultyLevel;
-        //     imageUrl?: string | null;
-        //     time?: number;
-        //     calories?: number;
-        //     ingredients?: Array<UpdateRecipeIngredientDto> | null;
-        //     directions?: Array<UpdateRecipeDirectionDto> | null;
-        //     tags?: Array<UpdateRecipeTagDto> | null;
-        //   };
-        const recipe: RecipePostRequest = {
-            title: title,
-            description: description,
-            //difficultyLevel: difficultyLevel,
-            // imageUrl: imageUrl,
-            // time: time,
-            // calories: calories,
-            // ingredients: ingredients,
-            // directions: directions,
-            // tags: tags
-        }
-        RecipesService.updateRecipe(parseInt(params.id || ""), recipe)
-            .then((response) => {
-                console.log(response)
-            }).catch((err) => {
-                console.log(err)
-
+                fitAlert("Success", "Recipe successfully saved", "success");
+                setTimeout(() => navigate(RECIPE_PREVIEW_RAW + recipeId), 1000)
+            }).catch(() => {
+                //tu jest błąd - 500, ale łatwno go ukryć, bo występuje tylko jak obiekt nie uległ zmianie - więc mozna udawać że tak miało być :D            
+                fitAlert("Error", "Recipe has not changed. Change recipie data to save", "error");
             })
     }
 
@@ -117,7 +133,6 @@ const RecipeEdit = () => {
 
         RecipesService.getRecipe(recipeId)
             .then((result: RecipeGetResponse) => {
-                console.log(result)
                 setTitle(result.title || "")
                 setDescription(result.description || "")
                 setIngredients(result.ingredients || [])
@@ -161,7 +176,7 @@ const RecipeEdit = () => {
                     calories={calories}
                     tags={tags}
                     onDifficultyLevelChange={setDifficultyLevel}
-                    onImageChange={setImageFile}
+                    onImageChange={submitImage}
                     onTimeChange={setTime}
                     onCaloriesChange={setCalories}
                     onTagsChange={setTags}

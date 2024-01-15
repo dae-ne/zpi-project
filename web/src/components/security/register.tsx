@@ -12,6 +12,7 @@ import Link from '@mui/material/Link';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import { fitAlert, fitAlertShort } from "../../tools/fit-alert";
 
 const RegisterPage = () => {
     const [login, setLogin] = useState<string>("")
@@ -36,14 +37,16 @@ const RegisterPage = () => {
 
         AccountService.register(registerRequest)
             .then(() => {
-                alert("Account created with success")
+                fitAlertShort("Account created with success", "success")
                 setErrorMessage("")
                 navigate(SECURITY_LOGIN)
             })
             .catch((err: ApiError) => {
                 const error = err?.body?.errors
                 const firstKey = Object.keys(error)[0];
-                setErrorMessage(error[firstKey] || "Unexpected error")
+                const errorMessage = error[firstKey] || "Unexpected error"
+                setErrorMessage(errorMessage)
+                fitAlert("Error", errorMessage, "error")
             })
 
     };

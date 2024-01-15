@@ -3,7 +3,10 @@ import { useNavigate, useParams } from "react-router-dom";
 import { RECIPE_EDIT_RAW } from "../../../constants/app-route";
 import EditIcon from '@mui/icons-material/Edit';
 import { getDifficultyName } from "../../../tools/enums";
-import { DifficultyLevel, RecipePostTagDto } from "@dietly/sdk";
+import { DifficultyLevel, RecipePostTagDto, RecipesService } from "@dietly/sdk";
+import DeleteIcon from '@mui/icons-material/Delete';
+import swal from "sweetalert";
+import { fitAlert } from "../../../tools/fit-alert";
 
 interface RecipePreviewStatsInterface {
     difficultyLevel: DifficultyLevel,
@@ -14,18 +17,35 @@ interface RecipePreviewStatsInterface {
 const RecipePreviewStats = ({ difficultyLevel, time, calories, tags }: RecipePreviewStatsInterface) => {
     const navigate = useNavigate();
     const params = useParams();
+
     const handleEditRecipe = () => {
         if (!params.id) {
             return;
         }
-        const recipeId = parseInt(params.id)
-        navigate(RECIPE_EDIT_RAW + recipeId)
+        navigate(RECIPE_EDIT_RAW + parseInt(params.id))
+    }
+
+    const handleDeleteRecipe = () => {
+        if (!params.id) {
+            return;
+        }
+
+        RecipesService.removeRecipe(parseInt(params.id))
+            .then(() => {
+                fitAlert("Success", "Recipe successfully removed", "success")
+                setTimeout(() => navigate(RECIPE_EDIT_RAW), 1000)
+            }).catch(() => {
+                fitAlert("Success", "Error during removing recipe", "error")
+            })
     }
 
     return (<>
         <div className="recipe-edit-button-wrapper">
             <div className="button-std add-button recipe-edit-button" onClick={handleEditRecipe}>
                 <EditIcon />
+            </div>
+            <div className="button-std add-button recipe-edit-button delete-button" onClick={handleDeleteRecipe}>
+                <DeleteIcon htmlColor="white" />
             </div>
         </div>
         <div className="recipe-stat-info recipe-preview-info-grid">

@@ -7,6 +7,7 @@ import RecipeEditTags from "./recipe-edit-tags";
 import { toBase64 } from "../../../tools/files";
 import AddIcon from '@mui/icons-material/Add';
 import { getDifficultyId, getDifficultyName } from "../../../tools/enums";
+import { fitAlert } from "../../../tools/fit-alert";
 
 interface RecipeEditStatsInterface {
     difficultyLevel: DifficultyLevel,
@@ -61,7 +62,7 @@ const RecipeEditStats = (props: RecipeEditStatsInterface) => {
                 setImagePreview(result as string)
             })
         } catch (error) {
-            console.error(error);
+            fitAlert("Error", "Error during processing file. Try again or try with other file", "success")
             return;
         }
     };
@@ -85,7 +86,7 @@ const RecipeEditStats = (props: RecipeEditStatsInterface) => {
             </div>
 
             <label htmlFor="fileImage" className="button-std recipe-edit-image-select" >Choose File</label>
-            <input hidden accept="image/jpeg" id="fileImage" type="file" onChange={handleCapture} />
+            <input hidden accept="image/jpeg,image/png" id="fileImage" type="file" onChange={handleCapture} />
 
             <div className="recipe-edit-sub-header">Difficulty level</div>
 

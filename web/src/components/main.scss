@@ -24,7 +24,6 @@ a {
     cursor: pointer;
 }
 
-.MuiSvgIcon-root[data-testid="DeleteIcon"],
 .MuiSvgIcon-root[data-testid="ExpandLessIcon"],
 .MuiSvgIcon-root[data-testid="ExpandMoreIcon"] {
     color: $main-color;
@@ -32,4 +31,8 @@ a {
 
 .MuiSvgIcon-root {
     cursor: pointer
+}
+
+.swal-button {
+    background-color: $main-color !important;
 }

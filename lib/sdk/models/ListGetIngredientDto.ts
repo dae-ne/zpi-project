@@ -3,6 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type SendEmailWithListRequest = {
-  ingredientIds?: Array<number> | null;
+export type ListGetIngredientDto = {
+  id?: number;
+  name?: string | null;
 };

@@ -84,4 +84,9 @@
     display: flex;
     justify-content: flex-end;
     margin-right: 2em;
+
+    .delete-button {
+        background-color: red;
+        margin-left: 1em;
+    }
 }

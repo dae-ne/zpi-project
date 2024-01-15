@@ -49,7 +49,7 @@ const RecipeEditContent = (props: RecipeEditContentInterface) => {
 
     const handleAddDirection = () => {
         if (!direction) return;
-        console.log(direction)
+
         const directionTmp: Array<RecipePostDirectionDto> = directions ? directions : new Array<RecipePostDirectionDto>();
         directionTmp.push({ description: direction, order: directionTmp.length } as RecipePostDirectionDto);
         onDirectionsChange(directionTmp);

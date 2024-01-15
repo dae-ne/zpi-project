@@ -3,142 +3,112 @@ import React, { useEffect, useState } from "react"
 import RecipeListHeader from "./recipe-list-header"
 import RecipeListContent from "./recipe-list-content"
 import { RecipeListMode } from "../../../enums/recipe"
-import { DifficultyLevel, RecipeGetResponse, RecipesGetResponse, RecipesService } from "@dietly/sdk"
+import { DifficultyLevel, OpenAPI, RecipeGetResponse, RecipesGetResponse, RecipesService } from "@dietly/sdk"
 
 interface RecipeListInterface {
     mode: RecipeListMode,
     onAccept?: (value: Date, recipe: RecipeGetResponse) => void
 }
+
+
 const RecipeList = ({ mode, onAccept }: RecipeListInterface) => {
     const [recipes, setRecipes] = useState<Array<RecipeGetResponse> | null>(null)
     const [displayRecipes, setDisplayRecipes] = useState<Array<RecipeGetResponse> | null>(null)
     const [tags, setTags] = useState<Array<string> | null>(null)
     const [selectedRecipe, setSelectedRecipe] = useState<RecipeGetResponse | null>(null)
 
-    const handleSearchData = (searchValue: string) => {
-        setDisplayRecipes(filterByName(searchValue))
+    const [filterSearchName, setFilterSearchName] = useState<string | null>(null)
+    const [filterDifficultyLevel, setFilterDifficultyLevel] = useState<Array<DifficultyLevel> | null>(null)
+    const [filterTime, setFilterTime] = useState<{ min: number, max: number } | null>(null)
+    const [filterEnergy, setFilterEnergy] = useState<{ min: number, max: number } | null>(null)
+    const [filterTags, setFilterTags] = useState<Array<string> | null>(null)
+
+
+    const handleSearchName = (searchValue: string) => {
+        setFilterSearchName(searchValue)
     }
 
     const handleDifficultyLevel = (levels: DifficultyLevel[] | undefined) => {
-        setDisplayRecipes(filterByDifficultyLevel(levels))
+        setFilterDifficultyLevel(levels || null)
     }
 
     const handleTime = (min: number, max: number) => {
-        setDisplayRecipes(filterByTime(min, max))
+        setFilterTime({ min: min, max: max })
     }
 
     const handleEnergy = (min: number, max: number) => {
-        setDisplayRecipes(filterByEnergy(min, max))
+        setFilterEnergy({ min: min, max: max })
     }
 
     const handleTags = (tags: string[] | undefined) => {
-        if (!tags)
-            return;
-        setDisplayRecipes(filterByTag(tags))
+        setFilterTags(tags || null)
     }
 
     const handleSelectRecipe = (time: Date) => {
-        console.log(time)
         if (!onAccept || !selectedRecipe)
             return;
 
         onAccept(time, selectedRecipe)
     }
 
-    const filterByDifficultyLevel = (levels: DifficultyLevel[] | undefined): Array<RecipeGetResponse> | null => {
-        if (!recipes || recipes.length == 0 || !levels)
-            return recipes;
-
-        return recipes.filter((recipe: RecipeGetResponse) => {
-            return recipe.difficultyLevel && levels.indexOf((recipe.difficultyLevel)) >= 0;
-        });
-    }
-
-    const filterByTime = (min: number, max: number): Array<RecipeGetResponse> | null => {
+    const refreshFilters = async () => {
         if (!recipes || recipes.length == 0)
-            return recipes;
+            return;
+        let tmpRecipies: Array<RecipeGetResponse> = recipes
 
-        return recipes.filter((recipe: RecipeGetResponse) => recipe.time && recipe.time >= min && recipe.time <= max);
-    }
+        if (filterSearchName && filterSearchName != "")
+            tmpRecipies = filterByName(tmpRecipies, filterSearchName)
 
-    const filterByEnergy = (min: number, max: number): Array<RecipeGetResponse> | null => {
-        if (!recipes || recipes.length == 0)
-            return recipes;
-
-        return recipes.filter((recipe: RecipeGetResponse) => recipe.calories && recipe.calories >= min && recipe.calories <= max);
-    }
-
-    const filterByName = (searchValue: string): Array<RecipeGetResponse> | null => {
-        if (!recipes || recipes.length == 0 || searchValue == "")
-            return recipes;
-
-        return recipes.filter((recipe: RecipeGetResponse) => recipe.title && recipe.title.toLowerCase().includes(searchValue.toLowerCase()));
-    }
-
-    const filterByTag = (tags: string[]): Array<RecipeGetResponse> | null => {
-        if (!recipes || recipes.length === 0 || tags?.length === 0)
-            return recipes;
-
-        return recipes.filter((recipe: RecipeGetResponse) => recipe.tags && recipeHasOneOfTags(recipe, tags))
-    }
-
-    const recipeHasOneOfTags = (recipe: RecipeGetResponse, selectedTagNames: string[]): boolean => {
-        if (recipe.tags && recipe.tags.length > 0) {
-            const tagNames = recipe.tags.map((t) => t.name);
-            return tagNames.some((tag) => tag && selectedTagNames.includes(tag));
+        if (tmpRecipies.length > 0 && filterDifficultyLevel && filterDifficultyLevel.length > 0) {
+            tmpRecipies = filterByDifficultyLevel(tmpRecipies, filterDifficultyLevel)
         }
 
-        return false;
+        if (tmpRecipies.length > 0 && filterTime) {
+            tmpRecipies = filterByTime(tmpRecipies, filterTime.min, filterTime.max)
+        }
+
+        if (tmpRecipies.length > 0 && filterEnergy) {
+            tmpRecipies = filterByEnergy(tmpRecipies, filterEnergy.min, filterEnergy.max)
+        }
+
+        if (tmpRecipies.length > 0 && filterTags && filterTags.length > 0) {
+            tmpRecipies = filterByTags(tmpRecipies, filterTags)
+        }
+
+        setDisplayRecipes(tmpRecipies)
     }
 
     const loadTags = (recipes: Array<RecipeGetResponse>) => {
         setTags(collectUniqueTags(recipes))
     }
 
-    const collectUniqueTags = (recipes: RecipeGetResponse[]): string[] => {
-        const allTags: Set<string> = new Set<string>();
-
-        recipes.forEach(recipe => {
-            if (recipe.tags) {
-                recipe.tags.forEach(tag => {
-                    allTags.add(tag.name || "")
-                });
-            }
-        });
-
-        return Array.from(allTags);
-    }
-
     useEffect(() => {
-        // const token = "CfDJ8PZUcAXGx8xNtqXZMUFayepTvBB9l1pa5zv3-gnskvLV8olLnXSGqFL7u2v5Wgim4vLkDspT04p7wcxkWlmLGt8p_DjQSS1cc9p-kdDk1XGdoLtwqT1vr-h5ZXQMv0D1X5S9dT7IUjRBpry1mdNvdSRSDMH2YCb_o91w6eVRAN_JJC1qEm7bub7UF6Jak-S_RSKqOBCfyGQIbjVXPGnPLxR3ipGhtHiBF93AOzAAjW83QRHf7Y7HRc-a9xFT9GCtbp1D_y5qNJatRfFu5LADtQe3RVyYrZcqZiRM6PbxJwxdrlbFzVpGSzP9VmjIEYUPFY7niAKNsybWXhtWNjQIv7xCfP1LdHp2r3PagfV3ux6hdCOkpN8kL85CYNvoz-j9_mFWA1VbM5j6bC9LcXolDwFCKsLvfjMa8FMuH67-pg81Er5IRYzsK4jp0UPuflOh5Zg9NJYsYjQcGnwwOh4_hcSyUIbZ9w5i9Uj6dKasfEu1eEmcf-KXFcy4OALBSSHMfEZaBLY_bLwyaaNhBBEEQQ6Bfl1jbmdr0msCJGKIFs4TKG9ICM2Zc9WOkPgvqyugzVvYHqGtXTOIvk9YMHkcLVDW7m0Z-28T2pyRazjPXbgp389WsAsFv3bM6yCFSuJEiQ"
-
-        // fetch("http://localhost:8080/api/recipes", {
-        //     headers: { Authorization: `Bearer ${token}` }
-        // })
-        //     .then(resp => resp.json())
-        //     .then(json => console.log(json))
-
+        if (!OpenAPI.TOKEN)
+            return;
 
         RecipesService.getRecipes()
             .then((result: RecipesGetResponse) => {
-                // console.log(result)
-                if (!result?.data)
+                if (!result?.data || result?.data.length == 0)
                     return;
 
-                setRecipes(result.data)
-                setDisplayRecipes(result.data)
-                loadTags(result.data)
-
+                const sortedData = result.data.sort((a, b) => (b.id || 0) - (a.id || 0))
+                setRecipes(sortedData)
+                setDisplayRecipes(sortedData)
+                loadTags(sortedData)
+                setSelectedRecipe(sortedData[0])
             })
-            .catch(() => {
-                //  console.log(err)
-            })
-
+            .catch(() => { })
     }, [])
+
+    useEffect(() => {
+        refreshFilters()
+
+    }, [filterSearchName, filterDifficultyLevel, filterTime, filterEnergy, filterTags])
+
     return (
         <>
             <RecipeListHeader
-                onSearchSubmit={handleSearchData}
+                onSearchSubmit={handleSearchName}
                 onSelectRecipeSubmit={handleSelectRecipe}
                 mode={mode}
             />
@@ -156,3 +126,49 @@ const RecipeList = ({ mode, onAccept }: RecipeListInterface) => {
 }
 
 export default RecipeList
+
+
+const filterByDifficultyLevel = (recipes: Array<RecipeGetResponse>, levels: DifficultyLevel[]): Array<RecipeGetResponse> => {
+    return recipes.filter((recipe: RecipeGetResponse) => {
+        return recipe.difficultyLevel != undefined && levels.indexOf(recipe.difficultyLevel) > -1;
+    });
+}
+
+const filterByTime = (recipes: Array<RecipeGetResponse>, min: number, max: number): Array<RecipeGetResponse> => {
+    return recipes.filter((recipe: RecipeGetResponse) => recipe.time && recipe.time >= min && recipe.time <= max);
+}
+
+const filterByEnergy = (recipes: Array<RecipeGetResponse>, min: number, max: number): Array<RecipeGetResponse> => {
+    return recipes.filter((recipe: RecipeGetResponse) => recipe.calories && recipe.calories >= min && recipe.calories <= max);
+}
+
+const filterByName = (recipes: Array<RecipeGetResponse>, searchValue: string): Array<RecipeGetResponse> => {
+    return recipes.filter((recipe: RecipeGetResponse) => recipe.title && recipe.title.toLowerCase().includes(searchValue.toLowerCase()));
+}
+
+const filterByTags = (recipes: Array<RecipeGetResponse>, tags: string[]): Array<RecipeGetResponse> => {
+    return recipes.filter((recipe: RecipeGetResponse) => recipe.tags && recipeHasOneOfTags(recipe, tags))
+}
+
+const recipeHasOneOfTags = (recipe: RecipeGetResponse, selectedTagNames: string[]): boolean => {
+    if (recipe.tags && recipe.tags.length > 0) {
+        const tagNames = recipe.tags.map((t) => t.name);
+        return tagNames.some((tag) => tag && selectedTagNames.includes(tag));
+    }
+
+    return false;
+}
+
+const collectUniqueTags = (recipes: RecipeGetResponse[]): string[] => {
+    const allTags: Set<string> = new Set<string>();
+
+    recipes.forEach(recipe => {
+        if (recipe.tags) {
+            recipe.tags.forEach(tag => {
+                allTags.add(tag.name || "")
+            });
+        }
+    });
+
+    return Array.from(allTags);
+}
