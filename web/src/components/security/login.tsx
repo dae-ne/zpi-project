@@ -15,6 +15,8 @@ import Link from '@mui/material/Link';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import { fitAlertShort } from "../../tools/fit-alert";
+
 
 const LoginPage = () => {
     const [login, setLogin] = useState<string>("")
@@ -35,6 +37,7 @@ const LoginPage = () => {
             setErrorMessage("")
             handleLoginSuccess(response)
         }).catch(() => {
+            fitAlertShort("Wrong password or email", "error")
             setErrorMessage("Wrong password or email")
         })
     };

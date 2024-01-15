@@ -7,6 +7,7 @@ import Grid from "@mui/material/Grid"
 import { DateTimePicker } from "@mui/x-date-pickers"
 import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment"
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider"
+import { fitAlert } from "../../tools/fit-alert"
 
 const GroceryList = () => {
     const [dateFrom, setDateFrom] = useState<Moment | null>(moment(new Date()).startOf('day'))
@@ -14,15 +15,20 @@ const GroceryList = () => {
     const [ingredients, setIngredients] = useState<Array<ListGetIngredientDto>>([])
 
     const handleSendList = () => {
+        if (!ingredients || ingredients.length == 0) {
+            fitAlert("Error", "Shopping list is empty", "error");
+            return;
+        }
         const list: SendEmailWithListRequest = {
             ingredientIds: ingredients.map(ingr => ingr.id || 0)
         }
+
         ListsService.sendEmailWithList(list)
             .then(() => {
-                alert("pomyślnie wsyłano listę na adres mailowy")
+                fitAlert("Success", "The shopping list has been successfully sent to your email address", "success");
             })
             .catch(() => {
-                alert("bląd z pobraniem")
+                fitAlert("Error", "Error during action", "error");
             })
     }
 

@@ -11,6 +11,7 @@ import {
     RecipesService
 } from "@dietly/sdk"
 import Grid from "@mui/material/Grid"
+import { fitAlert } from "../../../tools/fit-alert"
 
 export enum Mode {
     Edit,
@@ -60,7 +61,7 @@ const RecipeEdit = () => {
 
     const addRecipe = async () => {
         if (!imageFile) {
-            alert("No selected image");
+            fitAlert("Validation error", "No selected image", "error");
             return;
         }
 
@@ -78,11 +79,11 @@ const RecipeEdit = () => {
 
         RecipesService.createRecipe(recipe)
             .then(() => {
-                alert("Recipe has been created.")
-                navigate(RECIPE_LIST)
+                fitAlert("Success", "Recipe successfully created", "success");
+                setTimeout(() => navigate(RECIPE_LIST), 1000)
             })
             .catch(() => {
-                alert("Not all fields was fulfilled")
+                fitAlert("Validation error", "Not all fields was fulfilled", "error");
             })
     }
 
@@ -110,11 +111,11 @@ const RecipeEdit = () => {
 
         RecipesService.updateRecipe(recipeId, recipe)
             .then(() => {
-                alert("pomyślnie zapisano przepis")
-                navigate(RECIPE_PREVIEW_RAW + recipeId)
-            }).catch((err) => {
-                //tu jest błąd - 500, ale łatwno go ukryć, bo występuje tylko jak obiekt nie uległ zmianie - więc mozna udawać że tak miało być :D
-                alert("przepis nie uległ zmianie")
+                fitAlert("Success", "Recipe successfully saved", "success");
+                setTimeout(() => navigate(RECIPE_PREVIEW_RAW + recipeId), 1000)
+            }).catch(() => {
+                //tu jest błąd - 500, ale łatwno go ukryć, bo występuje tylko jak obiekt nie uległ zmianie - więc mozna udawać że tak miało być :D            
+                fitAlert("Error", "Recipe has not changed. Change recipie data to save", "error");
             })
     }
 

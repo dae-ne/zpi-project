@@ -5,6 +5,8 @@ import EditIcon from '@mui/icons-material/Edit';
 import { getDifficultyName } from "../../../tools/enums";
 import { DifficultyLevel, RecipePostTagDto, RecipesService } from "@dietly/sdk";
 import DeleteIcon from '@mui/icons-material/Delete';
+import swal from "sweetalert";
+import { fitAlert } from "../../../tools/fit-alert";
 
 interface RecipePreviewStatsInterface {
     difficultyLevel: DifficultyLevel,
@@ -30,11 +32,10 @@ const RecipePreviewStats = ({ difficultyLevel, time, calories, tags }: RecipePre
 
         RecipesService.removeRecipe(parseInt(params.id))
             .then(() => {
-                alert("pomyślnie usunięto")
-                navigate(RECIPE_EDIT_RAW)
-
+                fitAlert("Success", "Recipe successfully removed", "success")
+                setTimeout(() => navigate(RECIPE_EDIT_RAW), 1000)
             }).catch(() => {
-                alert("wystapił błąd podczas usuwania")
+                fitAlert("Success", "Error during removing recipe", "error")
             })
     }
 

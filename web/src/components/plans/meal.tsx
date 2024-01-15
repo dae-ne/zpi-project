@@ -6,6 +6,7 @@ import { Box } from "@mui/material"
 import DeleteIcon from '@mui/icons-material/Delete';
 import CheckIcon from '@mui/icons-material/Check';
 import RemoveIcon from '@mui/icons-material/Remove';
+import { fitAlert } from "../../tools/fit-alert";
 
 const MAX_DESCRIPTION_LENGTH: number = 180
 interface MealInterface {
@@ -28,11 +29,12 @@ const Meal = ({ data, onReload }: MealInterface) => {
         }
         MealsService.updateMeal(data?.id, commitMealData)
             .then(() => {
+                fitAlert("Success", "Meal status successfully updated", "success");
                 setMealCompleted(value => !value)
                 onReload()
             })
             .catch(() => {
-                alert("bład")
+                fitAlert("Error", "Meal status has not been updated", "error");
             })
     }
 
@@ -41,6 +43,7 @@ const Meal = ({ data, onReload }: MealInterface) => {
 
         MealsService.removeMeal(data.id)
             .then(() => {
+                fitAlert("Success", "Meal successfully removed", "success");
                 onReload()
             })
     }
