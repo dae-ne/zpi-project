@@ -83,7 +83,7 @@ jobs:
         run: |
           unzip -o ./efbundle/efbundle.zip
           echo '{ "ConnectionStrings": { "DefaultConnection": "" } }' > appsettings.json
-          ./efbundle --connection ${{ steps.connection-string.outputs.[inputs.db-connection-string-secret-name] }} --verbose
+          ./efbundle --connection ${{ steps.connection-string.outputs[inputs.db-connection-string-secret-name] }} --verbose
 
       - name: Logout via Azure CLI
         run: az logout
