@@ -13,4 +13,6 @@ internal sealed class EmailOptions
     public string AppEmail { get; init; } = null!;
 
     public string Password { get; init; } = null!;
+
+    public string LogoUrl { get; init; } = null!;
 }

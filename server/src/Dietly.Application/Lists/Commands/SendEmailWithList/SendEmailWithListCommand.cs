@@ -1,4 +1,5 @@
-﻿using Dietly.Application.Common.Results;
+﻿using Dietly.Application.Common.Enums;
+using Dietly.Application.Common.Results;
 
 namespace Dietly.Application.Lists.Commands.SendEmailWithList;
 
@@ -34,7 +35,7 @@ internal sealed class SendEmailWithListCommandHandler(
             .ToList();
 
         var message = string.Join("\n", listElements);
-        await emailService.SendAsync(user.Email, "Shopping list", message);
+        await emailService.SendAsync(user.Email, "Grocery list", message, EmailTemplate.GroceryList);
         return Unit.Value;
     }
 }
