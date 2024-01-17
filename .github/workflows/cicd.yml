@@ -6,11 +6,19 @@ on:
       - main
   workflow_dispatch:
 
+env:
+  INFRA_ARTIFACT_NAME: infra
+  SERVER_ARTIFACT_NAME: server
+  WEB_ARTIFACT_NAME: web
+
 jobs:
   build:
     uses: ./.github/workflows/build.yml
     with:
       build-artifacts: true
+      infra-artifact-name: ${{ env.INFRA_ARTIFACT_NAME }}
+      server-artifact-name: ${{ env.SERVER_ARTIFACT_NAME }}
+      web-artifact-name: ${{ env.WEB_ARTIFACT_NAME }}
 
   deploy-staging:
     uses: ./.github/workflows/deploy.yml
@@ -20,3 +28,6 @@ jobs:
       environment: Staging
       bicep-path: infra/main.bicep
       bicep-parameters-path: infra/parameters.stage.json
+      infra-artifact-name: ${{ env.INFRA_ARTIFACT_NAME }}
+      server-artifact-name: ${{ env.SERVER_ARTIFACT_NAME }}
+      web-artifact-name: ${{ env.WEB_ARTIFACT_NAME }}

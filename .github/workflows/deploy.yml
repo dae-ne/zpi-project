@@ -61,7 +61,7 @@ jobs:
       - name: Deploy server
         uses: azure/webapps-deploy@v2
         with:
-          app-name: ${{ steps.deploy.outputs.appServiceName }}
+          app-name: ${{ steps.arm-deploy.outputs.appServiceName }}
           package: ${{ inputs.server-artifact-name }}
       - name: Logout via Azure CLI
         run: az logout
