@@ -10,18 +10,6 @@ on:
         type: boolean
         required: true
         default: false
-      infra-artifact-name:
-        type: string
-        required: false
-        default: infra
-      server-artifact-name:
-        type: string
-        required: false
-        default: server
-      web-artifact-name:
-        type: string
-        required: false
-        default: web
   workflow_dispatch:
 
 jobs:
@@ -34,7 +22,7 @@ jobs:
       - name: Upload an ARM template artifact
         uses: actions/upload-artifact@v4
         with:
-          name: {{ inputs.infra-artifact-name }}
+          name: infra
           path: infra/azure/**
           if-no-files-found: error
 
@@ -61,7 +49,7 @@ jobs:
         if: ${{ inputs.build-artifacts == true }}
         uses: actions/upload-artifact@v4
         with:
-          name: {{ inputs.server-artifact-name }}
+          name: server
           path: server/output/**
           if-no-files-found: error
 
@@ -84,6 +72,6 @@ jobs:
         if: ${{ inputs.build-artifacts == true }}
         uses: actions/upload-artifact@v4
         with:
-          name: {{ inputs.web-artifact-name }}
+          name: web
           path: web/build/**
           if-no-files-found: error
