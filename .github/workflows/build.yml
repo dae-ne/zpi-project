@@ -4,12 +4,14 @@ on:
   pull_request:
     branches:
       - main
+
   workflow_call:
     inputs:
       build-artifacts:
         type: boolean
         required: true
         default: false
+
   workflow_dispatch:
 
 jobs:
@@ -18,11 +20,13 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+
       # TODO: validate bicep
+
       - name: Upload an ARM template artifact
         uses: actions/upload-artifact@v4
         with:
-          name: infra
+          name: deploy_infra
           path: infra/azure/**
           if-no-files-found: error
 
@@ -31,26 +35,55 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
+
       - name: Restore dependencies
         working-directory: server
         run: dotnet restore
+
       - name: Build
         working-directory: server
         run: dotnet build --no-restore --configuration Release
+
       - name: Test
         working-directory: server
         run: dotnet test --no-build --configuration Release --verbosity normal
+
       - name: Publish
-        working-directory: server
+        working-directory: server/src/Dietly.WebApi
         run: dotnet publish ${{ inputs.project-path }} --configuration Release --output output
+
       - name: Upload a build artifact
         if: ${{ inputs.build-artifacts == true }}
         uses: actions/upload-artifact@v4
         with:
-          name: server
-          path: server/output/**
+          name: deploy_server
+          path: server/src/Dietly.WebApi/output/**
+          if-no-files-found: error
+
+      - name: Create EF Core migrations bundle
+        if: ${{ inputs.build-artifacts == true }}
+        working-directory: server
+        run: |
+          dotnet new tool-manifest
+          dotnet tool install dotnet-ef
+          dotnet ef migrations bundle \
+            -o efbundle \
+            -c AppDbContext \
+            -p src/Dietly.Infrastructure/ \
+            -s src/Dielty.WebApi/ \
+            --configuration Release \
+            --no-build
+          zip -r ./efbundle.zip efbundle
+
+      - name: Upload EF Core migrations bundle artifact (efbundle)
+        if: ${{ inputs.build-artifacts == true }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: efbundle
+          path: ./efbundle.zip
           if-no-files-found: error
 
   build-web:
@@ -58,20 +91,25 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
           node-version: '18'
+
       - name: Install dependencies
         run: npm install
+
       - name: Test
         run: npm run test
+
       - name: Build
         run: npm run build
+
       - name: Upload a build artifact
         if: ${{ inputs.build-artifacts == true }}
         uses: actions/upload-artifact@v4
         with:
-          name: web
+          name: deploy_web
           path: web/build/**
           if-no-files-found: error

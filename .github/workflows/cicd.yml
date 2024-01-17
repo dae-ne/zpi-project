@@ -18,5 +18,7 @@ jobs:
     needs: build
     with:
       environment: Staging
-      bicep-path: infra/main.bicep
-      bicep-parameters-path: infra/parameters.stage.json
+      bicep-path: deploy_infra/main.bicep
+      bicep-parameters-path: deploy_infra/parameters.stage.json
+      az-kv-name: kv-dietly-stage
+      db-connection-string-secret-name: ConnectionStrings-DefaultDb

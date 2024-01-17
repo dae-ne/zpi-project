@@ -6,49 +6,38 @@ on:
       environment:
         type: string
         required: true
+
       bicep-path:
         type: string
         required: true
+
       bicep-parameters-path:
         type: string
         required: true
-      infra-artifact-name:
+
+      az-kv-name:
         type: string
-        required: false
-        default: infra
-      server-artifact-name:
+        required: true
+
+      db-connection-string-secret-name:
         type: string
-        required: false
-        default: server
-      web-artifact-name:
-        type: string
-        required: false
-        default: web
+        required: true
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     environment: ${{ inputs.environment }}
     steps:
-      - name: Download an infra artifact
+      - name: Download artifacts
         uses: actions/download-artifact@v4
         with:
-          name: ${{ inputs.infra-artifact-name }}
-          path: ${{ inputs.infra-artifact-name }}
-      - name: Download a server artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: ${{ inputs.server-artifact-name }}
-          path: ${{ inputs.server-artifact-name }}
-      - name: Download a web artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: ${{ inputs.web-artifact-name }}
-          path: ${{ inputs.web-artifact-name }}
+          pattern: deploy_*
+
       - name: Login via Azure CLI
         uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
+
       - name: Deploy bicep
         uses: azure/arm-deploy@v1
         id: arm-deploy
@@ -58,10 +47,40 @@ jobs:
           template: ${{ inputs.bicep-path }}
           parameters: ${{ inputs.bicep-parameters-path }}
           failOnStdErr: false
+
       - name: Deploy server
         uses: azure/webapps-deploy@v2
         with:
           app-name: ${{ steps.arm-deploy.outputs.appServiceName }}
-          package: ${{ inputs.server-artifact-name }}
+          package: deploy_server
+
       - name: Logout via Azure CLI
         run: az logout
+
+  update-database:
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+    steps:
+      - name: Download efbundle artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: efbundle
+          path: efbundle
+
+      - name: Login via Azure CLI
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Get db connection string
+        id: connection-string
+        uses: azure/get-keyvault-secrets@v1
+        with:
+          keyvault: ${{ inputs.az-kv-name }}
+          secrets: ${{ inputs.db-connection-string-secret-name }}
+
+      - name: Run ef database update
+        run: |
+        unzip -o ./efbundle/efbundle.zip
+        echo '{ "ConnectionStrings": { "DefaultConnection": "" } }' > appsettings.json
+        ./efbundle --connection ${{ steps.connection-string.outputs.${{ inputs.db-connection-string-secret-name }} }} --verbose
