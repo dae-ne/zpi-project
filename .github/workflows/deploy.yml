@@ -1,0 +1,67 @@
+name: Deploy
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        type: string
+        required: true
+      bicep-path:
+        type: string
+        required: true
+      bicep-parameters-path:
+        type: string
+        required: true
+      infra-artifact-name:
+        type: string
+        required: false
+        default: infra
+      server-artifact-name:
+        type: string
+        required: false
+        default: server
+      web-artifact-name:
+        type: string
+        required: false
+        default: web
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+    steps:
+      - name: Download an infra artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ inputs.infra-artifact-name }}
+          path: ${{ inputs.infra-artifact-name }}
+      - name: Download a server artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ inputs.server-artifact-name }}
+          path: ${{ inputs.server-artifact-name }}
+      - name: Download a web artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ inputs.web-artifact-name }}
+          path: ${{ inputs.web-artifact-name }}
+      - name: Login via Azure CLI
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+      - name: Deploy bicep
+        uses: azure/arm-deploy@v1
+        id: arm-deploy
+        with:
+          subscriptionId: ${{ vars.AZURE_SUBSCRIPTION }}
+          resourceGroupName: ${{ vars.AZURE_RG }}
+          template: ${{ inputs.bicep-path }}
+          parameters: ${{ inputs.bicep-parameters-path }}
+          failOnStdErr: false
+      - name: Deploy server
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: ${{ steps.deploy.outputs.appServiceName }}
+          package: ${{ inputs.server-artifact-name }}
+      - name: Logout via Azure CLI
+        run: az logout

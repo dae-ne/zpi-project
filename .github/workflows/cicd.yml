@@ -1,0 +1,22 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    uses: ./.github/workflows/build.yml
+    with:
+      build-artifacts: true
+
+  deploy-staging:
+    uses: ./.github/workflows/deploy.yml
+    secrets: inherit
+    needs: build
+    with:
+      environment: Staging
+      bicep-path: infra/main.bicep
+      bicep-parameters-path: infra/parameters.stage.json
