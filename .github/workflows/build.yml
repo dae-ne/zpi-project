@@ -84,7 +84,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: efbundle
-          path: ./efbundle.zip
+          path: server/efbundle.zip
           if-no-files-found: error
 
   build-web:
