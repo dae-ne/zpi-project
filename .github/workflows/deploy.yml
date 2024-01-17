@@ -53,8 +53,8 @@ jobs:
         uses: azure/arm-deploy@v1
         id: arm-deploy
         with:
-          subscriptionId: ${{ vars.AZURE_SUBSCRIPTION }}
-          resourceGroupName: ${{ vars.AZURE_RG }}
+          subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
+          resourceGroupName: ${{ secrets.AZURE_RG }}
           template: ${{ inputs.bicep-path }}
           parameters: ${{ inputs.bicep-parameters-path }}
           failOnStdErr: false
