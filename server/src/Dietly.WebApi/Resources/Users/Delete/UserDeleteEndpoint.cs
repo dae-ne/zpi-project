@@ -22,6 +22,6 @@ public sealed class UserDeleteEndpoint(IMediator mediator, CurrentUser currentUs
 
         var command = new RemoveUserCommand(userId);
         var result = await mediator.Send(command);
-        return result.Match(Results.Ok, HandleError);
+        return result.Match(_ => Results.Ok(), HandleError);
     }
 }
