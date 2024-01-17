@@ -67,7 +67,6 @@ jobs:
         if: ${{ inputs.build-artifacts == true }}
         working-directory: server
         run: |
-          dotnet new tool-manifest
           dotnet tool install dotnet-ef
           dotnet ef migrations bundle \
             -o efbundle \
