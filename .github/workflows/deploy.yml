@@ -81,6 +81,6 @@ jobs:
 
       - name: Run ef database update
         run: |
-        unzip -o ./efbundle/efbundle.zip
-        echo '{ "ConnectionStrings": { "DefaultConnection": "" } }' > appsettings.json
-        ./efbundle --connection ${{ steps.connection-string.outputs.${{ inputs.db-connection-string-secret-name }} }} --verbose
+          unzip -o ./efbundle/efbundle.zip
+          echo '{ "ConnectionStrings": { "DefaultConnection": "" } }' > appsettings.json
+          ./efbundle --connection ${{ steps.connection-string.outputs.${{ inputs.db-connection-string-secret-name }} }} --verbose
