@@ -12,6 +12,14 @@ param imageContainerName string
 
 param location string = resourceGroup().location
 
+var defaultDbConnectionStringSecretName = 'ConnectionStrings-DefaultDb'
+var emailPasswordSecretName = 'Email-Password'
+
+// kv references don't work (probably because of the free tier)
+resource keyVault 'Microsoft.KeyVault/vaults@2023-07-01' existing = {
+  name: keyVaultName
+}
+
 module storageAccount 'modules/storageAccount.bicep' = {
   name: 'storageAccountDeployment'
   params: {
@@ -26,7 +34,6 @@ module appService 'modules/appService.bicep' = {
     name: appServiceName
     serverFarmName: appServicePlanName
     storageAccountName: storageAccount.outputs.storageAccountName
-    keyVaultName: keyVaultName
     emailHost: emailHost
     emailPort: emailPort
     emailUsername: emailUsername
@@ -34,6 +41,8 @@ module appService 'modules/appService.bicep' = {
     logoUrl: logoUrl
     avatarContainerName: avatarContainerName
     imageContainerName: imageContainerName
+    emailPassword: keyVault.getSecret(emailPasswordSecretName)
+    defaultDbConnectionString: keyVault.getSecret(defaultDbConnectionStringSecretName)
     location: location
   }
 }

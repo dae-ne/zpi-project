@@ -1,7 +1,6 @@
 param name string
 param serverFarmName string
 param storageAccountName string
-param keyVaultName string
 param emailHost string
 param emailPort string
 param emailUsername string
@@ -11,8 +10,11 @@ param avatarContainerName string
 param imageContainerName string
 param location string
 
-var defaultDbConnectionStringSecretName = 'ConnectionStrings-DefaultDb'
-var emailPasswordSecretName = 'Email-Password'
+@secure()
+param emailPassword string
+
+@secure()
+param defaultDbConnectionString string
 
 resource storageAccount 'Microsoft.Storage/storageAccounts@2023-01-01' existing = {
   name: storageAccountName
@@ -52,7 +54,7 @@ resource appService 'Microsoft.Web/sites@2023-01-01' = {
         }
         {
           name: 'Email:Password'
-          value: '@Microsoft.KeyVault(VaultName=${keyVaultName};SecretName=${emailPasswordSecretName})'
+          value: emailPassword
         }
         {
           name: 'Email:LogoUrl'
@@ -70,7 +72,7 @@ resource appService 'Microsoft.Web/sites@2023-01-01' = {
       connectionStrings: [
         {
           name: 'DefaultDB'
-          connectionString: '@Microsoft.KeyVault(VaultName=${keyVaultName};SecretName=${defaultDbConnectionStringSecretName})'
+          connectionString: defaultDbConnectionString
           type: 'PostgreSQL'
         }
         {
