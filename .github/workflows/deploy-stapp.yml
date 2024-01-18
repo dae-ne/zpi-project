@@ -29,6 +29,9 @@ jobs:
       - name: Set server url base env
         run: echo "REACT_APP_SERVICE_URL=${{ secrets.SERVER_BASE_URL }}" >> $GITHUB_ENV
 
+      - name: Set server url base env
+        run: echo "REACT_APP_PUBLIC_URL=zpi-project" >> $GITHUB_ENV
+
       - name: Install dependencies
         run: npm install
 
