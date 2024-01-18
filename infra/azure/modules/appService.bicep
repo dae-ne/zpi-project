@@ -65,8 +65,8 @@ resource appService 'Microsoft.Web/sites@2023-01-01' = {
       connectionStrings: [
         {
           name: 'DefaultDB'
-          connectionString: '@Microsoft.KeyVault(SecretUri=https://${keyVaultName}.vault.azure.net/secrets/${defaultDbConnectionStringSecretName})'
-          type: 'Custom'
+          connectionString: '@Microsoft.KeyVault(VaultName=${keyVaultName};SecretName=${defaultDbConnectionStringSecretName})'
+          type: 'PostgreSQL'
         }
         {
           name: 'ImageStorage'
