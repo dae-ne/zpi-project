@@ -73,7 +73,7 @@ resource appService 'Microsoft.Web/sites@2023-01-01' = {
         {
           name: 'DefaultDB'
           connectionString: defaultDbConnectionString
-          type: 'PostgreSQL'
+          type: 'Custom'
         }
         {
           name: 'ImageStorage'
