@@ -2,7 +2,7 @@ import "./variables.scss"
 import './index.scss';
 
 import React, { useEffect } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { HashRouter, Routes, Route } from 'react-router-dom';
 import { GroceryList, LoginPage, PlansList, RecipeEdit, RecipeList, RecipePreview, RegisterPage, Navigation } from "./components";
 
 import ProtectedRoute from "./route/ProtectedRoute";
@@ -52,7 +52,7 @@ const App = () => {
   return (
     <ThemeProvider theme={appTheme}>
 
-      <BrowserRouter>
+      <HashRouter>
         <Routes>
 
           <Route path={EMPTY} element={<NoProtectedRoute><LoginPage /></NoProtectedRoute>} />
@@ -77,7 +77,7 @@ const App = () => {
           </Route>
 
         </Routes>
-      </BrowserRouter >
+      </HashRouter >
 
     </ThemeProvider>)
 }
