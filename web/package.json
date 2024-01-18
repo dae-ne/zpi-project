@@ -2,7 +2,7 @@
   "name": "@dietly/web",
   "version": "0.1.0",
   "private": true,
-  "homepage": ".",
+  "homepage": "https://dae-ne.github.io/zpi-project",
   "dependencies": {
     "@dietly/sdk": "*",
     "@emotion/react": "^11.11.1",
