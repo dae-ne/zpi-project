@@ -23,13 +23,13 @@ jobs:
       az-kv-name: kv-dietly-stage
       db-connection-string-secret-name: ConnectionStrings-DefaultDb
 
-  deploy-stapp-staging:
-    uses: ./.github/workflows/deploy-stapp.yml
-    secrets: inherit
-    needs: build
-    permissions:
-      contents: read
-      pages: write
-      id-token: write
-    with:
-      environment: Staging
+  # deploy-stapp-staging:
+  #   uses: ./.github/workflows/deploy-stapp.yml
+  #   secrets: inherit
+  #   needs: build
+  #   permissions:
+  #     contents: read
+  #     pages: write
+  #     id-token: write
+  #   with:
+  #     environment: Staging
