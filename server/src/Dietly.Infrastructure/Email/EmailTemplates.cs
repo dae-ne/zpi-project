@@ -55,7 +55,8 @@ internal static class EmailTemplates
                 background-color: #fff;
                 margin: 16px auto;
                 padding: 24px;
-                border-radius: 8px;'
+                border-radius: 8px;
+                text-align: center;'
             >
                 <h1 style='font-size: 24px'>Hello</h1>
                 <p style='margin-top: 16px'>Here is your grocery list:</p>
