@@ -22,3 +22,10 @@ jobs:
       bicep-parameters-path: deploy_infra/parameters.stage.json
       az-kv-name: kv-dietly-stage
       db-connection-string-secret-name: ConnectionStrings-DefaultDb
+
+  deploy-stapp-staging:
+    uses: ./github/workflows/deploy-stapp.yml
+    secrets: inherit
+    needs: build
+    with:
+      environment: Staging

@@ -87,7 +87,7 @@ jobs:
           path: server/efbundle.zip
           if-no-files-found: error
 
-  build-web:
+  test-web:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -106,11 +106,3 @@ jobs:
 
       - name: Build
         run: npm run build
-
-      - name: Upload a build artifact
-        if: ${{ inputs.build-artifacts == true }}
-        uses: actions/upload-artifact@v4
-        with:
-          name: deploy_web
-          path: web/build/**
-          if-no-files-found: error
