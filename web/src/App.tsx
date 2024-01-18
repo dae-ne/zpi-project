@@ -52,7 +52,7 @@ const App = () => {
   return (
     <ThemeProvider theme={appTheme}>
 
-      <BrowserRouter basename={process.env.REACT_APP_PUBLIC_URL}>
+      <BrowserRouter>
         <Routes>
 
           <Route path={EMPTY} element={<NoProtectedRoute><LoginPage /></NoProtectedRoute>} />
