@@ -29,7 +29,7 @@ const App = () => {
   }
 
   useEffect(() => {
-    OpenAPI.BASE = SERVICE_URL
+    OpenAPI.BASE = process.env.REACT_APP_SERVICE_URL ?? SERVICE_URL
 
     const { accessToken, refreshToken } = getSecurityCookies()
     if (!refreshToken) return;

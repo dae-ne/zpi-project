@@ -24,7 +24,6 @@ services:
       - 8080:8080
     depends_on:
       - azurite
-      - postgres
 
   node:
     container_name: node

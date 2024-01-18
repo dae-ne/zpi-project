@@ -15,8 +15,8 @@ RUN dotnet build -c $BUILD_CONFIGURATION
 RUN dotnet ef migrations bundle \
   -o efbundle \
   -c AppDbContext \
-  -p src/Dietly.Infrastructure/Dietly.Infrastructure.csproj \
-  -s src/Dietly.WebApi/Dietly.WebApi.csproj \
+  -p src/Dietly.Infrastructure/ \
+  -s src/Dietly.WebApi/ \
   --configuration $BUILD_CONFIGURATION \
   --no-build
 WORKDIR "/src/src/Dietly.WebApi"

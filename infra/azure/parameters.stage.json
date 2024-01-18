@@ -10,6 +10,30 @@
     },
     "appServiceName": {
       "value": "app-dietly-stage"
+    },
+    "keyVaultName": {
+      "value": "kv-dietly-stage"
+    },
+    "emailHost": {
+      "value": "smtp.gmail.com"
+    },
+    "emailPort": {
+      "value": "587"
+    },
+    "emailUsername": {
+      "value": "Dietly"
+    },
+    "emailAddress": {
+      "value": "rafalcz29@gmail.com"
+    },
+    "logoUrl": {
+      "value": "https://app-dietly-stage.azurewebsites.net/images/logo.png"
+    },
+    "avatarContainerName": {
+      "value": "avatars"
+    },
+    "imageContainerName": {
+      "value": "food-images"
     }
   }
 }
