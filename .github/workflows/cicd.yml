@@ -24,7 +24,7 @@ jobs:
       db-connection-string-secret-name: ConnectionStrings-DefaultDb
 
   deploy-stapp-staging:
-    uses: ./github/workflows/deploy-stapp.yml
+    uses: ./.github/workflows/deploy-stapp.yml
     secrets: inherit
     needs: build
     with:
