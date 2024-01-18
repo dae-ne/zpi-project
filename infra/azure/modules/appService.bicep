@@ -12,6 +12,7 @@ param imageContainerName string
 param location string
 
 var defaultDbConnectionStringSecretName = 'ConnectionStrings-DefaultDb'
+var emailPasswordSecretName = 'Email-Password'
 
 resource storageAccount 'Microsoft.Storage/storageAccounts@2023-01-01' existing = {
   name: storageAccountName
@@ -48,6 +49,10 @@ resource appService 'Microsoft.Web/sites@2023-01-01' = {
         {
           name: 'Email:Address'
           value: emailAddress
+        }
+        {
+          name: 'Email:Password'
+          value: '@Microsoft.KeyVault(VaultName=${keyVaultName};SecretName=${emailPasswordSecretName})'
         }
         {
           name: 'Email:LogoUrl'
