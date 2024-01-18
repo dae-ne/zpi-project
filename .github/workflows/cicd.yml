@@ -27,5 +27,9 @@ jobs:
     uses: ./.github/workflows/deploy-stapp.yml
     secrets: inherit
     needs: build
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
     with:
       environment: Staging
