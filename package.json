@@ -1,6 +1,7 @@
 {
   "name": "@dietly/root",
   "private": true,
+  "homepage": "https://dae-ne.github.io/zpi-project",
   "scripts": {
     "start": "turbo run start",
     "build": "turbo run build",
