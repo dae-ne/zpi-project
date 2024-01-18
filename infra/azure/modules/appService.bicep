@@ -49,7 +49,7 @@ resource appService 'Microsoft.Web/sites@2023-01-01' = {
           value: emailUsername
         }
         {
-          name: 'Email:Address'
+          name: 'Email:AppEmail'
           value: emailAddress
         }
         {
