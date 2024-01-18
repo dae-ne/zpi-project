@@ -52,7 +52,7 @@ const App = () => {
   return (
     <ThemeProvider theme={appTheme}>
 
-      <HashRouter>
+      <HashRouter basename={process.env.REACT_APP_PUBLIC_URL}>
         <Routes>
 
           <Route path={EMPTY} element={<NoProtectedRoute><LoginPage /></NoProtectedRoute>} />
