@@ -72,18 +72,18 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: Get db connection string
+      - name: Get DB connection string
         id: connection-string
-        uses: azure/get-keyvault-secrets@v1
+        uses: azure/CLI@v1
         with:
-          keyvault: ${{ inputs.az-kv-name }}
-          secrets: ${{ inputs.db-connection-string-secret-name }}
+          inlineScript: |
+            echo dbcs=$(az keyvault secret show --vault-name ${{ inputs.az-kv-name }} --name ${{ inputs.db-connection-string-secret-name }} --query value) >> $GITHUB_ENV
 
       - name: Run ef database update
         run: |
           unzip -o ./efbundle/efbundle.zip
           echo '{ "ConnectionStrings": { "DefaultConnection": "" } }' > appsettings.json
-          ./efbundle.exe --connection ${{ steps.connection-string.outputs[inputs.db-connection-string-secret-name] }} --verbose
+          ./efbundle.exe --connection ${{ env.dbcs }} --verbose
 
       - name: Logout via Azure CLI
         run: az logout
