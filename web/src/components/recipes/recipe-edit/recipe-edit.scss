@@ -114,3 +114,27 @@
 .recipe-no-arraydata {
     margin: 10px 0;
 }
+
+.recipe-edit-icon-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .recipe-edit-icon-wrapper {
+        .MuiSvgIcon-root {
+            color: #CDCDCD;
+            transition: color 0.2s ease-in-out;
+        }
+    }
+
+    .recipe-edit-icon-wrapper:hover {
+        .MuiSvgIcon-root[data-testid="ExpandLessIcon"],
+        .MuiSvgIcon-root[data-testid="ExpandMoreIcon"] {
+            color: $main-color;
+        }
+
+        .MuiSvgIcon-root[data-testid="DeleteIcon"] {
+            color: $delete-color;
+        }
+    }
+}
