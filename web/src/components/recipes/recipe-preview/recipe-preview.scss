@@ -2,8 +2,8 @@
 
 
 .recipe-stat-info {
-    margin: 2em;
-    padding: 1em;
+    margin: 2em 0 2em 2em;
+    padding: 1em 0 1em 2em;
 }
 
 .recipe-preview-info-grid {
@@ -64,7 +64,7 @@
 
 .recipie-preview-info-tags {
     background-color: white;
-    margin: 2em;
+    margin: 2em 0 2em 2em;
     padding: 1em;
     display: flex;
     flex-direction: column;
@@ -83,10 +83,9 @@
 .recipe-edit-button-wrapper {
     display: flex;
     justify-content: flex-end;
-    margin-right: 2em;
 
     .delete-button {
-        background-color: red;
+        background-color: $delete-color;
         margin-left: 1em;
     }
 }

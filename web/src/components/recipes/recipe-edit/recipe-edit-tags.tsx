@@ -22,8 +22,10 @@ const RecipeEditTags = ({ data, onDataChange }: RecipeEditDataInterface<RecipePo
                             <li className="recipe-ingridient recipe-ingridient-edit" key={"ingr" + index}>
                                 <div className="recipe-ingridient-label">{tag.name}
                                 </div>
-                                <div className="recipe-ingridient-icons">
-                                    <DeleteIcon onClick={() => handleDelete(index)} />
+                                <div className="recipe-edit-icon-group">
+                                    <div className="recipe-edit-icon-wrapper">
+                                        <DeleteIcon onClick={() => handleDelete(index)} />
+                                    </div>
                                 </div>
                             </li>
                         )

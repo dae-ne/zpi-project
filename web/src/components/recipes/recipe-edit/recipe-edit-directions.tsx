@@ -45,10 +45,16 @@ const RecipeEditDirections = ({ data, onDataChange }: RecipeEditDataInterface<Re
                                 <div key={"direc" + index}>
                                     <div className="recipe-direction-header recipe-direction-header-edit">
                                         <div>Step {index + 1}</div>
-                                        <div>
-                                            <ExpandLessIcon onClick={() => handleSwapPlaces(index, true)} />
-                                            <ExpandMoreIcon onClick={() => handleSwapPlaces(index, false)} />
-                                            <DeleteIcon onClick={() => handleDelete(index)} />
+                                        <div className="recipe-edit-icon-group">
+                                            <div className="recipe-edit-icon-wrapper">
+                                                <ExpandLessIcon onClick={() => handleSwapPlaces(index, true)} />
+                                            </div>
+                                            <div className="recipe-edit-icon-wrapper">
+                                                <ExpandMoreIcon onClick={() => handleSwapPlaces(index, false)} />
+                                            </div>
+                                            <div className="recipe-edit-icon-wrapper">
+                                                <DeleteIcon onClick={() => handleDelete(index)} />
+                                            </div>
                                         </div>
                                     </div>
                                     <div className="recipe-direction-text">

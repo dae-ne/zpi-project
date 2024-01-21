@@ -94,12 +94,12 @@
     width: 2em;
 
     .MuiSvgIcon-root[data-testid="DeleteIcon"] {
-        color: red;
+        color: $delete-color;
         font-size: 2em;
     }
 
     .MuiSvgIcon-root[data-testid="CheckIcon"] {
-        color: green;
+        color: $main-color;
         font-size: 2em;
     }
 }
